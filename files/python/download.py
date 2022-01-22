@@ -23,7 +23,7 @@ for each in inventory:
 
     configuration = dev.rpc.get_config(options={"format": "text"})
 
-    f = open(f"../junos/{each['device']}.conf", "w")
+    f = open(f"../junos/downloaded/{each['device']}.conf", "w")
     f.write(etree.tostring(configuration).decode("utf-8"))
     f.close()
 

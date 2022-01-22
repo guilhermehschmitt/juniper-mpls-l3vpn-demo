@@ -12,10 +12,13 @@ for each in routers:
     )
     dev.open()
 
-    configuration = dev.rpc.get_config(options={"format": "text"})
+    formats = ["text", "set"]
 
-    f = open(f"../junos/downloaded/{each['device']}.conf", "w")
-    f.write(etree.tostring(configuration).decode("utf-8"))
+    for each_format in formats:
+        configuration = dev.rpc.get_config(options={"format": each_format})
+        f = open(f"../junos/downloaded/{each['device']}_{each_format}.conf", "w")
+        f.write(etree.tostring(configuration).decode("utf-8"))
+
     f.close()
 
     print(f"downloaded: {each['device']}")

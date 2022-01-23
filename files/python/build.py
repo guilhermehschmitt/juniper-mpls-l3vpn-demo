@@ -15,7 +15,8 @@ for each in routers:
 
     print(f"connected to {each['device']}")
 
-    data = yaml.safe_load(open(f"vars/{each['device']}.yaml"))
+    data = dict()
+    data["configuration"] = yaml.safe_load(open(f"vars/{each['device']}.yaml"))
 
     cu = Config(dev)
 

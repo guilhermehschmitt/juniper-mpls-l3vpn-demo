@@ -25,7 +25,7 @@ for each in routers:
             with open(f"{CONFIG_PATH}/{each['device']}.conf", "w") as f:
                 for line in output.splitlines():
                     cleanedLine = line.strip()
-                    if cleanedLine:  # is not empty
+                    if cleanedLine:
                         f.write(cleanedLine + str("\n"))
             print(f"config generated: {CONFIG_PATH}/{each['device']}.conf")
         except yaml.YAMLError as exc:

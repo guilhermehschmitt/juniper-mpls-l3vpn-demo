@@ -13,11 +13,13 @@ for each in routers:
     )
     dev.open()
 
-    data = yaml.load(open(f"vars/{each['device']}.yaml"))
+    print(f"connected to {each['device']}")
+
+    data = yaml.safe_load(open(f"vars/{each['device']}.yaml"))
 
     cu = Config(dev)
 
-    cu.load(template_path="protocol_temp.j2", template_vars=data, format="text")
+    cu.load(template_path="templates/junos.j2", template_vars=data, format="set")
     cu.pdiff()
     if cu.commit_check():
         cu.commit()

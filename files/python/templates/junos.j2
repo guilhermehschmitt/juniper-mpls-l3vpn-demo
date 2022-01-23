@@ -1,20 +1,20 @@
 {# SYSTEM #}
-set system host-name {{ configuration.system.host_name }}
+set system host-name {{ system.host_name }}
 
-{% if configuration.system.domain_name is defined %}
-set system domain-name {{ configuration.system.domain_name }}
+{% if system.domain_name is defined %}
+set system domain-name {{ system.domain_name }}
 {% endif %}
 
 {# CHASSIS #}
-{% if configuration.chassis %}
-    {% if configuration.chassis.aggregated_devices is defined %}
-set chassis aggregated-devices ethernet device-count {{ configuration.chassis.aggregated_devices.ethernet.device_count }}
+{% if chassis is defined %}
+    {% if chassis.aggregated_devices is defined %}
+set chassis aggregated-devices ethernet device-count {{ chassis.aggregated_devices.ethernet.device_count }}
     {% endif %}
 {% endif %}
 
 {# INTERFACES #}
-{% if configuration.interfaces.interface is defined %}
-    {% for each in configuration.interfaces.interface %}
+{% if interfaces.interface is defined %}
+    {% for each in interfaces.interface %}
 
         {% if each.gigether_options is defined %}
 set interfaces {{ each.name }} gigether-options 802.3ad {{ each.gigether_options.ieee_8023ad.bundle }}
@@ -38,8 +38,8 @@ set interfaces {{ each.name }} unit {{ subinterface.name }} family inet address 
 {% endif %}
 
 {# ROUTING-INSTANCES #}
-{% if configuration.routing_instances is defined %}
-    {% for each_instance in configuration.routing_instances.instance %}
+{% if routing_instances is defined %}
+    {% for each_instance in routing_instances.instance %}
 
         {# ROUTING-INSTANCES BGP #}
         {% if each_instance.protocols.bgp is defined %}
@@ -66,21 +66,21 @@ set routing-instances {{ each_instance.name }} vrf-table-label
 {% endif %}
 
 {# ROUTING-OPTIONS #}
-{% if configuration.routing_options is defined %}
-set routing-options router-id {{ configuration.routing_options.router_id }}
-set routing-options autonomous-system {{ configuration.routing_options.autonomous_system.as_number }}
+{% if routing_options is defined %}
+set routing-options router-id {{ routing_options.router_id }}
+set routing-options autonomous-system {{ routing_options.autonomous_system.as_number }}
 
-    {% for each in configuration.routing_options.static.route %}
+    {% for each in routing_options.static.route %}
 set routing-options static route {{ each.name }} next-hop {{ each.next_hop[0] }}
     {% endfor %}
 
 {% endif %}
 
-{% if configuration.policy_options is defined %}
+{% if policy_options is defined %}
 
     {# PREFIX-LISTS #}
-    {% if configuration.policy_options.prefix_list is defined %}
-        {% for each_prefix_list in configuration.policy_options.prefix_list %}
+    {% if policy_options.prefix_list is defined %}
+        {% for each_prefix_list in policy_options.prefix_list %}
             {% for each_prefix in each_prefix_list.prefix_list_item %}
 set policy-options prefix-list {{ each_prefix_list.name }} {{ each_prefix.name }}
             {% endfor %}
@@ -88,8 +88,8 @@ set policy-options prefix-list {{ each_prefix_list.name }} {{ each_prefix.name }
     {% endif %}
 
     {# POLICY-STATEMENTS #}
-    {% if configuration.policy_options.policy_statement is defined %}
-        {% for each_policy_statement in configuration.policy_options.policy_statement %}
+    {% if policy_options.policy_statement is defined %}
+        {% for each_policy_statement in policy_options.policy_statement %}
 
             {# POLICY-STATEMENTS: terms #}
             {% for each_term in each_policy_statement.term %}
@@ -143,8 +143,8 @@ set policy-options policy-statement {{ each_policy_statement.name }} term {{ eac
 {% endif %}
 
 {# PROTOCOLS-BGP #}
-{% if configuration.protocols.bgp is defined %}
-    {% for each_group in configuration.protocols.bgp.group %}
+{% if protocols.bgp is defined %}
+    {% for each_group in protocols.bgp.group %}
 set protocols bgp group {{ each_group.name }} type {{ each_group.type }}
 set protocols bgp group {{ each_group.name }} peer-as {{ each_group.peer_as }}
 set protocols bgp group {{ each_group.name }} local-address {{ each_group.local_address }}
@@ -171,22 +171,22 @@ set protocols bgp group {{ each_group.name }} neighbor {{ each_neighbor.name }}
 {% endif %}
 
 {# PROTOCOLS-LDP #}
-{% if configuration.protocols.ldp is defined %}
-    {% for each_iface in configuration.protocols.ldp.interface %}
+{% if protocols.ldp is defined %}
+    {% for each_iface in protocols.ldp.interface %}
 set protocols ldp interface {{ each_iface.name }}
     {% endfor %}
 {% endif %}
 
 {# PROTOCOLS-MPLS #}
-{% if configuration.protocols.mpls is defined %}
-    {% for each_iface in configuration.protocols.mpls.interface %}
+{% if protocols.mpls is defined %}
+    {% for each_iface in protocols.mpls.interface %}
 set protocols mpls interface {{ each_iface.name }}
     {% endfor %}
 {% endif %}
 
 {# PROTOCOLS-OSPF #}
-{% if configuration.protocols.ospf is defined %}
-    {% for each_area in configuration.protocols.ospf.area %}
+{% if protocols.ospf is defined %}
+    {% for each_area in protocols.ospf.area %}
         {% for each_interface in each_area.interface %}
             {% if each_interface.interface_type is defined %}
 set protocols ospf area {{ each_area.name }} interface {{ each_interface.name }} interface-type {{ each_interface.interface_type }}
@@ -198,8 +198,8 @@ set protocols ospf area {{ each_area.name }} interface {{ each_interface.name }}
 {% endif %}
 
 {# PROTOCOLS-LLDP #}
-{% if configuration.protocols.lldp is defined %}
-    {% for each_iface in configuration.protocols.lldp.interface %}
+{% if protocols.lldp is defined %}
+    {% for each_iface in protocols.lldp.interface %}
 set protocols lldp interface {{ each_iface.name }}
     {% endfor %}
 {% endif %}

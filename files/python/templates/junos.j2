@@ -1,8 +1,27 @@
 {# SYSTEM #}
-set system host-name {{ system.host_name }}
 
-{% if system.domain_name is defined %}
+{% if system is defined %}
+
+    {% if system.host_name is defined %}
+set system host-name {{ system.host_name }}
+    {% endif %}
+
+    {% if system.domain_name is defined %}
 set system domain-name {{ system.domain_name }}
+    {% endif %}
+
+    {% if system.root_authentication is defined %}
+set system root-authentication encrypted-password  {{ system.root_authentication.encrypted_password }}
+    {% endif %}
+
+    {% if system.login is defined %}
+        {% for each_login in system.login.user %}
+set system login user {{ each_login.name }} uid {{ each_login.uid }}
+set system login user {{ each_login.name }} class {{ each_login.class }}
+set system login user {{ each_login.name }} authentication encrypted-password "{{ each_login.authentication.encrypted_password }}"
+        {% endfor %}
+    {% endif %}
+
 {% endif %}
 
 {# CHASSIS #}

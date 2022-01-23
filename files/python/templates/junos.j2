@@ -1,0 +1,205 @@
+{# SYSTEM #}
+set system host-name {{ configuration.system.host_name }}
+
+{% if configuration.system.domain_name is defined %}
+set system domain-name {{ configuration.system.domain_name }}
+{% endif %}
+
+{# CHASSIS #}
+{% if configuration.chassis %}
+    {% if configuration.chassis.aggregated_devices is defined %}
+set chassis aggregated-devices ethernet device-count {{ configuration.chassis.aggregated_devices.ethernet.device_count }}
+    {% endif %}
+{% endif %}
+
+{# INTERFACES #}
+{% if configuration.interfaces.interface is defined %}
+    {% for each in configuration.interfaces.interface %}
+
+        {% if each.gigether_options is defined %}
+set interfaces {{ each.name }} gigether-options 802.3ad {{ each.gigether_options.ieee_8023ad.bundle }}
+        {% endif %}
+
+        {% if each.unit is defined %}
+            {% for subinterface in each.unit %}
+
+                {% if subinterface.family.mpls is defined %}
+set interfaces {{ each.name }} unit {{ subinterface.name }} family mpls
+                {% endif %}
+
+                {% if subinterface.family.inet %}
+set interfaces {{ each.name }} unit {{ subinterface.name }} family inet address {{ subinterface.family.inet.address[0].name }}
+                {% endif %}
+
+            {% endfor %}
+        {% endif %}
+
+    {% endfor %}
+{% endif %}
+
+{# ROUTING-INSTANCES #}
+{% if configuration.routing_instances is defined %}
+    {% for each_instance in configuration.routing_instances.instance %}
+
+        {# ROUTING-INSTANCES BGP #}
+        {% if each_instance.protocols.bgp is defined %}
+            {% for each_group in each_instance.protocols.bgp.group %}
+set routing-instances {{ each_instance.name }} protocols bgp group {{ each_group.name }} type {{ each_group.type }}
+set routing-instances {{ each_instance.name }} protocols bgp group {{ each_group.name }} peer-as {{ each_group.peer_as }}
+                {% for each_neighbor in each_group.neighbor %}
+set routing-instances {{ each_instance.name }} protocols bgp group {{ each_group.name }} neighbor {{ each_neighbor.name }}
+                {% endfor %}
+            {% endfor %}
+        {% endif %}
+
+        {# ROUTING-INSTANCES INTERFACES #}
+        {% for each_interface in each_instance.interface %}
+set routing-instances {{ each_instance.name }} interface {{ each_interface.name }}
+        {% endfor %}
+
+        {# ROUTING-INSTANCES VRF #}
+set routing-instances {{ each_instance.name }} instance-type vrf
+set routing-instances {{ each_instance.name }} route-distinguisher {{ each_instance.route_distinguisher.rd_type }}
+set routing-instances {{ each_instance.name }} vrf-target {{ each_instance.vrfvtarget.community }}
+set routing-instances {{ each_instance.name }} vrf-table-label
+    {% endfor %}
+{% endif %}
+
+{# ROUTING-OPTIONS #}
+{% if configuration.routing_options is defined %}
+set routing-options router-id {{ configuration.routing_options.router_id }}
+set routing-options autonomous-system {{ configuration.routing_options.autonomous_system.as_number }}
+
+    {% for each in configuration.routing_options.static.route %}
+set routing-options static route {{ each.name }} next-hop {{ each.next_hop[0] }}
+    {% endfor %}
+
+{% endif %}
+
+{% if configuration.policy_options is defined %}
+
+    {# PREFIX-LISTS #}
+    {% if configuration.policy_options.prefix_list is defined %}
+        {% for each_prefix_list in configuration.policy_options.prefix_list %}
+            {% for each_prefix in each_prefix_list.prefix_list_item %}
+set policy-options prefix-list {{ each_prefix_list.name }} {{ each_prefix.name }}
+            {% endfor %}
+        {% endfor %}
+    {% endif %}
+
+    {# POLICY-STATEMENTS #}
+    {% if configuration.policy_options.policy_statement is defined %}
+        {% for each_policy_statement in configuration.policy_options.policy_statement %}
+
+            {# POLICY-STATEMENTS: terms #}
+            {% for each_term in each_policy_statement.term %}
+
+                {# POLICY-STATEMENTS: match statements #}
+                {% if each_term.from is defined %}
+
+                    {# POLICY-STATEMENTS: match protocol #}
+                    {% if each_term.from.protocol is defined %}
+                        {% for each_protocol in each_term.from.protocol%}
+set policy-options policy-statement {{ each_policy_statement.name }} term {{ each_term.name }} from protocol {{ each_protocol }}
+                        {% endfor %}
+                    {% endif %}
+
+                    {# POLICY-STATEMENTS: match interface #}
+                    {% if each_term.from.interface is defined %}
+                        {% for each_interface in each_term.from.interface%}
+set policy-options policy-statement {{ each_policy_statement.name }} term {{ each_term.name }} from interface {{ each_interface }}
+                        {% endfor %}
+                    {% endif %}
+
+                    {# POLICY-STATEMENTS: match prefix_list #}
+                    {% if each_term.from.prefix_list is defined %}
+                        {% for each_prefix_list in each_term.from.prefix_list%}
+set policy-options policy-statement {{ each_policy_statement.name }} term {{ each_term.name }} from prefix-list {{ each_prefix_list.name }}
+                        {% endfor %}
+                    {% endif %}
+
+                {% endif %}
+
+                {# POLICY-STATEMENTS: action statements #}
+                {% if each_term.then is defined %}
+
+                    {% if each_term.then.reject is defined %}
+set policy-options policy-statement {{ each_policy_statement.name }} term {{ each_term.name }} then reject
+                    {% endif %}
+
+                    {% if each_term.then.accept is defined %}
+set policy-options policy-statement {{ each_policy_statement.name }} term {{ each_term.name }} then accept
+                    {% endif %}
+
+                    {% if each_term.then.log is defined %}
+set policy-options policy-statement {{ each_policy_statement.name }} term {{ each_term.name }} then log
+                    {% endif %}
+
+                {% endif %}
+
+            {% endfor %}
+        {% endfor %}
+    {% endif %}
+{% endif %}
+
+{# PROTOCOLS-BGP #}
+{% if configuration.protocols.bgp is defined %}
+    {% for each_group in configuration.protocols.bgp.group %}
+set protocols bgp group {{ each_group.name }} type {{ each_group.type }}
+set protocols bgp group {{ each_group.name }} peer-as {{ each_group.peer_as }}
+set protocols bgp group {{ each_group.name }} local-address {{ each_group.local_address }}
+set protocols bgp group {{ each_group.name }} peer-as {{ each_group.peer_as }}
+        {% if each_group.import is defined %}
+            {% for each_import in each_group.import %}
+set protocols bgp group {{ each_group.name }} import {{ each_import }}
+            {% endfor %}
+        {% endif %}
+        {% if each_group.export is defined %}
+            {% for each_export in each_group.export %}
+set protocols bgp group {{ each_group.name }} export {{ each_export }}
+            {% endfor %}
+        {% endif %}
+        {% if each_group.family is defined %}
+            {% if each_group.family.inet_vpn is defined %}
+set protocols bgp group {{ each_group.name }} family inet-vpn unicast
+            {% endif %}
+        {% endif %}
+        {% for each_neighbor in each_group.neighbor %}
+set protocols bgp group {{ each_group.name }} neighbor {{ each_neighbor.name }}
+        {% endfor %}
+    {% endfor %}
+{% endif %}
+
+{# PROTOCOLS-LDP #}
+{% if configuration.protocols.ldp is defined %}
+    {% for each_iface in configuration.protocols.ldp.interface %}
+set protocols ldp interface {{ each_iface.name }}
+    {% endfor %}
+{% endif %}
+
+{# PROTOCOLS-MPLS #}
+{% if configuration.protocols.mpls is defined %}
+    {% for each_iface in configuration.protocols.mpls.interface %}
+set protocols mpls interface {{ each_iface.name }}
+    {% endfor %}
+{% endif %}
+
+{# PROTOCOLS-OSPF #}
+{% if configuration.protocols.ospf is defined %}
+    {% for each_area in configuration.protocols.ospf.area %}
+        {% for each_interface in each_area.interface %}
+            {% if each_interface.interface_type is defined %}
+set protocols ospf area {{ each_area.name }} interface {{ each_interface.name }} interface-type {{ each_interface.interface_type }}
+            {% else %}
+set protocols ospf area {{ each_area.name }} interface {{ each_interface.name }} passive
+            {% endif %}
+        {% endfor %}
+    {% endfor %}
+{% endif %}
+
+{# PROTOCOLS-LLDP #}
+{% if configuration.protocols.lldp is defined %}
+    {% for each_iface in configuration.protocols.lldp.interface %}
+set protocols lldp interface {{ each_iface.name }}
+    {% endfor %}
+{% endif %}

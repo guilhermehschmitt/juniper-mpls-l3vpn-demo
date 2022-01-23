@@ -3,6 +3,8 @@ from lxml import etree
 
 from inventory import routers
 
+CONFIG_PATH = "../junos/downloaded"
+
 for each in routers:
     dev = Device(
         host=f"192.168.110.{each['id']}",
@@ -16,9 +18,11 @@ for each in routers:
 
     for each_format in formats:
         configuration = dev.rpc.get_config(options={"format": each_format})
-        f = open(f"../junos/downloaded/{each['device']}_{each_format}.conf", "w")
-        f.write(etree.tostring(configuration).decode("utf-8"))
-
-    f.close()
+        local_file = open(
+            f"{CONFIG_PATH}/{each['device']}.{each_format}.conf",
+            "w",
+        )
+        local_file.write(etree.tostring(configuration).decode("utf-8"))
+        local_file.close()
 
     print(f"downloaded: {each['device']}")

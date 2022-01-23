@@ -1,18 +1,11 @@
 from jnpr.junos import Device
 from lxml import etree
 
-inventory = [
-    {"id": "11", "device": "houston"},
-    {"id": "12", "device": "dallas"},
-    {"id": "13", "device": "amarillo"},
-    {"id": "14", "device": "sanantonio"},
-    {"id": "15", "device": "austin"},
-    {"id": "16", "device": "fortworth"},
-    {"id": "17", "device": "elpaso"},
-    {"id": "18", "device": "galveston"},
-]
+from inventory import routers
 
-for each in inventory:
+CONFIG_PATH = "../junos/downloaded"
+
+for each in routers:
     dev = Device(
         host=f"192.168.110.{each['id']}",
         user="root",
@@ -21,10 +14,15 @@ for each in inventory:
     )
     dev.open()
 
-    configuration = dev.rpc.get_config(options={"format": "text"})
+    formats = ["text", "set"]
 
-    f = open(f"../junos/{each['device']}.conf", "w")
-    f.write(etree.tostring(configuration).decode("utf-8"))
-    f.close()
+    for each_format in formats:
+        configuration = dev.rpc.get_config(options={"format": each_format})
+        local_file = open(
+            f"{CONFIG_PATH}/{each['device']}.{each_format}.conf",
+            "w",
+        )
+        local_file.write(etree.tostring(configuration).decode("utf-8"))
+        local_file.close()
 
     print(f"downloaded: {each['device']}")

@@ -1,0 +1,85 @@
+---
+system:
+  host_name: "amarillo"
+  domain_name: "redtail.com"
+interfaces:
+  interface:
+    - name: "ge-0/0/0"
+      unit:
+        - name: 0
+          family:
+            inet:
+              address:
+                - name: "10.12.13.13/24"
+            mpls:
+              - null
+    - name: "ge-0/0/2"
+      unit:
+        - name: 0
+          family:
+            inet:
+              address:
+                - name: "10.13.16.13/24"
+            mpls:
+              - null
+    - name: "ge-0/0/5"
+      unit:
+        - name: 0
+          family:
+            inet:
+              address:
+                - name: "10.13.15.13/24"
+            mpls:
+              - null
+    - name: "fxp0"
+      unit:
+        - name: 0
+          family:
+            inet:
+              address:
+                - name: "192.168.110.13/24"
+    - name: "lo0"
+      unit:
+        - name: 0
+          family:
+            inet:
+              address:
+                - name: "192.168.255.13/32"
+routing_options:
+  router_id: "192.168.255.13"
+  autonomous_system:
+    as_number: "300"
+  static:
+    route:
+      - name: "192.168.0.0/16"
+        next_hop:
+          - "192.168.110.1"
+protocols:
+  ldp:
+    interface:
+      - name: "ge-0/0/0.0"
+      - name: "ge-0/0/2.0"
+      - name: "ge-0/0/5.0"
+  mpls:
+    interface:
+      - name: "ge-0/0/0.0"
+      - name: "ge-0/0/2.0"
+      - name: "ge-0/0/5.0"
+  ospf:
+    area:
+      - name: "0.0.0.0"
+        interface:
+          - name: "ge-0/0/0.0"
+            interface_type: "p2p"
+          - name: "ge-0/0/2.0"
+            interface_type: "p2p"
+          - name: "ge-0/0/5.0"
+            interface_type: "p2p"
+          - name: "lo0.0"
+            passive:
+              - null
+  lldp:
+    interface:
+      - name: "ge-0/0/0"
+      - name: "ge-0/0/2"
+      - name: "ge-0/0/5"

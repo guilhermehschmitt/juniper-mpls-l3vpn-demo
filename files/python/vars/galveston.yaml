@@ -1,0 +1,92 @@
+---
+system:
+  host_name: "galveston"
+  domain_name: "thesmiths.com"
+interfaces:
+  interface:
+    - name: "ge-0/0/0"
+      unit:
+        - name: 0
+          family:
+            inet:
+              address:
+                - name: "10.0.0.1/24"
+    - name: "ge-0/0/4"
+      unit:
+        - name: 0
+          family:
+            inet:
+              address:
+                - name: "74.51.192.1/24"
+    - name: "fxp0"
+      unit:
+        - name: 0
+          family:
+            inet:
+              address:
+                - name: "192.168.110.18/24"
+    - name: "lo0"
+      unit:
+        - name: 0
+          family:
+            inet:
+              address:
+                - name: "192.168.255.18/32"
+routing_options:
+  router_id: "192.168.255.18"
+  autonomous_system:
+    as_number: "7451"
+  static:
+    route:
+      - name: "192.168.0.0/16"
+        next_hop:
+          - "192.168.110.1"
+policy_options:
+  prefix_list:
+    - name: "Any"
+      prefix_list_item:
+        - name: "0.0.0.0/0"
+  policy_statement:
+    - name: "Any"
+      term:
+        - name: "Any-PrefixList"
+          from:
+            prefix_list:
+              - name: "Any"
+    - name: "TheSmiths-Export"
+      term:
+        - name: "Exclude-MGMT"
+          from:
+            protocol:
+              - "direct"
+            interface:
+              - "fxp0.0"
+          then:
+            reject:
+              - null
+        - name: "Connected"
+          from:
+            protocol:
+              - "direct"
+          then:
+            accept:
+              - null
+        - name: "Reject"
+          then:
+            reject:
+              - null
+protocols:
+  bgp:
+    group:
+      - name: "Redtail"
+        type: "external"
+        local_address: "74.51.192.1"
+        peer_as: "300"
+        import: ["Any"]
+        export: ["TheSmiths-Export"]
+        neighbor:
+          - name: "74.51.192.2"
+  lldp:
+    interface:
+      - name: "ge-0/0/0"
+      - name: "ge-0/0/4"

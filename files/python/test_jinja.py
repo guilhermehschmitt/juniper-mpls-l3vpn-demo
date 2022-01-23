@@ -27,7 +27,6 @@ for each in routers:
                     cleanedLine = line.strip()
                     if cleanedLine:  # is not empty
                         f.write(cleanedLine + str("\n"))
-                        print(cleanedLine)
-
+            print(f"config generated: {CONFIG_PATH}/{each['device']}.conf")
         except yaml.YAMLError as exc:
             print(exc)

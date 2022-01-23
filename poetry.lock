@@ -515,7 +515,7 @@ testing = ["pytest (>=6)", "pytest-checkdocs (>=2.4)", "pytest-flake8", "pytest-
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "377bc7b5602a7db70246e5221151df35f13eb5c265ab27a323d31de01d4e9b76"
+content-hash = "8b32eee1ec82a698c13b7386ed3eb1f6d9a064e7f0fa0ccaedf3b2a83a2ef4dc"
 
 [metadata.files]
 bcrypt = [

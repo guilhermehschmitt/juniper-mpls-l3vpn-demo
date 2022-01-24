@@ -16,6 +16,10 @@ system:
         class: super-user
         authentication:
           encrypted_password: "$6$/yt2iUdp$iCLkdUSs0n4X.PSYSDS4Y0xM5dcYZ0vNn2sGjYokqVCqsTB/DF3Bgo3GjhmfXapTzd3W2J3uUPTe5FrbS1Wiw/"
+chassis:
+  aggregated_devices:
+    ethernet:
+      device_count: 1
 interfaces:
   interface:
     - name: "ge-0/0/1"
@@ -45,15 +49,6 @@ interfaces:
                 - name: "10.11.15.15/24"
             mpls:
               - null
-    - name: "ge-0/0/4"
-      unit:
-        - name: 0
-          family:
-            inet:
-              address:
-                - name: "10.12.15.15/24"
-            mpls:
-              - null
     - name: "ge-0/0/5"
       unit:
         - name: 0
@@ -61,6 +56,23 @@ interfaces:
             inet:
               address:
                 - name: "10.13.15.15/24"
+            mpls:
+              - null
+    - name: "ge-0/0/4"
+      gigether_options:
+        ieee_8023ad:
+          bundle: "ae0"
+    - name: "ge-0/0/6"
+      gigether_options:
+        ieee_8023ad:
+          bundle: "ae0"
+    - name: "ae0"
+      unit:
+        - name: 0
+          family:
+            inet:
+              address:
+                - name: "10.12.15.15/24"
             mpls:
               - null
     - name: "fxp0"
@@ -95,15 +107,15 @@ protocols:
       - name: "ge-0/0/1.0"
       - name: "ge-0/0/2.0"
       - name: "ge-0/0/3.0"
-      - name: "ge-0/0/4.0"
       - name: "ge-0/0/5.0"
+      - name: "ae0.0"
   mpls:
     interface:
       - name: "ge-0/0/1.0"
       - name: "ge-0/0/2.0"
       - name: "ge-0/0/3.0"
-      - name: "ge-0/0/4.0"
       - name: "ge-0/0/5.0"
+      - name: "ae0.0"
   ospf:
     area:
       - name: "0.0.0.0"
@@ -114,9 +126,9 @@ protocols:
             interface_type: "p2p"
           - name: "ge-0/0/3.0"
             interface_type: "p2p"
-          - name: "ge-0/0/4.0"
-            interface_type: "p2p"
           - name: "ge-0/0/5.0"
+            interface_type: "p2p"
+          - name: "ae0.0"
             interface_type: "p2p"
           - name: "lo0.0"
             passive:
@@ -128,3 +140,4 @@ protocols:
       - name: "ge-0/0/3"
       - name: "ge-0/0/4"
       - name: "ge-0/0/5"
+      - name: "ge-0/0/6"

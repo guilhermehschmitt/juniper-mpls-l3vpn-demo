@@ -7,7 +7,7 @@ from inventory import routers
 for each in routers:
     dev = Device(
         host=f"192.168.110.{each['id']}",
-        user="root",
+        user="automation",
         password="juniper123",
         gather_facts=False,
     )

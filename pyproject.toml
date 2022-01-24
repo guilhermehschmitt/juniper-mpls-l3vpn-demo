@@ -14,6 +14,7 @@ scrapli = "^2021.7.30"
 nornir = "^3.2.0"
 nornir-pyez = "^0.0.10"
 Jinja2 = "^3.0.3"
+invoke = "^1.6.0"
 
 [tool.poetry.dev-dependencies]
 black = {version = "^21.12b0", allow-prereleases = true}

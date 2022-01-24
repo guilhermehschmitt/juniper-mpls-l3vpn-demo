@@ -18,12 +18,12 @@ for each in routers:
     # creating an empty dictionary called `data`, then stuffing our YAML vars into it as 'configuration'
     # this is to help handle the fact that PyEZ loads the YAML vars differently than Jinja2
     data = dict()
-    data["configuration"] = yaml.safe_load(open(f"bootstrap/{each['device']}.yaml"))
+    data["configuration"] = yaml.safe_load(open(f"./{each['device']}.yaml"))
 
     cu = Config(dev)
 
     cu.load(
-        template_path="templates/junos.j2",
+        template_path="../templates/junos.j2",
         template_vars=data,
         format="set",
     )

@@ -27,15 +27,6 @@ interfaces:
                 - name: "10.12.13.13/24"
             mpls:
               - null
-    - name: "ge-0/0/2"
-      unit:
-        - name: 0
-          family:
-            inet:
-              address:
-                - name: "10.13.16.13/24"
-            mpls:
-              - null
     - name: "ge-0/0/5"
       unit:
         - name: 0
@@ -75,20 +66,16 @@ protocols:
   ldp:
     interface:
       - name: "ge-0/0/0.0"
-      - name: "ge-0/0/2.0"
       - name: "ge-0/0/5.0"
   mpls:
     interface:
       - name: "ge-0/0/0.0"
-      - name: "ge-0/0/2.0"
       - name: "ge-0/0/5.0"
   ospf:
     area:
       - name: "0.0.0.0"
         interface:
           - name: "ge-0/0/0.0"
-            interface_type: "p2p"
-          - name: "ge-0/0/2.0"
             interface_type: "p2p"
           - name: "ge-0/0/5.0"
             interface_type: "p2p"
@@ -98,5 +85,4 @@ protocols:
   lldp:
     interface:
       - name: "ge-0/0/0"
-      - name: "ge-0/0/2"
       - name: "ge-0/0/5"

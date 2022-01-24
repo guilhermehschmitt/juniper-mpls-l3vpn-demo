@@ -16,20 +16,8 @@ system:
         class: super-user
         authentication:
           encrypted_password: "$6$/yt2iUdp$iCLkdUSs0n4X.PSYSDS4Y0xM5dcYZ0vNn2sGjYokqVCqsTB/DF3Bgo3GjhmfXapTzd3W2J3uUPTe5FrbS1Wiw/"
-chassis:
-  aggregated_devices:
-    ethernet:
-      device_count: 1
 interfaces:
   interface:
-    - name: "ge-0/0/0"
-      gigether_options:
-        ieee_8023ad:
-          bundle: "ae0"
-    - name: "ge-0/0/1"
-      gigether_options:
-        ieee_8023ad:
-          bundle: "ae0"
     - name: "ge-0/0/2"
       unit:
         - name: 0
@@ -55,15 +43,6 @@ interfaces:
             inet:
               address:
                 - name: "74.51.192.2/24"
-    - name: "ae0"
-      unit:
-        - name: 0
-          family:
-            inet:
-              address:
-                - name: "10.11.14.11/24"
-            mpls:
-              - null
     - name: "fxp0"
       unit:
         - name: 0
@@ -127,18 +106,14 @@ protocols:
     interface:
       - name: "ge-0/0/2.0"
       - name: "ge-0/0/3.0"
-      - name: "ae0.0"
   mpls:
     interface:
-      - name: "ae0.0"
       - name: "ge-0/0/2.0"
       - name: "ge-0/0/3.0"
   ospf:
     area:
       - name: "0.0.0.0"
         interface:
-          - name: "ae0.0"
-            interface_type: "p2p"
           - name: "ge-0/0/3.0"
             interface_type: "p2p"
           - name: "ge-0/0/2.0"
@@ -150,6 +125,4 @@ protocols:
     interface:
       - name: "ge-0/0/2"
       - name: "ge-0/0/3"
-      - name: "ge-0/0/0"
-      - name: "ge-0/0/1"
       - name: "ge-0/0/4"

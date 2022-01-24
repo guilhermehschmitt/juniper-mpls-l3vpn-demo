@@ -16,8 +16,20 @@ LABEL build-date="20220135"
 WORKDIR /tmp/files
 
 ### -------------------------------------------------
+### Change directory to /tmp/files
+### -------------------------------------------------
+RUN apt -y update
+RUN apt -y install sshpass
+
+### -------------------------------------------------
 ### Add and install python packages
 ### -------------------------------------------------
 ADD requirements.txt requirements.txt
 RUN pip install -r requirements.txt
 RUN pip install --upgrade pip
+
+### -------------------------------------------------
+### Create an SSH config file to bypass SSH key check
+### -------------------------------------------------
+WORKDIR /root/.ssh
+RUN echo "Host *\n    StrictHostKeyChecking no" > /root/.ssh/config

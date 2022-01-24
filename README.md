@@ -10,4 +10,4 @@ For all information about this project, please reference the [documentation page
 
 We are leveraging EVE-NG to deploy an MPLS network on Juniper vMX routers.
 
-![topology](./files/images/topology.png)
+![topology](./files/images/topology-100.jpg)

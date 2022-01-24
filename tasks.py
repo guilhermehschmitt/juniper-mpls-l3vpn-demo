@@ -32,7 +32,7 @@ PWD = os.getcwd()
 ### DOCKER CONTAINER BUILD
 ### ---------------------------------------------------------------------------
 @task
-def build(context):
+def docker(context):
     # Build our docker image
     context.run(
         f"docker build -t {DOCKER_IMG}:{DOCKER_TAG} files/docker/",
@@ -60,14 +60,14 @@ def shell(context):
 ### TESTS
 ### ---------------------------------------------------------------------------
 @task
-def template(context):
+def build(context):
     # Run the template_config.py script to build configurations without PyEZ
     print("Test the configuration build process")
     context.run(
         f"docker run -it --rm \
             -v {PWD}/files/:/home/files \
             -w /home/files/python/ \
-            {DOCKER_IMG}:{DOCKER_TAG} python template_config.py",
+            {DOCKER_IMG}:{DOCKER_TAG} python build.py",
         pty=True,
     )
 
@@ -76,7 +76,7 @@ def template(context):
 ### USE PyEZ TO BUILD CONFIGURATION AND PUSH TO DEVICES
 ### ---------------------------------------------------------------------------
 @task
-def pyez(context):
+def configure(context):
     # Run the configure.py script to build configurations and push with PyEZ
     print("Build and push configurations to devices")
     context.run(

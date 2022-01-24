@@ -15,7 +15,7 @@
         "clientcrt": "/var/tmp/client.crt",
         "clientkey": "/var/tmp/client.key",
         "ca": "/var/tmp/rootCA.crt",
-        "servername": "houston.dmz.home"
+        "servername": "pe1.dmz.home"
     },
     "grpc": {
         "ws": 1048576

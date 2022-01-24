@@ -1,0 +1,114 @@
+---
+system:
+  host_name: "pe3"
+  domain_name: "mpls.com"
+  root_authentication:
+    encrypted_password: "$6$PHCVjynv$xgoBCzi/C6VKKEzvWLIGE2AzOLJ/9qJph/oNZODzh3CXg5EtUgShl0uLc2HtI.5/Pf6pWxsFmtfkFC7vvDznj."
+  login:
+    user:
+      - name: automation
+        uid: 2000
+        class: super-user
+        authentication:
+          encrypted_password: "$6$/X2iOYbD$ccgNxCe51PKDIQDiLdOTN8Nmx7EEvht5MXOw2mRvi0bmRDtpv1p4ru.OftlA6wGzw8hsk3z7pwSTYoLyhXEeJ0"
+      - name: awx
+        uid: 2001
+        class: super-user
+        authentication:
+          encrypted_password: "$6$/yt2iUdp$iCLkdUSs0n4X.PSYSDS4Y0xM5dcYZ0vNn2sGjYokqVCqsTB/DF3Bgo3GjhmfXapTzd3W2J3uUPTe5FrbS1Wiw/"
+chassis:
+  aggregated_devices:
+    ethernet:
+      device_count: 1
+interfaces:
+  interface:
+    - name: "ge-0/0/0"
+      gigether_options:
+        ieee_8023ad:
+          bundle: "ae0"
+    - name: "ge-0/0/1"
+      gigether_options:
+        ieee_8023ad:
+          bundle: "ae0"
+    - name: "ge-0/0/2"
+      unit:
+        - name: 0
+          family:
+            inet:
+              address:
+                - name: "10.14.15.14/24"
+            mpls:
+              - null
+    - name: "ge-0/0/5"
+      unit:
+        - name: 0
+          family:
+            inet:
+              address:
+                - name: "10.12.14.14/24"
+            mpls:
+              - null
+    - name: "ae0"
+      unit:
+        - name: 0
+          family:
+            inet:
+              address:
+                - name: "10.11.14.14/24"
+            mpls:
+              - null
+    - name: "fxp0"
+      unit:
+        - name: 0
+          family:
+            inet:
+              address:
+                - name: "192.168.110.14/24"
+    - name: "lo0"
+      unit:
+        - name: 0
+          family:
+            inet:
+              address:
+                - name: "192.168.255.14/32"
+routing_options:
+  router_id: "192.168.255.14"
+  autonomous_system:
+    as_number: "300"
+  static:
+    route:
+      - name: "192.168.0.0/16"
+        next_hop:
+          - "192.168.110.1"
+      - name: "10.9.0.0/16"
+        next_hop:
+          - "192.168.110.1"
+protocols:
+  ldp:
+    interface:
+      - name: "ae0.0"
+      - name: "ge-0/0/2.0"
+      - name: "ge-0/0/5.0"
+  mpls:
+    interface:
+      - name: "ae0.0"
+      - name: "ge-0/0/2.0"
+      - name: "ge-0/0/5.0"
+  ospf:
+    area:
+      - name: "0.0.0.0"
+        interface:
+          - name: "ae0.0"
+            interface_type: "p2p"
+          - name: "ge-0/0/2.0"
+            interface_type: "p2p"
+          - name: "ge-0/0/5.0"
+            interface_type: "p2p"
+          - name: "lo0.0"
+            passive:
+              - null
+  lldp:
+    interface:
+      - name: "ae0"
+      - name: "ge-0/0/2"
+      - name: "ge-0/0/5"

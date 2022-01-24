@@ -15,6 +15,8 @@ for each in routers:
 
     print(f"connected to {each['device']}")
 
+    # creating an empty dictionary called `data`, then stuffing our YAML vars into it as 'configuration'
+    # this is to help handle the fact that PyEZ loads the YAML vars differently than Jinja2
     data = dict()
     data["configuration"] = yaml.safe_load(open(f"vars/{each['device']}.yaml"))
 

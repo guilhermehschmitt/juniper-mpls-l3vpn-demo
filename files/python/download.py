@@ -1,7 +1,6 @@
+from inventory import routers
 from jnpr.junos import Device
 from lxml import etree
-
-from inventory import routers
 
 CONFIG_PATH = "../junos/downloaded"
 

@@ -1,9 +1,8 @@
 #!/usr/bin/env python
 
-from jinja2 import Environment, FileSystemLoader
 import yaml
-
 from inventory import routers
+from jinja2 import Environment, FileSystemLoader
 
 # define path for config files
 CONFIG_PATH = "../junos/generated"

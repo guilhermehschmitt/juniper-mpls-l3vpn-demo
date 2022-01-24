@@ -1,8 +1,7 @@
+import yaml
+from inventory import routers
 from jnpr.junos import Device
 from jnpr.junos.utils.config import Config
-import yaml
-
-from inventory import routers
 
 for each in routers:
     dev = Device(

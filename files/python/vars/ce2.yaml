@@ -1,16 +1,21 @@
 ---
 system:
-  host_name: "galveston"
-  domain_name: "thesmiths.com"
+  host_name: "ce2"
+  domain_name: "customer1.com"
   root_authentication:
     encrypted_password: "$6$PHCVjynv$xgoBCzi/C6VKKEzvWLIGE2AzOLJ/9qJph/oNZODzh3CXg5EtUgShl0uLc2HtI.5/Pf6pWxsFmtfkFC7vvDznj."
   login:
     user:
-      - name: cdot
+      - name: automation
         uid: 2000
         class: super-user
         authentication:
-          encrypted_password: "$6$raMV2xlZ$ry9mswYafpuXF9ko1GyGIHUIlyPR3OrY6qNJvLTo.8qgkkMHZtR6uC5TvmSgjNEOpKL8QmFzm/JUm1iZOnucR1"
+          encrypted_password: "$6$/X2iOYbD$ccgNxCe51PKDIQDiLdOTN8Nmx7EEvht5MXOw2mRvi0bmRDtpv1p4ru.OftlA6wGzw8hsk3z7pwSTYoLyhXEeJ0"
+      - name: awx
+        uid: 2001
+        class: super-user
+        authentication:
+          encrypted_password: "$6$/yt2iUdp$iCLkdUSs0n4X.PSYSDS4Y0xM5dcYZ0vNn2sGjYokqVCqsTB/DF3Bgo3GjhmfXapTzd3W2J3uUPTe5FrbS1Wiw/"
 interfaces:
   interface:
     - name: "ge-0/0/0"
@@ -19,32 +24,32 @@ interfaces:
           family:
             inet:
               address:
-                - name: "10.0.0.1/24"
-    - name: "ge-0/0/4"
+                - name: "216.227.251.1/24"
+    - name: "ge-0/0/1"
       unit:
         - name: 0
           family:
             inet:
               address:
-                - name: "74.51.192.1/24"
+                - name: "10.0.1.1/24"
     - name: "fxp0"
       unit:
         - name: 0
           family:
             inet:
               address:
-                - name: "192.168.110.18/24"
+                - name: "192.168.110.17/24"
     - name: "lo0"
       unit:
         - name: 0
           family:
             inet:
               address:
-                - name: "192.168.255.18/32"
+                - name: "192.168.255.17/32"
 routing_options:
-  router_id: "192.168.255.18"
+  router_id: "192.168.255.17"
   autonomous_system:
-    as_number: "7451"
+    as_number: "65001"
   static:
     route:
       - name: "192.168.0.0/16"
@@ -65,7 +70,7 @@ policy_options:
           from:
             prefix_list:
               - name: "Any"
-    - name: "TheSmiths-Export"
+    - name: "Customer1-Export"
       term:
         - name: "Exclude-MGMT"
           from:
@@ -90,15 +95,15 @@ policy_options:
 protocols:
   bgp:
     group:
-      - name: "Redtail"
+      - name: "MPLS"
         type: "external"
-        local_address: "74.51.192.1"
+        local_address: "216.227.251.1"
         peer_as: "300"
         import: ["Any"]
-        export: ["TheSmiths-Export"]
+        export: ["Customer1-Export"]
         neighbor:
-          - name: "74.51.192.2"
+          - name: "216.227.251.2"
   lldp:
     interface:
       - name: "ge-0/0/0"
-      - name: "ge-0/0/4"
+      - name: "ge-0/0/1"

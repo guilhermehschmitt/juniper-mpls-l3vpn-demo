@@ -1,16 +1,21 @@
 ---
 system:
-  host_name: "houston"
-  domain_name: "redtail.com"
+  host_name: "pe3"
+  domain_name: "mpls.com"
   root_authentication:
     encrypted_password: "$6$PHCVjynv$xgoBCzi/C6VKKEzvWLIGE2AzOLJ/9qJph/oNZODzh3CXg5EtUgShl0uLc2HtI.5/Pf6pWxsFmtfkFC7vvDznj."
   login:
     user:
-      - name: cdot
+      - name: automation
         uid: 2000
         class: super-user
         authentication:
-          encrypted_password: "$6$raMV2xlZ$ry9mswYafpuXF9ko1GyGIHUIlyPR3OrY6qNJvLTo.8qgkkMHZtR6uC5TvmSgjNEOpKL8QmFzm/JUm1iZOnucR1"
+          encrypted_password: "$6$/X2iOYbD$ccgNxCe51PKDIQDiLdOTN8Nmx7EEvht5MXOw2mRvi0bmRDtpv1p4ru.OftlA6wGzw8hsk3z7pwSTYoLyhXEeJ0"
+      - name: awx
+        uid: 2001
+        class: super-user
+        authentication:
+          encrypted_password: "$6$/yt2iUdp$iCLkdUSs0n4X.PSYSDS4Y0xM5dcYZ0vNn2sGjYokqVCqsTB/DF3Bgo3GjhmfXapTzd3W2J3uUPTe5FrbS1Wiw/"
 chassis:
   aggregated_devices:
     ethernet:
@@ -31,32 +36,25 @@ interfaces:
           family:
             inet:
               address:
-                - name: "10.11.12.11/24"
+                - name: "10.14.15.14/24"
             mpls:
               - null
-    - name: "ge-0/0/3"
+    - name: "ge-0/0/5"
       unit:
         - name: 0
           family:
             inet:
               address:
-                - name: "10.11.15.11/24"
+                - name: "10.12.14.14/24"
             mpls:
               - null
-    - name: "ge-0/0/4"
-      unit:
-        - name: 0
-          family:
-            inet:
-              address:
-                - name: "74.51.192.2/24"
     - name: "ae0"
       unit:
         - name: 0
           family:
             inet:
               address:
-                - name: "10.11.14.11/24"
+                - name: "10.11.14.14/24"
             mpls:
               - null
     - name: "fxp0"
@@ -65,36 +63,16 @@ interfaces:
           family:
             inet:
               address:
-                - name: "192.168.110.11/24"
+                - name: "192.168.110.14/24"
     - name: "lo0"
       unit:
         - name: 0
           family:
             inet:
               address:
-                - name: "192.168.255.11/24"
-routing_instances:
-  instance:
-    - name: "TheSmiths"
-      instance_type: "vrf"
-      protocols:
-        bgp:
-          group:
-            - name: "TheSmiths"
-              type: "external"
-              peer_as: "7451"
-              neighbor:
-                - name: "74.51.192.1"
-      interface:
-        - name: "ge-0/0/4.0"
-      route_distinguisher:
-        rd_type: "192.168.255.11:100"
-      vrfvtarget:
-        community: "target:300:100"
-      vrf_table_label:
-        - null
+                - name: "192.168.255.14/32"
 routing_options:
-  router_id: "192.168.255.11"
+  router_id: "192.168.255.14"
   autonomous_system:
     as_number: "300"
   static:
@@ -106,45 +84,31 @@ routing_options:
         next_hop:
           - "192.168.110.1"
 protocols:
-  bgp:
-    group:
-      - name: "Redtail"
-        type: "internal"
-        local_address: "192.168.255.11"
-        family:
-          inet_vpn:
-            unicast:
-              - "null"
-        peer_as: "300"
-        neighbor:
-          - name: "192.168.255.16"
   ldp:
     interface:
-      - name: "ge-0/0/2.0"
-      - name: "ge-0/0/3.0"
       - name: "ae0.0"
+      - name: "ge-0/0/2.0"
+      - name: "ge-0/0/5.0"
   mpls:
     interface:
       - name: "ae0.0"
       - name: "ge-0/0/2.0"
-      - name: "ge-0/0/3.0"
+      - name: "ge-0/0/5.0"
   ospf:
     area:
       - name: "0.0.0.0"
         interface:
           - name: "ae0.0"
             interface_type: "p2p"
-          - name: "ge-0/0/3.0"
-            interface_type: "p2p"
           - name: "ge-0/0/2.0"
+            interface_type: "p2p"
+          - name: "ge-0/0/5.0"
             interface_type: "p2p"
           - name: "lo0.0"
             passive:
               - null
   lldp:
     interface:
+      - name: "ae0"
       - name: "ge-0/0/2"
-      - name: "ge-0/0/3"
-      - name: "ge-0/0/0"
-      - name: "ge-0/0/1"
-      - name: "ge-0/0/4"
+      - name: "ge-0/0/5"

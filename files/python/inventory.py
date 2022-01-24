@@ -1,10 +1,10 @@
 routers = [
-    {"id": "11", "device": "houston"},
-    {"id": "12", "device": "dallas"},
-    {"id": "13", "device": "amarillo"},
-    {"id": "14", "device": "sanantonio"},
-    {"id": "15", "device": "austin"},
-    {"id": "16", "device": "fortworth"},
-    {"id": "17", "device": "elpaso"},
-    {"id": "18", "device": "galveston"},
+    {"id": "11", "device": "pe1"},
+    {"id": "12", "device": "p1"},
+    {"id": "13", "device": "pe2"},
+    {"id": "14", "device": "pe3"},
+    {"id": "15", "device": "p2"},
+    {"id": "16", "device": "pe4"},
+    {"id": "17", "device": "ce2"},
+    {"id": "18", "device": "ce1"},
 ]

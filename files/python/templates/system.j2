@@ -13,6 +13,13 @@ set system domain-name {{ configuration.system.domain_name }}
 set system root-authentication encrypted-password "{{ configuration.system.root_authentication.encrypted_password }}"
     {% endif %}
 
+{# GENERIC / UBIQUITOUS CONFIG #}
+set system services ssh root-login allow
+set system services netconf ssh
+set system syslog file interactive-commands interactive-commands any
+set system syslog file messages any notice
+set system syslog file messages authorization info
+
     {% if configuration.system.login is defined %}
         {% for each_login in configuration.system.login.user %}
 set system login user {{ each_login.name }} uid {{ each_login.uid }}

@@ -1,3 +1,4 @@
+"""Build and push our bootstrap config with PyEZ."""
 import yaml
 from inventory import routers
 from jnpr.junos import Device

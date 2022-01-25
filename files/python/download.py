@@ -1,3 +1,4 @@
+"""Download our configurations and store locally."""
 from inventory import routers
 from jnpr.junos import Device
 from lxml import etree

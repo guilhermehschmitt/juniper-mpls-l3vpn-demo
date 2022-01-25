@@ -1,6 +1,4 @@
 """Generate bootstrap configurations for our network devices."""
-#!/usr/bin/env python
-
 import yaml
 from inventory import routers
 from jinja2 import Environment, FileSystemLoader
@@ -30,5 +28,6 @@ for each in routers:
                     cleanedLine = line.strip()
                     if cleanedLine:
                         f.write(cleanedLine + str("\n"))
+            print(f"config built: {CONFIG_PATH}/{each['device']}.conf")  # noqa T001
         except yaml.YAMLError as exc:
             print(exc)  # noqa T001

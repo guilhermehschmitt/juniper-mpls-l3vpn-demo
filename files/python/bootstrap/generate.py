@@ -1,6 +1,4 @@
 """Generate production configurations for our network devices."""
-#!/usr/bin/env python
-
 import yaml
 from inventory import routers
 from jinja2 import Environment, FileSystemLoader

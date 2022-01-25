@@ -6,9 +6,9 @@ system:
     encrypted_password: "$6$PHCVjynv$xgoBCzi/C6VKKEzvWLIGE2AzOLJ/9qJph/oNZODzh3CXg5EtUgShl0uLc2HtI.5/Pf6pWxsFmtfkFC7vvDznj."
   login:
     user:
-      - name: automation
+      - name: "automation"
         uid: 2000
-        class: super-user
+        class: "super-user"
         authentication:
           encrypted_password: "$6$/X2iOYbD$ccgNxCe51PKDIQDiLdOTN8Nmx7EEvht5MXOw2mRvi0bmRDtpv1p4ru.OftlA6wGzw8hsk3z7pwSTYoLyhXEeJ0"
 interfaces:

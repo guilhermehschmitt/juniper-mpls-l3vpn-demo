@@ -13,39 +13,48 @@ limitations under the License.
 """
 
 import os
-from invoke import task
+from invoke import task  # type: ignore
 
-### ---------------------------------------------------------------------------
-### DOCKER PARAMETERS
-### ---------------------------------------------------------------------------
+# ---------------------------------------------------------------------------
+# DOCKER PARAMETERS
+# ---------------------------------------------------------------------------
 DOCKER_IMG = "ghcr.io/cdot65/juniper-mpls-l3vpn-demo"
 DOCKER_TAG = "0.0.1"
 
 
-### ---------------------------------------------------------------------------
-### SYSTEM PARAMETERS
-### ---------------------------------------------------------------------------
+# ---------------------------------------------------------------------------
+# SYSTEM PARAMETERS
+# ---------------------------------------------------------------------------
 PWD = os.getcwd()
 
 
-### ---------------------------------------------------------------------------
-### DOCKER CONTAINER BUILD
-### ---------------------------------------------------------------------------
+# ---------------------------------------------------------------------------
+# CONSOLE MESSAGE TEMPLATE
+# ---------------------------------------------------------------------------
+def console_msg(message):
+    """provide a little formatting help for console messages"""
+    print("-" * 78 + f"\n{message}\n" + "-" * 78 + "\n")  # noqa T001
+
+
+# ---------------------------------------------------------------------------
+# DOCKER CONTAINER BUILD
+# ---------------------------------------------------------------------------
 @task
-def docker(context):
-    # Build our docker image
+def build(context):
+    """Build an instance of the Docker container image locally."""
+    console_msg("Build an instance of the Docker container image locally.")
     context.run(
         f"docker build -t {DOCKER_IMG}:{DOCKER_TAG} files/docker/",
     )
 
 
-### ---------------------------------------------------------------------------
-### DOCKER CONTAINER SHELL
-### ---------------------------------------------------------------------------
+# ---------------------------------------------------------------------------
+# DOCKER CONTAINER SHELL
+# ---------------------------------------------------------------------------
 @task
 def shell(context):
-    # Get access to the BASH shell within our container
-    print("Jump into a container")
+    """Get access to the BASH shell within our container."""
+    console_msg("Get access to the BASH shell within our container.")
     context.run(
         f"docker run -it --rm \
             -v {PWD}/files:/home/files \
@@ -56,33 +65,114 @@ def shell(context):
     )
 
 
-### ---------------------------------------------------------------------------
-### TESTS
-### ---------------------------------------------------------------------------
+# ---------------------------------------------------------------------------
+# TESTS
+# ---------------------------------------------------------------------------
 @task
-def build(context):
-    # Run the template_config.py script to build configurations without PyEZ
-    print("Test the configuration build process")
+def bandit(context):
+    """Check to see if there are any security issues with our code."""
+    console_msg("test: bandit checking for security issues.")
     context.run(
         f"docker run -it --rm \
             -v {PWD}/files/:/home/files \
-            -w /home/files/python/ \
-            {DOCKER_IMG}:{DOCKER_TAG} python build.py",
+            -w /home/files/ \
+            {DOCKER_IMG}:{DOCKER_TAG} bandit -r .",
         pty=True,
     )
 
 
-### ---------------------------------------------------------------------------
-### USE PyEZ TO BUILD CONFIGURATION AND PUSH TO DEVICES
-### ---------------------------------------------------------------------------
+@task
+def black(context):
+    """Enforce black style standards within our code."""
+    console_msg("test: black standards enforcement.")
+    context.run(
+        f"docker run -it --rm \
+            -v {PWD}/files/:/home/files \
+            -w /home/files/ \
+            {DOCKER_IMG}:{DOCKER_TAG} black .",
+        pty=True,
+    )
+
+
+@task
+def flake8(context):
+    """Check to see if there are any formatting issues with our code."""
+    console_msg("test: flake8 checking for formatting issues.")
+    context.run(
+        f"docker run -it --rm \
+            -v {PWD}/files/:/home/files \
+            -w /home/files/ \
+            {DOCKER_IMG}:{DOCKER_TAG} flake8 .",
+        pty=True,
+    )
+
+
+@task
+def pydocstyle(context):
+    """Check to see if there are any documentation issues with our code."""
+    console_msg("test: pydocstyle checking for documentation issues.")
+    context.run(
+        f"docker run -it --rm \
+            -v {PWD}/files/:/home/files \
+            -w /home/files/ \
+            {DOCKER_IMG}:{DOCKER_TAG} pydocstyle .",
+        pty=True,
+    )
+
+
+@task
+def yamllint(context):
+    """Check to see if there are any YAML formatting issues with our code."""
+    console_msg("test: yamllint checking for linting issues.")
+    context.run(
+        f"docker run -it --rm \
+            -v {PWD}/files/:/home/files \
+            -w /home/files/ \
+            {DOCKER_IMG}:{DOCKER_TAG} yamllint .",
+        pty=True,
+    )
+
+
+# ---------------------------------------------------------------------------
+# USE Jinja2 TO BUILD CONFIGURATION AND STORE LOCALLY
+# ---------------------------------------------------------------------------
+@task
+def generate(context):
+    """Building the configuration locally with Jinaj2."""
+    console_msg("Building the configuration locally with Jinaj2")
+    context.run(
+        f"docker run -it --rm \
+            -v {PWD}/files/:/home/files \
+            -w /home/files/python/ \
+            {DOCKER_IMG}:{DOCKER_TAG} python generate.py",
+        pty=True,
+    )
+
+
+# ---------------------------------------------------------------------------
+# USE PyEZ TO BUILD CONFIGURATION AND PUSH TO DEVICES
+# ---------------------------------------------------------------------------
 @task
 def configure(context):
-    # Run the configure.py script to build configurations and push with PyEZ
-    print("Build and push configurations to devices")
+    """Build and push our configurations with PyEZ."""
+    console_msg("Build and push configurations to devices")
     context.run(
         f"docker run -it --rm \
             -v {PWD}/files/:/home/files \
             -w /home/files/python/ \
             {DOCKER_IMG}:{DOCKER_TAG} python configure.py",
+        pty=True,
+    )
+
+
+@task
+def bootstrap(context):
+    """Push our bootstrap configurations with PyEZ."""
+    console_msg("Push bootstrap configurations to devices")
+    context.run(
+        f"docker run -it --rm \
+            -v {PWD}/files/:/home/files \
+            -w /home/files/python/bootstrap \
+            {DOCKER_IMG}:{DOCKER_TAG} python bootstrap.py",
         pty=True,
     )

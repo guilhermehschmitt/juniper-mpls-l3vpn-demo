@@ -1,3 +1,4 @@
+"""List of our network devices and ID."""
 routers = [
     {"id": "11", "device": "pe1"},
     {"id": "12", "device": "p1"},

@@ -1,4 +1,5 @@
-name: Mkdocs
+---
+name: "Mkdocs"
 on:
   # each day at 0200 hours
   schedule:
@@ -8,11 +9,11 @@ on:
 jobs:
   "doc":
     name: "Build mkdocs"
-    runs-on: ubuntu-latest
+    runs-on: "ubuntu-latest"
     steps:
-      - uses: actions/checkout@master
+      - uses: "actions/checkout@master"
       - name: "Setup Python 3 on runner"
-        uses: actions/setup-python@v2.1.4
+        uses: "actions/setup-python@v2.1.4"
         with:
           python-version: "3.x"
       - name: "Build mkdocs content to site folder"
@@ -21,7 +22,7 @@ jobs:
           python .github/index.py
           mkdocs build -f mkdocs.yml
       - name: "Deploy last version to gh-pages"
-        uses: peaceiris/actions-gh-pages@v3
+        uses: "peaceiris/actions-gh-pages@v3"
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./site
+          github_token: "${{ secrets.GITHUB_TOKEN }}"
+          publish_dir: "./site"

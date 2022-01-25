@@ -14,17 +14,13 @@ jobs:
   mkdocs:
     name: "Build mkdocs"
     runs-on: "ubuntu-latest"
-    strategy:
-      matrix:
-        # in this example, there is a newer version already installed, 3.7.7, so the older version will be downloaded
-        python-version: ["3.7", "3.8", "3.9", "3.10"]
     steps:
       - uses: "actions/checkout@v2"
 
       - name: "Setup Python 3 on runner"
         uses: "actions/setup-python@v2"
         with:
-          python-version: "${{ matrix.python-version }}"
+          python-version: "3.8"
 
       - name: "Build mkdocs content to site folder"
         run: |

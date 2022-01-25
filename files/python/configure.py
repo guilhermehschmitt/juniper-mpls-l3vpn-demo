@@ -17,7 +17,7 @@ def main():
         dev = Device(
             host=f"192.168.110.{each['id']}",
             user="automation",
-            password="juniper123",  # nosec
+            password="juniper123",
             gather_facts=False,
         )
         dev.open()

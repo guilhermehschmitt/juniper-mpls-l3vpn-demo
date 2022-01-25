@@ -6,7 +6,9 @@ from jnpr.junos.utils.config import Config  # type: ignore
 
 
 def main():
-    """Loop over our list of routers that we imported from inventory.py
+    """Build connection, template config, and push to device.
+
+    Loop over our list of routers that we imported from inventory.py
     Utilize the ID as the last octet within the IP address of the router
     Once the connection is open, print a message to the console
     Ingest the configuration variables stored in our device's' YAML file
@@ -15,7 +17,7 @@ def main():
         dev = Device(
             host=f"192.168.110.{each['id']}",
             user="automation",
-            password="juniper123",
+            password="juniper123",  # nosec
             gather_facts=False,
         )
         dev.open()

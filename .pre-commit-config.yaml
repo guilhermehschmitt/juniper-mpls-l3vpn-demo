@@ -1,9 +1,5 @@
 ---
 repos:
-  - repo: "https://github.com/PyCQA/bandit"
-    rev: "1.7.0"
-    hooks:
-      - id: "bandit"
   - repo: "https://github.com/myint/autoflake"
     rev: "v1.4"
     hooks:
@@ -38,13 +34,17 @@ repos:
     rev: "v0.931"
     hooks:
       - id: "mypy"
-  - repo: "https://github.com/macisamuele/language-formatters-pre-commit-hooks"
-    rev: "v2.1.0"
-    hooks:
-      - id: "pretty-format-yaml"
-        args:
-          - "--autofix"
   - repo: "https://github.com/adrienverge/yamllint"
     rev: "v1.26.3"
     hooks:
       - id: "yamllint"
+  # - repo: "https://github.com/PyCQA/bandit"
+  #   rev: "1.7.0"
+  #   hooks:
+  #     - id: "bandit"
+  # - repo: "https://github.com/macisamuele/language-formatters-pre-commit-hooks"
+  #   rev: "v2.1.0"
+  #   hooks:
+  #     - id: "pretty-format-yaml"
+  #       args:
+  #         - "--autofix"

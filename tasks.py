@@ -120,6 +120,19 @@ def pydocstyle(context):
     )
 
 
+@task
+def yamllint(context):
+    """Check to see if there are any YAML formatting issues with our code."""
+    console_msg("test: yamllint checking for linting issues.")
+    context.run(
+        f"docker run -it --rm \
+            -v {PWD}/files/:/home/files \
+            -w /home/files/ \
+            {DOCKER_IMG}:{DOCKER_TAG} yamllint .",
+        pty=True,
+    )
+
+
 # ---------------------------------------------------------------------------
 # USE Jinja2 TO BUILD CONFIGURATION AND STORE LOCALLY
 # ---------------------------------------------------------------------------

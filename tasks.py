@@ -15,22 +15,22 @@ limitations under the License.
 import os
 from invoke import task
 
-### ---------------------------------------------------------------------------
-### DOCKER PARAMETERS
-### ---------------------------------------------------------------------------
+# ---------------------------------------------------------------------------
+# DOCKER PARAMETERS
+# ---------------------------------------------------------------------------
 DOCKER_IMG = "ghcr.io/cdot65/juniper-mpls-l3vpn-demo"
 DOCKER_TAG = "0.0.1"
 
 
-### ---------------------------------------------------------------------------
-### SYSTEM PARAMETERS
-### ---------------------------------------------------------------------------
+# ---------------------------------------------------------------------------
+# SYSTEM PARAMETERS
+# ---------------------------------------------------------------------------
 PWD = os.getcwd()
 
 
-### ---------------------------------------------------------------------------
-### DOCKER CONTAINER BUILD
-### ---------------------------------------------------------------------------
+# ---------------------------------------------------------------------------
+# DOCKER CONTAINER BUILD
+# ---------------------------------------------------------------------------
 @task
 def docker(context):
     # Build our docker image
@@ -39,13 +39,13 @@ def docker(context):
     )
 
 
-### ---------------------------------------------------------------------------
-### DOCKER CONTAINER SHELL
-### ---------------------------------------------------------------------------
+# ---------------------------------------------------------------------------
+# DOCKER CONTAINER SHELL
+# ---------------------------------------------------------------------------
 @task
 def shell(context):
     # Get access to the BASH shell within our container
-    print("Jump into a container")
+    print("Jumping into the container's bash shell")  # noqa T001
     context.run(
         f"docker run -it --rm \
             -v {PWD}/files:/home/files \
@@ -56,13 +56,13 @@ def shell(context):
     )
 
 
-### ---------------------------------------------------------------------------
-### TESTS
-### ---------------------------------------------------------------------------
+# ---------------------------------------------------------------------------
+# TESTS
+# ---------------------------------------------------------------------------
 @task
 def build(context):
     # Run the template_config.py script to build configurations without PyEZ
-    print("Test the configuration build process")
+    print("Building the configuration locally with Jinaj2")  # noqa T001
     context.run(
         f"docker run -it --rm \
             -v {PWD}/files/:/home/files \
@@ -72,13 +72,26 @@ def build(context):
     )
 
 
-### ---------------------------------------------------------------------------
-### USE PyEZ TO BUILD CONFIGURATION AND PUSH TO DEVICES
-### ---------------------------------------------------------------------------
+@task
+def bandit(context):
+    # Run the template_config.py script to build configurations without PyEZ
+    print("Test for any security problems with our code")  # noqa T001
+    context.run(
+        f"docker run -it --rm \
+            -v {PWD}/files/:/home/files \
+            -w /home/files/ \
+            {DOCKER_IMG}:{DOCKER_TAG} bandit -r .",
+        pty=True,
+    )
+
+
+# ---------------------------------------------------------------------------
+# USE PyEZ TO BUILD CONFIGURATION AND PUSH TO DEVICES
+# ---------------------------------------------------------------------------
 @task
 def configure(context):
     # Run the configure.py script to build configurations and push with PyEZ
-    print("Build and push configurations to devices")
+    print("Build and push configurations to devices")  # noqa T001
     context.run(
         f"docker run -it --rm \
             -v {PWD}/files/:/home/files \

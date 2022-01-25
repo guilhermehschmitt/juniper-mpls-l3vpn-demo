@@ -23,32 +23,12 @@ import os
 import sys
 from jinja2 import Environment, FileSystemLoader
 
-# import requests
-
-
 TEMPLATE_MARKDOWN = "index.md.j2"
 OUTPUT_FILE = "../files/docs/index.md"
 PAGE_TITLE = "Juniper MPLS L3VPN demo"
 PROJECT_NAME = "juniper-mpls-l3vpn-demo"
 ORGANISATION_NAME = "cdot65"
 ORGANISATION_URL = "https://github.com/" + ORGANISATION_NAME
-
-
-# def filter_by_topic(projects):
-#     """
-#     filter_by_topic enable a filteration system by topic
-
-#     Parameters
-#     ----------
-#     projects : list
-#         list of repositories from Github
-#     """
-#     data = list()
-
-#     for each in projects:
-#         if TOPIC in each["topics"]:
-#             data.append(each)
-#     return data
 
 
 if __name__ == "__main__":

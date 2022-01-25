@@ -1,4 +1,3 @@
-import yaml
 from inventory import routers
 from jnpr.junos import Device
 from jnpr.junos.utils.config import Config
@@ -12,7 +11,7 @@ for each in routers:
     )
     dev.open()
 
-    print(f"connected to {each['device']}")
+    print(f"connected to {each['device']}")  # noqa T001
 
     cu = Config(dev)
     cu.load(

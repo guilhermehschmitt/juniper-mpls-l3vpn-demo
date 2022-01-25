@@ -18,14 +18,16 @@ for each in routers:
     # create a template based on variables stored in file
     with open(f"vars/{each['device']}.yaml", "r") as stream:
         try:
+            # set up  our environment and render configuration
             variables = yaml.safe_load(stream)
             template = env.get_template("templates/junos.j2")
             output = template.render(configuration=variables)
+
+            # write our rendered configuration to a local file
             with open(f"{CONFIG_PATH}/{each['device']}.conf", "w") as f:
                 for line in output.splitlines():
                     cleanedLine = line.strip()
                     if cleanedLine:
                         f.write(cleanedLine + str("\n"))
-            print(f"config generated: {CONFIG_PATH}/{each['device']}.conf")
         except yaml.YAMLError as exc:
-            print(exc)
+            print(exc)  # noqa T001

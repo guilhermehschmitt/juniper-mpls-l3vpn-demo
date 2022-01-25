@@ -12,20 +12,23 @@ for each in routers:
     )
     dev.open()
 
-    print(f"connected to {each['device']}")
+    print(f"connected to {each['device']}")  # noqa T001
 
-    # creating an empty dictionary called `data`, then stuffing our YAML vars into it as 'configuration'
-    # this is to help handle the fact that PyEZ loads the YAML vars differently than Jinja2
+    # creating an empty dictionary called `data`
+    # then stuffing our YAML vars into it as 'configuration'
+    # this is to help handle PyEZ loading YAML vars differently than Jinja2
     data = dict()
     data["configuration"] = yaml.safe_load(open(f"vars/{each['device']}.yaml"))
 
-    cu = Config(dev)
+    configuration = Config(dev)
 
-    cu.load(template_path="templates/junos.j2", template_vars=data, format="set")
-    cu.pdiff()
-    if cu.commit_check():
-        cu.commit()
+    configuration.load(
+        template_path="templates/junos.j2", template_vars=data, format="set"
+    )
+    configuration.pdiff()
+    if configuration.commit_check():
+        configuration.commit()
     else:
-        cu.rollback()
+        configuration.rollback()
 
     dev.close()

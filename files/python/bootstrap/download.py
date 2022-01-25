@@ -24,4 +24,4 @@ for each in routers:
         local_file.write(etree.tostring(configuration).decode("utf-8"))
         local_file.close()
 
-    print(f"downloaded: {each['device']}")
+    print(f"downloaded: {each['device']}")  # noqa T001

@@ -29,11 +29,20 @@ PWD = os.getcwd()
 
 
 # ---------------------------------------------------------------------------
+# CONSOLE MESSAGE TEMPLATE
+# ---------------------------------------------------------------------------
+def console_msg(message):
+    """provide a little formatting help for console messages"""
+    print("-" * 78 + f"\n{message}\n" + "-" * 78 + "\n")  # noqa T001
+
+
+# ---------------------------------------------------------------------------
 # DOCKER CONTAINER BUILD
 # ---------------------------------------------------------------------------
 @task
 def build(context):
     """Build an instance of the Docker container image locally."""
+    console_msg("Build an instance of the Docker container image locally.")
     context.run(
         f"docker build -t {DOCKER_IMG}:{DOCKER_TAG} files/docker/",
     )
@@ -45,7 +54,7 @@ def build(context):
 @task
 def shell(context):
     """Get access to the BASH shell within our container."""
-    print("Jumping into the container's bash shell")  # noqa T001
+    console_msg("Get access to the BASH shell within our container.")
     context.run(
         f"docker run -it --rm \
             -v {PWD}/files:/home/files \
@@ -60,22 +69,9 @@ def shell(context):
 # TESTS
 # ---------------------------------------------------------------------------
 @task
-def generate(context):
-    """Run the generate.py script to build configs without PyEZ."""
-    print("Building the configuration locally with Jinaj2")  # noqa T001
-    context.run(
-        f"docker run -it --rm \
-            -v {PWD}/files/:/home/files \
-            -w /home/files/python/ \
-            {DOCKER_IMG}:{DOCKER_TAG} python generate.py",
-        pty=True,
-    )
-
-
-@task
 def bandit(context):
     """Check to see if there are any security issues with our code."""
-    print("Test for any security problems with our code")  # noqa T001
+    console_msg("test: bandit checking for security issues.")
     context.run(
         f"docker run -it --rm \
             -v {PWD}/files/:/home/files \
@@ -86,9 +82,22 @@ def bandit(context):
 
 
 @task
+def black(context):
+    """Enforce black style standards within our code."""
+    console_msg("test: black standards enforcement.")
+    context.run(
+        f"docker run -it --rm \
+            -v {PWD}/files/:/home/files \
+            -w /home/files/ \
+            {DOCKER_IMG}:{DOCKER_TAG} black .",
+        pty=True,
+    )
+
+
+@task
 def flake8(context):
     """Check to see if there are any formatting issues with our code."""
-    print("Test for any formatting issues within our code")  # noqa T001
+    console_msg("test: flake8 checking for formatting issues.")
     context.run(
         f"docker run -it --rm \
             -v {PWD}/files/:/home/files \
@@ -101,7 +110,7 @@ def flake8(context):
 @task
 def pydocstyle(context):
     """Check to see if there are any documentation issues with our code."""
-    print("Test for any missing documentation within our code")  # noqa T001
+    console_msg("test: pydocstyle checking for documentation issues.")
     context.run(
         f"docker run -it --rm \
             -v {PWD}/files/:/home/files \
@@ -112,12 +121,28 @@ def pydocstyle(context):
 
 
 # ---------------------------------------------------------------------------
+# USE Jinja2 TO BUILD CONFIGURATION AND STORE LOCALLY
+# ---------------------------------------------------------------------------
+@task
+def generate(context):
+    """Building the configuration locally with Jinaj2."""
+    console_msg("Building the configuration locally with Jinaj2")
+    context.run(
+        f"docker run -it --rm \
+            -v {PWD}/files/:/home/files \
+            -w /home/files/python/ \
+            {DOCKER_IMG}:{DOCKER_TAG} python generate.py",
+        pty=True,
+    )
+
+
+# ---------------------------------------------------------------------------
 # USE PyEZ TO BUILD CONFIGURATION AND PUSH TO DEVICES
 # ---------------------------------------------------------------------------
 @task
 def configure(context):
     """Build and push our configurations with PyEZ."""
-    print("Build and push configurations to devices")  # noqa T001
+    console_msg("Build and push configurations to devices")
     context.run(
         f"docker run -it --rm \
             -v {PWD}/files/:/home/files \
@@ -127,13 +152,10 @@ def configure(context):
     )
 
 
-# ---------------------------------------------------------------------------
-# USE Jinja2 TO BUILD CONFIGURATION AND STORE IN bootstrap DIRECTORY
-# ---------------------------------------------------------------------------
 @task
 def bootstrap(context):
-    """Build and push our configurations with PyEZ."""
-    print("Build and push configurations to devices")  # noqa T001
+    """Push our bootstrap configurations with PyEZ."""
+    console_msg("Push bootstrap configurations to devices")
     context.run(
         f"docker run -it --rm \
             -v {PWD}/files/:/home/files \

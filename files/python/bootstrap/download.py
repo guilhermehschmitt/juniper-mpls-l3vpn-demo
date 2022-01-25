@@ -1,6 +1,6 @@
 """Download our bootstrap configurations and store locally."""
 from inventory import routers
-from jnpr.junos import Device
+from jnpr.junos import Device  # type: ignore
 from lxml import etree
 
 CONFIG_PATH = "./configurations"

@@ -1,8 +1,8 @@
 """Build and push our bootstrap config with PyEZ."""
-import yaml
+import yaml  # type: ignore
 from inventory import routers
-from jnpr.junos import Device
-from jnpr.junos.utils.config import Config
+from jnpr.junos import Device  # type: ignore
+from jnpr.junos.utils.config import Config  # type: ignore
 
 for each in routers:
     dev = Device(

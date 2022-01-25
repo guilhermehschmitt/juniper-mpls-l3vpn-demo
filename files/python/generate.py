@@ -1,5 +1,5 @@
 """Generate bootstrap configurations for our network devices."""
-import yaml
+import yaml  # type: ignore
 from inventory import routers
 from jinja2 import Environment, FileSystemLoader
 
@@ -11,7 +11,6 @@ file_loader = FileSystemLoader("./")
 env = Environment(loader=file_loader)
 env.trim_blocks = True
 env.lstrip_blocks = True
-env.rstrip_blocks = True
 
 for each in routers:
     # create a template based on variables stored in file

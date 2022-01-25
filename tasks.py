@@ -13,7 +13,7 @@ limitations under the License.
 """
 
 import os
-from invoke import task
+from invoke import task  # type: ignore
 
 # ---------------------------------------------------------------------------
 # DOCKER PARAMETERS

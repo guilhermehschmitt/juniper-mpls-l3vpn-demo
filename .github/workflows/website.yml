@@ -6,7 +6,7 @@ on:
     - cron: "0 0 * * *"
   # each push
   push:
-    branches: ["main"]
+    branches: ["main", "dev"]
   pull_request:
     branches: ["main"]
 

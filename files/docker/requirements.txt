@@ -10,3 +10,4 @@ flake8-print==4.0.0
 flake8-builtins==1.5.3
 flake8-eradicate==1.2.0
 pydocstyle==6.1.1
+yamllint==1.26.3

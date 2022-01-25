@@ -85,6 +85,32 @@ def bandit(context):
     )
 
 
+@task
+def flake8(context):
+    """Check to see if there are any formatting issues with our code."""
+    print("Test for any formatting issues within our code")  # noqa T001
+    context.run(
+        f"docker run -it --rm \
+            -v {PWD}/files/:/home/files \
+            -w /home/files/ \
+            {DOCKER_IMG}:{DOCKER_TAG} flake8 .",
+        pty=True,
+    )
+
+
+@task
+def pydocstyle(context):
+    """Check to see if there are any documentation issues with our code."""
+    print("Test for any missing documentation within our code")  # noqa T001
+    context.run(
+        f"docker run -it --rm \
+            -v {PWD}/files/:/home/files \
+            -w /home/files/ \
+            {DOCKER_IMG}:{DOCKER_TAG} pydocstyle .",
+        pty=True,
+    )
+
+
 # ---------------------------------------------------------------------------
 # USE PyEZ TO BUILD CONFIGURATION AND PUSH TO DEVICES
 # ---------------------------------------------------------------------------

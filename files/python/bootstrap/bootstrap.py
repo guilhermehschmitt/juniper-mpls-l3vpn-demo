@@ -7,7 +7,7 @@ for each in routers:
     dev = Device(
         host=f"192.168.110.{each['id']}",
         user="automation",
-        password="juniper123",
+        password="juniper123",  # nosec
         gather_facts=False,
     )
     dev.open()

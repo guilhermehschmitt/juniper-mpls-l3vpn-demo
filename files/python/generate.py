@@ -8,7 +8,7 @@ CONFIG_PATH = "../junos/generated"
 
 # define Jinja2 environment
 file_loader = FileSystemLoader("./")
-env = Environment(loader=file_loader)
+env = Environment(loader=file_loader, autoescape=True)
 env.trim_blocks = True
 env.lstrip_blocks = True
 

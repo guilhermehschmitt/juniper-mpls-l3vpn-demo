@@ -16,31 +16,47 @@ pc2='100.123.35.1'
 # CE1
 sed -i "s/100.123.0.18/${ce1}/" files/python/vars/ce1.yaml
 sed -i "s/100.123.0.18/${ce1}/" files/python/bootstrap/vars/ce1.yaml
+sed -i "s/100.123.0.18/${ce1}/" files/python/inventory.yaml
+sed -i "s/100.123.0.18/${ce1}/" files/python/bootstrap/inventory.yaml
 
 # CE2
 sed -i "s/100.123.0.17/${ce2}/" files/python/vars/ce2.yaml
 sed -i "s/100.123.0.17/${ce2}/" files/python/bootstrap/vars/ce2.yaml
+sed -i "s/100.123.0.17/${ce2}/" files/python/inventory.yaml
+sed -i "s/100.123.0.17/${ce2}/" files/python/bootstrap/inventory.yaml
 
 # P1
 sed -i "s/100.123.0.12/${p1}/" files/python/vars/p1.yaml
 sed -i "s/100.123.0.12/${p1}/" files/python/bootstrap/vars/p1.yaml
+sed -i "s/100.123.0.12/${p1}/" files/python/inventory.yaml
+sed -i "s/100.123.0.12/${p1}/" files/python/bootstrap/inventory.yaml
 
 # P2
 sed -i "s/100.123.0.15/${p2}/" files/python/vars/p2.yaml
 sed -i "s/100.123.0.15/${p2}/" files/python/bootstrap/vars/p2.yaml
+sed -i "s/100.123.0.15/${p2}/" files/python/inventory.yaml
+sed -i "s/100.123.0.15/${p2}/" files/python/bootstrap/inventory.yaml
 
 # PE1
 sed -i "s/100.123.0.11/${pe1}/" files/python/vars/pe1.yaml
 sed -i "s/100.123.0.11/${pe1}/" files/python/bootstrap/vars/pe1.yaml
+sed -i "s/100.123.0.11/${pe1}/" files/python/inventory.yaml
+sed -i "s/100.123.0.11/${pe1}/" files/python/bootstrap/inventory.yaml
 
 # PE2
 sed -i "s/100.123.0.13/${pe2}/" files/python/vars/pe2.yaml
 sed -i "s/100.123.0.13/${pe2}/" files/python/bootstrap/vars/pe2.yaml
+sed -i "s/100.123.0.13/${pe2}/" files/python/inventory.yaml
+sed -i "s/100.123.0.13/${pe2}/" files/python/bootstrap/inventory.yaml
 
 # PE3
 sed -i "s/100.123.0.14/${pe3}/" files/python/vars/pe3.yaml
 sed -i "s/100.123.0.14/${pe3}/" files/python/bootstrap/vars/pe3.yaml
+sed -i "s/100.123.0.14/${pe3}/" files/python/inventory.yaml
+sed -i "s/100.123.0.14/${pe3}/" files/python/bootstrap/inventory.yaml
 
 # PE4
 sed -i "s/100.123.0.16/${pe4}/" files/python/vars/pe4.yaml
 sed -i "s/100.123.0.16/${pe4}/" files/python/bootstrap/vars/pe4.yaml
+sed -i "s/100.123.0.16/${pe4}/" files/python/inventory.yaml
+sed -i "s/100.123.0.16/${pe4}/" files/python/bootstrap/inventory.yaml

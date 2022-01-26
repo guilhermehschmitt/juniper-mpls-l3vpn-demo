@@ -33,7 +33,7 @@ def main(devices):
         # then stuffing our YAML vars into it as 'configuration'
         # this is to help handle PyEZ loading YAML vars differently than Jinja2
         data = dict()
-        data["configuration"] = yaml.safe_load(open(f"./{each['name']}.yaml"))
+        data["configuration"] = yaml.safe_load(open(f"./vars/{each['name']}.yaml"))
 
         cu = Config(dev)
 

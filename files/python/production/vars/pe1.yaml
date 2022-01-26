@@ -119,15 +119,15 @@ protocols:
     area:
       - name: "0.0.0.0"
         interface:
-          - name: "ge-0/0/3.0"
-            interface_type: "p2p"
           - name: "ge-0/0/2.0"
+            interface_type: "p2p"
+          - name: "ge-0/0/3.0"
             interface_type: "p2p"
           - name: "lo0.0"
             passive:
               - null
   lldp:
     interface:
+      - name: "ge-0/0/0"
       - name: "ge-0/0/2"
       - name: "ge-0/0/3"
-      - name: "ge-0/0/0"

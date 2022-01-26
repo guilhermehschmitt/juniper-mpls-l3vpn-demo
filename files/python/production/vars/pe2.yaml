@@ -23,15 +23,6 @@ system:
           encrypted_password: "$6$/yt2iUdp$iCLkdUSs0n4X.PSYSDS4Y0xM5dcYZ0vNn2sGjYokqVCqsTB/DF3Bgo3GjhmfXapTzd3W2J3uUPTe5FrbS1Wiw/"
 interfaces:
   interface:
-    - name: "ge-0/0/5"
-      unit:
-        - name: 0
-          family:
-            inet:
-              address:
-                - name: "10.12.13.13/24"
-            mpls:
-              - null
     - name: "ge-0/0/4"
       unit:
         - name: 0
@@ -39,6 +30,15 @@ interfaces:
             inet:
               address:
                 - name: "10.13.15.13/24"
+            mpls:
+              - null
+    - name: "ge-0/0/5"
+      unit:
+        - name: 0
+          family:
+            inet:
+              address:
+                - name: "10.12.13.13/24"
             mpls:
               - null
     - name: "fxp0"

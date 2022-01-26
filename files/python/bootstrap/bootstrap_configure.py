@@ -7,7 +7,6 @@ from jnpr.junos.utils.config import Config  # type: ignore
 def inventory():
     """Load our inventory.yaml into a python object called routers."""
     devices = yaml.safe_load(open("inventory.yaml"))
-    print(devices)
     return devices
 
 

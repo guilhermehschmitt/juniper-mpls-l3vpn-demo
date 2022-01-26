@@ -37,6 +37,6 @@ routing_options:
 protocols:
   lldp:
     interface:
+      - name: "ge-0/0/0"
       - name: "ge-0/0/2"
       - name: "ge-0/0/3"
-      - name: "ge-0/0/4"

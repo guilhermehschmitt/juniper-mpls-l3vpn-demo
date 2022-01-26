@@ -38,4 +38,3 @@ protocols:
   lldp:
     interface:
       - name: "ge-0/0/0"
-      - name: "ge-0/0/1"

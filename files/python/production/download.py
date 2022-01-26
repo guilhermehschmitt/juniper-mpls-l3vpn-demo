@@ -29,7 +29,7 @@ def main(devices):
         for each_format in formats:
             configuration = dev.rpc.get_config(options={"format": each_format})
             local_file = open(
-                f"{CONFIG_PATH}/{each['name']}.{each_format}.conf",
+                f"{CONFIG_PATH}/{each_format}/{each['name']}.conf",
                 "w",
             )
             local_file.write(etree.tostring(configuration).decode("utf-8"))

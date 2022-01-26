@@ -19,16 +19,16 @@ interfaces:
           family:
             inet:
               address:
-                - name: "192.168.110.15/24"
+                - name: "100.123.0.15/24"
 routing_options:
   static:
     route:
       - name: "192.168.0.0/16"
         next_hop:
-          - "192.168.110.1"
+          - "100.123.0.1"
       - name: "10.9.0.0/16"
         next_hop:
-          - "192.168.110.1"
+          - "100.123.0.1"
 protocols:
   lldp:
     interface:

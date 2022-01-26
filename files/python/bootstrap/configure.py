@@ -1,11 +1,17 @@
 """Build and push our bootstrap config with PyEZ."""
 import yaml  # type: ignore
-from inventory import routers
 from jnpr.junos import Device  # type: ignore
 from jnpr.junos.utils.config import Config  # type: ignore
 
 
-def main():
+def inventory():
+    """Load our inventory.yaml into a python object called routers."""
+    routers = yaml.safe_load(open("inventory.yaml"))
+    print(routers)
+    return routers
+
+
+def main(routers):
     """Build connection, template config, and push to device.
 
     Loop over our list of routers that we imported from inventory.py
@@ -15,20 +21,20 @@ def main():
     """
     for each in routers:
         dev = Device(
-            host=f"192.168.110.{each['id']}",
-            user="automation",
-            password="juniper123",
+            host=f"{each['ip']}",
+            user="jcluser",
+            password="Juniper!1",
             gather_facts=False,
         )
         dev.open()
 
-        print(f"connected to {each['device']}")  # noqa T001
+        print(f"connected to {each['name']}")  # noqa T001
 
         # creating an empty dictionary called `data`
         # then stuffing our YAML vars into it as 'configuration'
         # this is to help handle PyEZ loading YAML vars differently than Jinja2
         data = dict()
-        data["configuration"] = yaml.safe_load(open(f"./{each['device']}.yaml"))
+        data["configuration"] = yaml.safe_load(open(f"./{each['name']}.yaml"))
 
         cu = Config(dev)
 
@@ -47,4 +53,11 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    """Main script execution.
+
+    We will first load our inventory.yaml file into a new Python object `routers`
+    Our main function will run next, which will take care of the templating
+    and pushing of our configurations to the remote devices.
+    """
+    routers = inventory()
+    main(routers)

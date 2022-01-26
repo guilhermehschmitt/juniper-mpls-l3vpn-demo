@@ -1,13 +1,19 @@
 """Generate production configurations for our network devices."""
 import yaml  # type: ignore
-from inventory import routers
 from jinja2 import Environment, FileSystemLoader
 
 # define Jinja2 environment
 CONFIG_PATH = "../junos/generated"
 
 
-def main():
+def inventory():
+    """Load our inventory.yaml into a python object called routers."""
+    routers = yaml.safe_load(open("inventory.yaml"))
+    print(routers)
+    return routers
+
+
+def main(routers):
     """Template configuration with Jinja2 and store locally."""
     # set up our Jinja2 environment
     file_loader = FileSystemLoader("./")
@@ -39,4 +45,11 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    """Main script execution.
+
+    We will first load our inventory.yaml file into a new Python object `routers`
+    Our main function will run next, which will take care of the templating
+    and pushing of our configurations to the remote devices.
+    """
+    routers = inventory()
+    main(routers)

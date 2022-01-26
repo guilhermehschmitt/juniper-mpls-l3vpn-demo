@@ -1,13 +1,19 @@
 """Generate bootstrap configurations for our network devices."""
 import yaml  # type: ignore
-from inventory import routers
 from jinja2 import Environment, FileSystemLoader
 
 # define Jinja2 environment
 CONFIG_PATH = "../junos/generated"
 
 
-def main():
+def inventory():
+    """Load our inventory.yaml into a python object called routers."""
+    routers = yaml.safe_load(open("inventory.yaml"))
+    print(routers)
+    return routers
+
+
+def main(routers):
     """Template configuration with Jinja2 and store locally."""
     # set up our Jinja2 environment
     file_loader = FileSystemLoader("./")
@@ -18,7 +24,7 @@ def main():
     # begin loop over devices
     for each in routers:
         # create a template based on variables stored in file
-        with open(f"vars/{each['device']}.yaml", "r") as stream:
+        with open(f"vars/{each['name']}.yaml", "r") as stream:
             try:
                 # set up  our environment and render configuration
                 variables = yaml.safe_load(stream)
@@ -26,15 +32,22 @@ def main():
                 output = template.render(configuration=variables)
 
                 # write our rendered configuration to a local file
-                with open(f"{CONFIG_PATH}/{each['device']}.conf", "w") as f:
+                with open(f"{CONFIG_PATH}/{each['name']}.conf", "w") as f:
                     for line in output.splitlines():
                         cleanedLine = line.strip()
                         if cleanedLine:
                             f.write(cleanedLine + str("\n"))
-                print(f"config built: {CONFIG_PATH}/{each['device']}.conf")  # noqa T001
+                print(f"config built: {CONFIG_PATH}/{each['name']}.conf")  # noqa T001
             except yaml.YAMLError as exc:
                 print(exc)  # noqa T001
 
 
 if __name__ == "__main__":
-    main()
+    """Main script execution.
+
+    We will first load our inventory.yaml file into a new Python object `routers`
+    Our main function will run next, which will take care of the templating
+    and pushing of our configurations to the remote devices.
+    """
+    routers = inventory()
+    main(routers)

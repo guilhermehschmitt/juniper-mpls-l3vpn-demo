@@ -3,7 +3,7 @@ import yaml  # type: ignore
 from jinja2 import Environment, FileSystemLoader
 
 # define Jinja2 environment
-CONFIG_PATH = "../junos/generated"
+CONFIG_PATH = "./configurations/generated"
 
 
 def inventory():

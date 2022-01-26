@@ -3,7 +3,7 @@ import yaml  # type: ignore
 from jnpr.junos import Device  # type: ignore
 from lxml import etree
 
-CONFIG_PATH = "../junos/downloaded"
+CONFIG_PATH = "./configurations/downloaded"
 
 
 def inventory():

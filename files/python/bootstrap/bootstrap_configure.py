@@ -6,12 +6,12 @@ from jnpr.junos.utils.config import Config  # type: ignore
 
 def inventory():
     """Load our inventory.yaml into a python object called routers."""
-    routers = yaml.safe_load(open("inventory.yaml"))
-    print(routers)
-    return routers
+    devices = yaml.safe_load(open("inventory.yaml"))
+    print(devices)
+    return devices
 
 
-def main(routers):
+def main(devices):
     """Build connection, template config, and push to device.
 
     Loop over our list of routers that we imported from inventory.py
@@ -19,7 +19,7 @@ def main(routers):
     Once the connection is open, print a message to the console
     Ingest the configuration variables stored in our device's' YAML file
     """
-    for each in routers:
+    for each in devices["routers"]:
         dev = Device(
             host=f"{each['ip']}",
             user="jcluser",
@@ -55,9 +55,9 @@ def main(routers):
 if __name__ == "__main__":
     """Main script execution.
 
-    We will first load our inventory.yaml file into a new Python object `routers`
+    We will first load our inventory.yaml file into a new Python object `devices`
     Our main function will run next, which will take care of the templating
     and pushing of our configurations to the remote devices.
     """
-    routers = inventory()
-    main(routers)
+    devices = inventory()
+    main(devices)

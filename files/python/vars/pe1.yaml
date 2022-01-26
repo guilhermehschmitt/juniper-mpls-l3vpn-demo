@@ -23,6 +23,13 @@ system:
           encrypted_password: "$6$/yt2iUdp$iCLkdUSs0n4X.PSYSDS4Y0xM5dcYZ0vNn2sGjYokqVCqsTB/DF3Bgo3GjhmfXapTzd3W2J3uUPTe5FrbS1Wiw/"
 interfaces:
   interface:
+    - name: "ge-0/0/0"
+      unit:
+        - name: 0
+          family:
+            inet:
+              address:
+                - name: "74.51.192.2/24"
     - name: "ge-0/0/2"
       unit:
         - name: 0
@@ -41,13 +48,6 @@ interfaces:
                 - name: "10.11.15.11/24"
             mpls:
               - null
-    - name: "ge-0/0/4"
-      unit:
-        - name: 0
-          family:
-            inet:
-              address:
-                - name: "74.51.192.2/24"
     - name: "fxp0"
       unit:
         - name: 0
@@ -75,7 +75,7 @@ routing_instances:
               neighbor:
                 - name: "74.51.192.1"
       interface:
-        - name: "ge-0/0/4.0"
+        - name: "ge-0/0/0.0"
       route_distinguisher:
         rd_type: "192.168.255.11:100"
       vrfvtarget:

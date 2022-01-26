@@ -42,7 +42,7 @@ interfaces:
           family:
             inet:
               address:
-                - name: "100.123.0.14/24"
+                - name: "100.123.0.14/16"
     - name: "lo0"
       unit:
         - name: 0

@@ -27,7 +27,7 @@ interfaces:
                 - name: "10.14.15.14/24"
             mpls:
               - null
-    - name: "ge-0/0/5"
+    - name: "ge-0/0/3"
       unit:
         - name: 0
           family:
@@ -66,18 +66,18 @@ protocols:
   ldp:
     interface:
       - name: "ge-0/0/2.0"
-      - name: "ge-0/0/5.0"
+      - name: "ge-0/0/3.0"
   mpls:
     interface:
       - name: "ge-0/0/2.0"
-      - name: "ge-0/0/5.0"
+      - name: "ge-0/0/3.0"
   ospf:
     area:
       - name: "0.0.0.0"
         interface:
           - name: "ge-0/0/2.0"
             interface_type: "p2p"
-          - name: "ge-0/0/5.0"
+          - name: "ge-0/0/3.0"
             interface_type: "p2p"
           - name: "lo0.0"
             passive:
@@ -85,4 +85,4 @@ protocols:
   lldp:
     interface:
       - name: "ge-0/0/2"
-      - name: "ge-0/0/5"
+      - name: "ge-0/0/3"

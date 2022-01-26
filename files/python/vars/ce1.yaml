@@ -24,14 +24,14 @@ interfaces:
           family:
             inet:
               address:
-                - name: "10.0.0.1/24"
-    - name: "ge-0/0/4"
+                - name: "74.51.192.1/24"
+    - name: "ge-0/0/1"
       unit:
         - name: 0
           family:
             inet:
               address:
-                - name: "74.51.192.1/24"
+                - name: "10.0.0.1/24"
     - name: "fxp0"
       unit:
         - name: 0
@@ -106,4 +106,4 @@ protocols:
   lldp:
     interface:
       - name: "ge-0/0/0"
-      - name: "ge-0/0/4"
+      - name: "ge-0/0/1"

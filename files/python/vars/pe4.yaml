@@ -25,22 +25,22 @@ interfaces:
             inet:
               address:
                 - name: "216.227.251.2/24"
-    - name: "ge-0/0/1"
-      unit:
-        - name: 0
-          family:
-            inet:
-              address:
-                - name: "10.15.16.16/24"
-            mpls:
-              - null
-    - name: "ge-0/0/3"
+    - name: "ge-0/0/4"
       unit:
         - name: 0
           family:
             inet:
               address:
                 - name: "10.12.16.16/24"
+            mpls:
+              - null
+    - name: "ge-0/0/5"
+      unit:
+        - name: 0
+          family:
+            inet:
+              address:
+                - name: "10.15.16.16/24"
             mpls:
               - null
     - name: "fxp0"
@@ -108,15 +108,15 @@ protocols:
       - name: "ge-0/0/3.0"
   mpls:
     interface:
-      - name: "ge-0/0/1.0"
-      - name: "ge-0/0/3.0"
+      - name: "ge-0/0/4.0"
+      - name: "ge-0/0/5.0"
   ospf:
     area:
       - name: "0.0.0.0"
         interface:
-          - name: "ge-0/0/1.0"
+          - name: "ge-0/0/4.0"
             interface_type: "p2p"
-          - name: "ge-0/0/3.0"
+          - name: "ge-0/0/5.0"
             interface_type: "p2p"
           - name: "lo0.0"
             passive:
@@ -124,5 +124,5 @@ protocols:
   lldp:
     interface:
       - name: "ge-0/0/0"
-      - name: "ge-0/0/1"
-      - name: "ge-0/0/3"
+      - name: "ge-0/0/4"
+      - name: "ge-0/0/5"

@@ -18,7 +18,7 @@ system:
           encrypted_password: "$6$/yt2iUdp$iCLkdUSs0n4X.PSYSDS4Y0xM5dcYZ0vNn2sGjYokqVCqsTB/DF3Bgo3GjhmfXapTzd3W2J3uUPTe5FrbS1Wiw/"
 interfaces:
   interface:
-    - name: "ge-0/0/0"
+    - name: "ge-0/0/5"
       unit:
         - name: 0
           family:
@@ -27,7 +27,7 @@ interfaces:
                 - name: "10.12.13.13/24"
             mpls:
               - null
-    - name: "ge-0/0/5"
+    - name: "ge-0/0/4"
       unit:
         - name: 0
           family:
@@ -65,17 +65,17 @@ routing_options:
 protocols:
   ldp:
     interface:
-      - name: "ge-0/0/0.0"
+      - name: "ge-0/0/4.0"
       - name: "ge-0/0/5.0"
   mpls:
     interface:
-      - name: "ge-0/0/0.0"
+      - name: "ge-0/0/4.0"
       - name: "ge-0/0/5.0"
   ospf:
     area:
       - name: "0.0.0.0"
         interface:
-          - name: "ge-0/0/0.0"
+          - name: "ge-0/0/4.0"
             interface_type: "p2p"
           - name: "ge-0/0/5.0"
             interface_type: "p2p"
@@ -84,5 +84,5 @@ protocols:
               - null
   lldp:
     interface:
-      - name: "ge-0/0/0"
+      - name: "ge-0/0/4"
       - name: "ge-0/0/5"

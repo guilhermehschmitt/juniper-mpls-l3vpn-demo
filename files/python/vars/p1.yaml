@@ -23,12 +23,20 @@ chassis:
 interfaces:
   interface:
     - name: "ge-0/0/0"
+      gigether_options:
+        ieee_8023ad:
+          bundle: "ae0"
+    - name: "ge-0/0/1"
+      gigether_options:
+        ieee_8023ad:
+          bundle: "ae0"
+    - name: "ae0"
       unit:
         - name: 0
           family:
             inet:
               address:
-                - name: "10.12.13.12/24"
+                - name: "10.12.15.12/24"
             mpls:
               - null
     - name: "ge-0/0/2"
@@ -46,6 +54,15 @@ interfaces:
           family:
             inet:
               address:
+                - name: "10.12.14.12/24"
+            mpls:
+              - null
+    - name: "ge-0/0/4"
+      unit:
+        - name: 0
+          family:
+            inet:
+              address:
                 - name: "10.12.16.12/24"
             mpls:
               - null
@@ -55,24 +72,7 @@ interfaces:
           family:
             inet:
               address:
-                - name: "10.12.14.12/24"
-            mpls:
-              - null
-    - name: "ge-0/0/4"
-      gigether_options:
-        ieee_8023ad:
-          bundle: "ae0"
-    - name: "ge-0/0/6"
-      gigether_options:
-        ieee_8023ad:
-          bundle: "ae0"
-    - name: "ae0"
-      unit:
-        - name: 0
-          family:
-            inet:
-              address:
-                - name: "10.12.15.12/24"
+                - name: "10.12.13.12/24"
             mpls:
               - null
     - name: "fxp0"
@@ -104,27 +104,27 @@ routing_options:
 protocols:
   ldp:
     interface:
-      - name: "ge-0/0/0.0"
       - name: "ge-0/0/2.0"
       - name: "ge-0/0/3.0"
+      - name: "ge-0/0/4.0"
       - name: "ge-0/0/5.0"
       - name: "ae0.0"
   mpls:
     interface:
-      - name: "ge-0/0/0.0"
       - name: "ge-0/0/2.0"
       - name: "ge-0/0/3.0"
+      - name: "ge-0/0/4.0"
       - name: "ge-0/0/5.0"
       - name: "ae0.0"
   ospf:
     area:
       - name: "0.0.0.0"
         interface:
-          - name: "ge-0/0/0.0"
-            interface_type: "p2p"
           - name: "ge-0/0/2.0"
             interface_type: "p2p"
           - name: "ge-0/0/3.0"
+            interface_type: "p2p"
+          - name: "ge-0/0/4.0"
             interface_type: "p2p"
           - name: "ge-0/0/5.0"
             interface_type: "p2p"
@@ -136,8 +136,8 @@ protocols:
   lldp:
     interface:
       - name: "ge-0/0/0"
+      - name: "ge-0/0/1"
       - name: "ge-0/0/2"
       - name: "ge-0/0/3"
       - name: "ge-0/0/4"
       - name: "ge-0/0/5"
-      - name: "ge-0/0/6"

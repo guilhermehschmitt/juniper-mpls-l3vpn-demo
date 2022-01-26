@@ -3,7 +3,7 @@ import yaml  # type: ignore
 from jinja2 import Environment, FileSystemLoader
 
 # define Jinja2 environment
-CONFIG_PATH = "../junos/generated"
+CONFIG_PATH = "./configurations/generated"
 
 
 def inventory():
@@ -23,7 +23,7 @@ def main(devices):
     # begin loop over devices
     for each in devices["routers"]:
         # create a template based on variables stored in file
-        with open(f"vars/{each['device']}.yaml", "r") as stream:
+        with open(f"vars/{each['name']}.yaml", "r") as stream:
             try:
                 # set up  our environment and render configuration
                 variables = yaml.safe_load(stream)
@@ -31,7 +31,7 @@ def main(devices):
                 output = template.render(configuration=variables)
 
                 # write our rendered configuration to a local file
-                with open(f"{CONFIG_PATH}/{each['device']}.conf", "w") as f:
+                with open(f"{CONFIG_PATH}/{each['name']}.conf", "w") as f:
 
                     # strip out all of the empty lines first
                     for line in output.splitlines():

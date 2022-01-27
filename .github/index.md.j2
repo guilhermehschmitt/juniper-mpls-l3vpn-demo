@@ -1,16 +1,84 @@
 # {{page_title}}
 
+<img src="files/images/topology-100.jpg" width="720px"/>
+
+<br/>
+
+# 🐍 Build and Deploy a MPLS L3VPN with Juniper Networks PyEZ
+
+<br/>
+
 ## Welcome
 
 First off, hello and welcome to the landing page of my demo's documentation. My name is Calvin and I work in the sales organization at Juniper Networks; I hope that you will find this project helpful.
 
-In this demonstration, we will deploy a L3VPN circuit across an MPLS backbone with Python and Juniper vMX routers. We will be using EVE-NG to provide the virtualization, sample lab topology has been included in the project files.
+In this demonstration, we will deploy a L3VPN circuit across an MPLS backbone using Juniper's PyEZ library. For those without access to Juniper's vLabs, I have provided a sample lab topology for EVE-NG within the project files.
 
-![topology](https://github.com/cdot65/juniper-mpls-l3vpn-demo/blob/main/files/images/topology-100.jpg?raw=true)
+## `Table of Contents`
 
-## Overview
+#### [`Section 0: Automation Overview`](#section-0-automation-overview)
 
-Let's talk about the workflow before we get into the requirements. 
+#### [`Section 1: Network Topology Design`](#section-1-network-topology-design)
 
+#### [`Section 2: Provisioning with PyEZ`](#section-2-provisioning-with-pyez)
 
-*This page is automatically generated*
+#### [`Section 3: Validating with JSNAPy`](#section-3-validating-with-jsnapy)
+
+<br/><br/>
+
+# Section 0: Automation Overview
+
+<br/>
+
+## ⚪️ 0 The Golden Rule: Design for lean testing
+
+:white_check_mark: **Do:**
+Testing code is not like production-code - design it to be dead-simple, short, abstraction-free, flat, delightful to work with, lean. One should look at a test and get the intent instantly.
+
+Our minds are full with the main production code, we don't have 'headspace' for additional complexity. Should we try to squeeze yet another challenging code into our poor brain it will slow the team down which works against the reason we do testing. Practically this is where many teams just abandon testing.
+
+The tests are an opportunity for something else - a friendly and smiley assistant, one that it's delightful to work with and delivers great value for such a small investment. Science tells us that we have two brain systems: system 1 is used for effortless activities like driving a car on an empty road and system 2 which is meant for complex and conscious operations like solving a math equation. Design your test for system 1, when looking at test code it should _feel_ as easy as modifying an HTML document and not like solving 2X(17 × 24).
+
+This can be achieved by selectively cherry-picking techniques, tools and test targets that are cost-effective and provide great ROI. Test only as much as needed, strive to keep it nimble, sometimes it's even worth dropping some tests and trade reliability for agility and simplicity.
+
+![alt text](/assets/headspace.png "We have no head room for additional complexity")
+
+Most of the advice below are derivatives of this principle.
+
+### Ready to start?
+
+<br/><br/>
+
+# Section 1: Network Topology Design
+
+<br/>
+
+## 1.1 IP Addressing
+
+## 1.2 Routing Protocols
+
+## 1.3 Label Distribution
+
+<br/><br/>
+
+# Team
+
+## [Calvin Remsburg](https://github.com/cdot65)
+
+**Role:** Writer
+
+**About:** I work as a global architect within the sales organization at Juniper Networks. My primary focus is to help share the power of using automation within the context of a network engineer.
+
+<br/>
+
+<hr/>
+<br/>
+
+## Order of operations
+
+1. Start JCL lab
+2. SSH into Automation VM
+3. change directory to project directory
+4. git pull updates
+5. activate poetry shell
+6. invoke configure

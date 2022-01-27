@@ -1,14 +1,13 @@
 ---
 name: "Mkdocs"
 on:
-  # each day at 0200 hours
   schedule:
     - cron: "0 0 * * *"
   # each push
   push:
     branches: ["main", "dev"]
-  pull_request:
-    branches: ["main"]
+  # pull_request:
+  #   branches: ["main"]
 
 jobs:
   mkdocs:

@@ -57,10 +57,7 @@ routing_options:
     as_number: "65001"
   static:
     route:
-      - name: "192.168.0.0/16"
-        next_hop:
-          - "100.123.0.1"
-      - name: "10.9.0.0/16"
+      - name: "0.0.0.0/0"
         next_hop:
           - "100.123.0.1"
 policy_options:

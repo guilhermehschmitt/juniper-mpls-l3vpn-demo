@@ -22,6 +22,18 @@ repo_url: "https://github.com/cdot65/juniper-mpls-l3vpn-demo"
 use_directory_urls: true
 nav:
   - Homepage: "index.md"
+  - Automation:
+      - Overview: "automation_overview.md"
+      - Workflow: "automation_workflow.md"
+  - Network Topology:
+      - Overview: "network_overview.md"
+      - Workflow: "network_workflow.md"
+  - Provisioning with PyEZ:
+      - Overview: "pyez_overview.md"
+      - Workflow: "pyez_workflow.md"
+  - Validating with JSNAPy:
+      - Overview: "jsnapy_overview.md"
+      - Workflow: "jsnapy_workflow.md"
 
 markdown_extensions:
   - "smarty"

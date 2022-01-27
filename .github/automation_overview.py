@@ -1,4 +1,4 @@
-"""index.py: Create site for Github pages.
+"""automation_overview.py: Create site for Automation Overview.
 
 coding: utf-8 -*-
 
@@ -33,12 +33,12 @@ JSON_FIELDS = {
     "updated_at": "last_commit",
     "topics": "topics",
 }
-TEMPLATE_MARKDOWN = "index.md.j2"
-OUTPUT_FILE = "../docs/index.md"
-PAGE_TITLE = "Juniper MPLS L3VPN Demo"
+TEMPLATE_MARKDOWN = "page.md.j2"
+OUTPUT_FILE = "../docs/automation_overview.md"
+PAGE_TITLE = "Automation Overview"
 ORGANISATION_NAME = "cdot65"
 ORGANISATION_URL = "https://github.com/" + ORGANISATION_NAME
-TOPIC = "juniper"
+TOPIC = "automation_overview"
 
 
 def get_gh_api(url):

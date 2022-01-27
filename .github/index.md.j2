@@ -20,11 +20,6 @@ In this demonstration, we will deploy a L3VPN circuit across an MPLS backbone us
 [Provisioning with PyEZ](https://cdot65.github.io/juniper-mpls-l3vpn-demo/#provisioning-with-pyez)
 
 [Validating with JSNAPy](https://cdot65.github.io/juniper-mpls-l3vpn-demo/#validating-with-jsnapy)
- 
-* [Laws and Regulations](https://github.com/hillaryfraley/jobbriefings#laws-and-regulations)
-* [Technical Information](https://github.com/hillaryfraley/jobbriefings#technical-information)
-* [Related Work Practices](https://github.com/hillaryfraley/jobbriefings#related-work-practices)
-* [Related Documents and Forms](https://github.com/hillaryfraley/jobbriefings#related-documents-and-forms)
 
 -----------
 ## Automation Overview
@@ -69,3 +64,11 @@ There are four elements of job briefings:
 2. Job site assessment.
 3. Job briefing.
 4. Post-job briefing.  
+
+## List of projects
+
+|  Project  |  Description  | Last activity |
+|------------------|---------------|-------------|
+{% for project in projects|sort(reverse=false,attribute='project_name') %}
+|  [{{project['project_name']}}]({{project['homepage']}}) | {% if project['description'] != 'None'  %} {{project['description']}} {% else %} N/A {% endif %} | {{project['last_commit']|truncate(10,end='')}}
+{% endfor %}

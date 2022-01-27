@@ -13,6 +13,7 @@ limitations under the License.
 """
 
 import os
+
 from invoke import task  # type: ignore
 
 # ---------------------------------------------------------------------------
@@ -32,7 +33,7 @@ PWD = os.getcwd()
 # CONSOLE MESSAGE TEMPLATE
 # ---------------------------------------------------------------------------
 def console_msg(message):
-    """provide a little formatting help for console messages"""
+    """Provide a little formatting help for console messages."""
     print("-" * 78 + f"\n{message}\n" + "-" * 78 + "\n")  # noqa T001
 
 
@@ -138,7 +139,7 @@ def yamllint(context):
 # ---------------------------------------------------------------------------
 @task
 def generate(context):
-    """Building the configuration locally with Jinaj2."""
+    """Build the configurations locally with Jinaj2."""
     console_msg("Building the configuration locally with Jinaj2")
     context.run(
         f"docker run -it --rm \
@@ -166,13 +167,26 @@ def configure(context):
 
 
 @task
+def download(context):
+    """Download our configurations with PyEZ."""
+    console_msg("Downloading our device configurations")
+    context.run(
+        f"docker run -it --rm \
+            -v {PWD}/files/:/home/files \
+            -w /home/files/python/ \
+            {DOCKER_IMG}:{DOCKER_TAG} python download.py",
+        pty=True,
+    )
+
+
+@task
 def bootstrap(context):
     """Push our bootstrap configurations with PyEZ."""
     console_msg("Push bootstrap configurations to devices")
     context.run(
         f"docker run -it --rm \
             -v {PWD}/files/:/home/files \
-            -w /home/files/python/bootstrap \
+            -w /home/files/eve-ng/bootstrap \
             {DOCKER_IMG}:{DOCKER_TAG} python bootstrap.py",
         pty=True,
     )

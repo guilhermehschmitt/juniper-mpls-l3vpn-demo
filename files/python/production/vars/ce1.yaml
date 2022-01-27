@@ -43,7 +43,7 @@ interfaces:
           family:
             inet:
               address:
-                - name: "100.123.0.18/16"
+                - name: "100.123.1.0/16"
     - name: "lo0"
       unit:
         - name: 0

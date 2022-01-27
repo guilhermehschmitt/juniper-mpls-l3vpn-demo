@@ -190,3 +190,16 @@ def bootstrap(context):
             {DOCKER_IMG}:{DOCKER_TAG} python bootstrap.py",
         pty=True,
     )
+
+
+@task
+def rollback(context):
+    """Rollback to our bootstrap configurations with PyEZ."""
+    console_msg("Rollback to our bootstrap configurations with PyEZ")
+    context.run(
+        f"docker run -it --rm \
+            -v {PWD}/files/:/home/files \
+            -w /home/files/python/ \
+            {DOCKER_IMG}:{DOCKER_TAG} python rollback.py",
+        pty=True,
+    )

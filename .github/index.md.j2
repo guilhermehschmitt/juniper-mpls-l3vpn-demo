@@ -2,11 +2,7 @@
 
 <img src="https://raw.githubusercontent.com/cdot65/juniper-mpls-l3vpn-demo/main/files/images/topology-100.jpg" width="720px"/>
 
-<br/>
-
 # 🐍 Build and Deploy a MPLS L3VPN with Juniper Networks PyEZ
-
-<br/>
 
 ## Welcome
 
@@ -14,112 +10,146 @@ First off, hello and welcome to the landing page of my demo's documentation. My 
 
 In this demonstration, we will deploy a L3VPN circuit across an MPLS backbone using Juniper's PyEZ library. For those without access to Juniper's vLabs, I have provided a sample lab topology for EVE-NG within the project files.
 
-## `Table of Contents`
-
-#### [`Section 0: Automation Overview`](#section-0-automation-overview)
-
-#### [`Section 1: Network Topology Design`](#section-1-network-topology-design)
+-----------
+### Table of Contents
 
 #### [`Section 2: Provisioning with PyEZ`](#section-2-provisioning-with-pyez)
 
 #### [`Section 3: Validating with JSNAPy`](#section-3-validating-with-jsnapy)
 
-<br/><br/>
+[Automation Overview](https://cdot65.github.io/juniper-mpls-l3vpn-demo/#automation-overview)
 
-# Section 0: Automation Overview
+[Network Topology](https://cdot65.github.io/juniper-mpls-l3vpn-demo/#network-topology)
 
-<br/>
+[Provisioning with PyEZ](https://cdot65.github.io/juniper-mpls-l3vpn-demo/#provisioning-with-pyez)
 
-## Workflow
+* [Daily Briefing](https://github.com/hillaryfraley/jobbriefings#daily-briefing)
+     - [Daily Briefing Requirements](https://github.com/hillaryfraley/jobbriefings#daily-briefing-requirements)
+     - [Daily Briefing Documentation](https://github.com/hillaryfraley/jobbriefings#daily-briefing-documentation)
+* [Job Site Assessment](https://github.com/hillaryfraley/jobbriefings#job-site-assessment)
+     - [Job Site Assessment Requirements](https://github.com/hillaryfraley/jobbriefings#job-site-assessment-requirements)
+     - [Job Site Assessment Documentation](https://github.com/hillaryfraley/jobbriefings#job-site-assessment-documentation)
+* [Job Briefing](https://github.com/hillaryfraley/jobbriefings#job-briefing)
+     - [Job Briefing Requirements](https://github.com/hillaryfraley/jobbriefings#job-briefing-requirements)
+     - [Job Briefing Documentation](https://github.com/hillaryfraley/jobbriefings#job-briefing-documentation)
+* [Post-Job Briefing](https://github.com/hillaryfraley/jobbriefings#job-briefing)  
+     - [Post-Job Briefing Requirements](https://github.com/hillaryfraley/jobbriefings#job-briefing-requirements)
+     - [Post-Job Briefing Documentation](https://github.com/hillaryfraley/jobbriefings#job-briefing-documentation)
 
-:white_check_mark: **Do:**
-Testing code is not like production-code - design it to be dead-simple, short, abstraction-free, flat, delightful to work with, lean. One should look at a test and get the intent instantly.
+[Validating with JSNAPy](https://cdot65.github.io/juniper-mpls-l3vpn-demo/#validating-with-jsnapy)
+ 
+* [Laws and Regulations](https://github.com/hillaryfraley/jobbriefings#laws-and-regulations)
+* [Technical Information](https://github.com/hillaryfraley/jobbriefings#technical-information)
+* [Related Work Practices](https://github.com/hillaryfraley/jobbriefings#related-work-practices)
+* [Related Documents and Forms](https://github.com/hillaryfraley/jobbriefings#related-documents-and-forms)
 
-<br/><br/>
+[Test](https://cdot65.github.io/juniper-mpls-l3vpn-demo/#test)
+ 
+* [Laws and Regulations](https://github.com/hillaryfraley/jobbriefings#laws-and-regulations)
 
-# Section 1: Network Topology Design
+-----------
+## Automation Overview
+Job briefings are an important part of planning safe work. Job briefings are also required by Occupational Safety and Health Administration (OSHA) [29 CFR 1926.952](http://www.ecfr.gov/cgi-bin/text-idx?SID=ceeaf016fdd21de13fffb416153479ad&node=se29.8.1926_1952&rgn=div8). This work practice will help you understand what to expect during job briefings and how to participate to comply with OSHA requirements.
 
-<br/>
+-----------
 
-## 1.1 IP Addressing
+## Network Topology
+This work practice describes the four elements of job briefings: daily briefing, job site assessment, job briefing, and post-job briefing. This work practice explains when each element is completed, what you can expect to talk about during each element, and the required documentation for each element.
+ 
+This work practice is intended to help crew members understand each element of a job briefing, including how they must contribute and participate. This work practice does not describe crew supervisor, Employee in Charge (EIC), or designated crew member (DCM) responsibilities.
+ 
+-----------
+## Provisioning with PyEZ
+There are four elements of job briefings:
 
-## 1.2 Routing Protocols
+1. Daily briefing.
+2. Job site assessment.
+3. Job briefing.
+4. Post-job briefing.  
 
-## 1.3 Label Distribution
+Every job requires these four elements, including storm response and service restoration jobs.
 
-<br/><br/>
+> **Note:**
+> When you work alone, you must complete the four elements of a job briefing as carefully as when you are part of a crew. Lone worker briefings are planning processes that include thinking through all of the same topics as crew briefings, including hazards, work procedures, and emergency plans.
+> 
+> You do not have to document job briefings as a lone worker. If you start a job by working alone, but another crew member or entire crew arrives later to help, you do have to document job briefings, starting when the other crew member or crew arrives at the job site.
+ 
+### Daily Briefing
+The EIC or DCM will hold a daily briefing at the beginning of each work day. All the crew members who will work on the job that day have to attend the daily briefing. The daily briefing gets the entire crew involved in planning for the day’s work.
+ 
+The daily briefing is held at your reporting location, not at the job site.
 
-# Section 2: Provisioning with PyEZ
+-----------
+## Validating with JSNAPy
+There are four elements of job briefings:
 
-## Care traxit
+1. Daily briefing.
+2. Job site assessment.
+3. Job briefing.
+4. Post-job briefing.  
 
-Lorem markdownum et plusque! Orbis ictus, Procrusten praebere famem cuncta tu
-parte dilecte colebat iustissima mota medio! Inde pontus, neve
-[Hyacinthia](http://eccequo.net/) vitiatur. Tum sed glandes, solvit quid terram
-lucida, levat crista tamen sibi valuere **manumque Syringa**? Sanguine an
-argumentum placet convertit callidus novas cacumine effugies: pressa!
+-----------
+## Test
 
-    user_secondary = pim_ecc_minicomputer(
-            intranetWirelessClient.hypertext_flat_serial.nntp_registry_memory(
-            thyristor(swappableSyntax, coreNasVlb), dualCgi, menu_layout_input(
-            firmware_rte, 5, plagiarism)), rdramDeprecated +
-            ebookGoodputMegapixel + 1, -4 + terminal_ppc);
-    servletLunExbibyte = 2 * -5;
-    hoc -= schema;
-    sram.software_reader_client -= htmlLeakNat(definitionDiskSla, sdram(
-            frozenPingIos, station), layout_page_nic);
-    sla -= core.standby(torrentRtIm, exifSerial);
+Lorem markdownum motatque, amat maiores formam primum, vox quoque rapuitque est
+mea ea. Ater videam; potentia puer Paphon saeva disce, una robora, ora sciret.
+Humo pectus terrarum montano fulva, [at
+forma](http://euboica.io/permiscuit-viri) ripas talia. Sub pectora nacta
+sonantem quod fluminis timor vacuae, ait coniugis antemnas rore fata non cum
+alipedum, luctuque.
 
-Omnes arae vino nec hastile rapta, tenuit est. Tangat adit sonantes mutantur
-Stabiasque eandem, coloribus pro post.
-
-## Numen uteri veros est
-
-Formae qui; quoque meliore et, Unde [umeris](http://sui.io/), quem iaculum et
-vincere. Modo qui summaque Phoebi eripuit **lacrimis filia**; erat umeris, *et
-ac quid* carebis ita suas hortamine cum carpebam.
-
-Primus corpus Narcissumque nisi et Antenora penitus lyra lata clavigeri
-conantesque. Terramque flumina **creatus**?
-
-    var engineAtm = windows(core_flops_midi, 1, 56);
-    var emulationDesign = language(digital);
-    if (dialPrinterSwipe(webSequence(pci_lag_log), restore_dvi_media(vfat_icf(
-            keyHardening), northbridge, analog))) {
-        servlet_partition += 2 + heatChipsetSoftware;
-        tape_user = file;
+    if (real_pum_affiliate) {
+        isa = print;
+        ccd_batch = publishing;
+        whoisTwainKibibyte.threadingPup = appWorm.retina_smm(
+                hertz_media_pack.retina_access(mac_iphone), -1);
     }
+    dashboard += chipParallelMatrix;
+    smb_host += scanWebmaster(southbridgeNamespaceFilename, pcmcia, 33);
 
-Cornum Aetnaea Spercheides ipsum; nec aut sanguine [pedibus Auram
-nutrimen](http://nominis.io/aeternusvisus) pedibus sinu, est comes? Mox tenent
-ausis moderator superis deos horridus his; et non limina quodque nocendo requies
-nupta, laeva.
+Utinam ut incepta planamque fidelem medio verus iam traxere: ab ultima altoque
+flammae. Per Serpens **amor credas** sororis dicuntur iterum Hippothousque aetas
+cornua pugnabant reliquit numina edideras curvos, solacia si Rhodosque omnia.
+Regique in inquit quamvis Ionium medius, ille sumus maiore corpora. Me mole,
+vidistis ministret fortia fugiebant nostra et detrusum, quae. Induta vulnus, nec
+si tenere facibus **in multa**, ore?
 
-## Order of operations
+    if (device <= dropRowPhp) {
+        host(monitor);
+        duplex_user_bash = 1;
+    } else {
+        raidDuplex.matrix_golden = hdmi;
+        wordDocument.video_faq_mpeg = query / udp + 2;
+    }
+    if (qwerty_bookmark(wwwIm, camelcase_bitrate_download, ascii_hoc_d(
+            clickMemoryHfs)) > smtp + mtuAddressComponent + 2) {
+        resourcesThermistorFilename = ispGuid(bespoke.osSpoofing(
+                smartphoneDataPoint, illegal_pda_software));
+        rayAvatarCable.animated_standby_cdfs(sshDos, mpegDriverStreaming);
+        stack(5);
+    }
+    pharming = wep_ethernet(4, -3, cloudPingCdma(softwareLoginTweet +
+            graphics_inbox, aiffClock + classHorseBarebones, cps_runtime(
+            defragment_clean, wddm_pda_edi, -1)));
+    var media = formula_row(tag.association_restore_web(
+            gps_ieee.edutainment_lpi.midi_lun_file(typeface_javascript), file),
+            fragmentationMemorySchema);
 
-1. Start JCL lab
-2. SSH into Automation VM
-3. change directory to project directory
-4. git pull updates
-5. activate poetry shell
-6. invoke configure
+In tamquam infecit ego! Volucrisque imago; et in **sua minas cum** tuta querenti
+Iuppiter sola. Avem est dato coniurata, qui accensum qui arma ora nam ilia necem
+per repulsa alieni, cetera Cnosiaci!
 
-<br/><br/>
+> Suis ibi idque rigido terrent ad manetque frustra prospiciens noctes deripit
+> corpora. Quantum his torvos Hippothousque monstri Thesea matrumque se levis
+> obstabat altera plangitur inter [quaerere](http://data.net/acheloe.aspx), dum?
+> Per veros cognita misit murmura modus dextera vestibus, forma amo vulnera
+> frequens eripiat per fortuna neque sanguine dona.
 
-# Section 3: Validating with JSNAPy
+Intabescere frugum, sole posuere habuistis, referri obscena fuit frugis. Et qui
+Aeaciden in vulnere situs hoc cunctos, comes mille! Hortus miserabile plumbum
+nubibus negare sub, tamen faciente sepulti eosdem. Vaticinos Diomedeos illud
+*tenent pugnatque genetrix* lignum, loquentis inpositum Iunonem? Dubiaeque
+clades, Olympi illa animi manu, quam ut o.
 
-<br/><br/>
-
-# Team
-
-## [Calvin Remsburg](https://github.com/cdot65)
-
-**Role:** Writer
-
-**About:** I work as a global architect within the sales organization at Juniper Networks. My primary focus is to help share the power of using automation within the context of a network engineer.
-
-<br/>
-
-<hr/>
-<br/>
-
+Mox bene quasi timidasque datur, et sub adfixa buxoque garrula sustulit videri.
+Venit hominum Schoeneia purum. Tibi fronti atque suae mendacia.

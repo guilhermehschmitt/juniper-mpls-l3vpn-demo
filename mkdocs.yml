@@ -23,17 +23,19 @@ use_directory_urls: true
 nav:
   - Homepage: "index.md"
   - Automation:
-      - Overview: "automation_overview.md"
-      - Workflow: "automation_workflow.md"
-  - Network Topology:
-      - Overview: "network_overview.md"
-      - Workflow: "network_workflow.md"
-  - Provisioning with PyEZ:
-      - Overview: "pyez_overview.md"
-      - Workflow: "pyez_workflow.md"
-  - Validating with JSNAPy:
-      - Overview: "jsnapy_overview.md"
-      - Workflow: "jsnapy_workflow.md"
+      - generate.py: "generate.py.md"
+      - configure.py: "configure.py.md"
+      - download.py: "download.py.md"
+      - rollback.py: "rollback.py.md"
+      - Templates: "templates.py.md"
+  - Network:
+      - IP Addressing: "ip-addressing.md"
+      - MPLS: "ip-addressing.md"
+      - Routing: "ip-addressing.md"
+  - Provisioning:
+      - Workflow: "provisioning.md"
+  - Validating:
+      - Workflow: "validating.md"
 
 markdown_extensions:
   - "smarty"

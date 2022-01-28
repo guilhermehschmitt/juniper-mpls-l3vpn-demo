@@ -10,6 +10,8 @@ First off, hello and welcome to the landing page of my demo's documentation. My 
 
 In this demonstration, we will deploy a L3VPN circuit across an MPLS backbone using Juniper's PyEZ library. For those without access to Juniper's vLabs, I have provided a sample lab topology for EVE-NG within the project files.
 
+This landing page will provide an overview of the components of this project, for a more detailed look at a specific topic please reference the navigation bar or click on the provided links within a topic.
+
 ---
 
 ### Table of Contents
@@ -39,21 +41,21 @@ All of our project's scripts, variables, and template files are stored within th
 
 ```bash
 files/python
-├── configurations
+├── configurations/
+├── templates/
+├── vars/
 ├── configure.py
 ├── download.py
 ├── generate.py
 ├── inventory.yaml
-├── rollback.py
-├── templates
-└── vars
+└── rollback.py
 ```
 
 #### Python Scripts
 
 You likely don't need me to explain that the files that end with `.py` are the various Python scripts. Here is a quick glimpse into the four provided.
 
-| Command        | Action                                              |
+| Script         | Action                                              |
 | -------------- | --------------------------------------------------- |
 | `generate.py`  | Build the configurations locally with Jinaj2.       |
 | `configure.py` | Build and push our configurations with PyEZ.        |

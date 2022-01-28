@@ -10,7 +10,8 @@ First off, hello and welcome to the landing page of my demo's documentation. My 
 
 In this demonstration, we will deploy a L3VPN circuit across an MPLS backbone using Juniper's PyEZ library. For those without access to Juniper's vLabs, I have provided a sample lab topology for EVE-NG within the project files.
 
------------
+---
+
 ### Table of Contents
 
 [Automation Overview](https://cdot65.github.io/juniper-mpls-l3vpn-demo/#automation-overview)
@@ -21,18 +22,117 @@ In this demonstration, we will deploy a L3VPN circuit across an MPLS backbone us
 
 [Validating with JSNAPy](https://cdot65.github.io/juniper-mpls-l3vpn-demo/#validating-with-jsnapy)
 
------------
-## Automation Overview
-Job briefings are an important part of planning safe work. Job briefings are also required by Occupational Safety and Health Administration (OSHA) [29 CFR 1926.952](http://www.ecfr.gov/cgi-bin/text-idx?SID=ceeaf016fdd21de13fffb416153479ad&node=se29.8.1926_1952&rgn=div8). This work practice will help you understand what to expect during job briefings and how to participate to comply with OSHA requirements.
+---
 
------------
+## Automation
+
+### 📝 Overview
+
+Our primary goal today is to use PyEZ to provision eight Juniper vMX routers into various elements of an MPLS network.
+
+While PyEZ has the capability of pushing individual lines, or groups of lines, of configurations to a device, here we will be building and pushing an entire configuration.
+
+We will also be following the guiding principles of [Infrastructure-as-Code]("https://en.wikipedia.org/wiki/Infrastructure_as_code"), where we will store our the elements of our configuration as YAML, to be ran through a Jinja2 template to output our configurations.
+
+### 🐍 Python scripts, Jinja2 templates, and variable files
+
+All of our project's scripts, variables, and template files are stored within the [files/python](https://github.com/cdot65/juniper-mpls-l3vpn-demo/tree/main/files/python) directory.
+
+```bash
+files/python
+├── configurations
+├── configure.py
+├── download.py
+├── generate.py
+├── inventory.yaml
+├── rollback.py
+├── templates
+└── vars
+```
+
+#### Python Scripts
+
+You likely don't need me to explain that the files that end with `.py` are the various Python scripts. A quick glimpse into the four provided.
+
+| Command       | Action                                              |
+| ------------- | --------------------------------------------------- |
+| `generate.py` | Build the configurations locally with Jinaj2.       |
+| `configure`   | Build and push our configurations with PyEZ.        |
+| `download`    | Download our configurations with PyEZ.              |
+| `rollback`    | Rollback to our bootstrap configurations with PyEZ. |
+
+#### Inventory file
+
+The `inventory.yaml` file stores information about our devices, basic information like hostname and IP address.
+
+#### `configurations/` directory
+
+If you choose to generate the configurations locally but _not_ push them to the devices, then you will find the generated configurations within the `configurations` directory. I had also included the working final configurations in this directory if you just want to see the resulting configurations.
+
+#### `templates/` directory
+
+Since we are storing our configuration as code, we will need some kind of templating engine to run our variables through to produce the configurations. For this we have Jinja2 to handle the templating, and its template files are stored in the `templates` directory.
+
+#### `vars/` directory
+
+Finally, the device's configuration will be stored as YAML files found within the `vars/` directory. Each device will have its own file to represent its configuration. We will run these files through the Jinaj2 templates to produce our configurations.
+
+---
+
+### 🛠️ Tools
+
+In hopes to making this project as easy as possible to execute, I have provided many tools to help with execution of the tasks within this project.
+
+#### Poetry
+
+A [Poetry](https://python-poetry.org/docs/) lock file to help you create a Python environment that mirrors my own. As long as you [have Poetry installed on your machine](https://python-poetry.org/docs/), to you can simply type `poetry install` to create the virtual environment, followed by `poetry shell` to activate it.
+
+#### Invoke
+
+You will find a packaged called [Invoke](http://www.pyinvoke.org/) installed within the virtual environment. Invoke is an elegant way to create CLI shortcuts for commands that are long to type out. Here is a short list of some of the Invoke operations created in the `tasks.py` file.
+
+| Command            | Action                                              |
+| ------------------ | --------------------------------------------------- |
+| `invoke generate`  | Build the configurations locally with Jinaj2.       |
+| `invoke configure` | Build and push our configurations with PyEZ.        |
+| `invoke download`  | Download our configurations with PyEZ.              |
+| `invoke rollback`  | Rollback to our bootstrap configurations with PyEZ. |
+
+#### Dockerfile
+
+A Dockerfile has also been provided for those that would like to execute this within an isolated container instead of a virtual environment. A couple of additional Invoke tasks are listed below to help with building and accessing the Docker container environment.
+
+| Command        | Action                                                   |
+| -------------- | -------------------------------------------------------- |
+| `invoke build` | Build an instance of the Docker container image locally. |
+| `invoke shell` | Get access to the BASH shell within our container.       |
+
+---
+
+### 🚀 Workflow
+
+The workflow will look like this:
+
+1. Have Poetry install your Python packages in a virtual environment (one-time operation)
+2. Activate your new virtual environment with Poetry
+3. Run locally or within a container using the Invoke package
+
+```bash
+poetry install
+poetry shell
+invoke xyz
+```
+
+---
 
 ## Network Topology
+
 This work practice describes the four elements of job briefings: daily briefing, job site assessment, job briefing, and post-job briefing. This work practice explains when each element is completed, what you can expect to talk about during each element, and the required documentation for each element.
- 
+
 This work practice is intended to help crew members understand each element of a job briefing, including how they must contribute and participate. This work practice does not describe crew supervisor, Employee in Charge (EIC), or designated crew member (DCM) responsibilities.
- 
------------
+
+---
+
 ## Provisioning with PyEZ
 
 There are four elements of job briefings:
@@ -40,22 +140,23 @@ There are four elements of job briefings:
 1. Daily briefing.
 2. Job site assessment.
 3. Job briefing.
-4. Post-job briefing.  
+4. Post-job briefing.
 
 Every job requires these four elements, including storm response and service restoration jobs.
 
 > **Note:**
 > When you work alone, you must complete the four elements of a job briefing as carefully as when you are part of a crew. Lone worker briefings are planning processes that include thinking through all of the same topics as crew briefings, including hazards, work procedures, and emergency plans.
-> 
+>
 > You do not have to document job briefings as a lone worker. If you start a job by working alone, but another crew member or entire crew arrives later to help, you do have to document job briefings, starting when the other crew member or crew arrives at the job site.
- 
+
 ### Daily Briefing
 
 The EIC or DCM will hold a daily briefing at the beginning of each work day. All the crew members who will work on the job that day have to attend the daily briefing. The daily briefing gets the entire crew involved in planning for the day’s work.
- 
+
 The daily briefing is held at your reporting location, not at the job site.
 
------------
+---
+
 ## Validating with JSNAPy
 
 There are four elements of job briefings:
@@ -63,12 +164,13 @@ There are four elements of job briefings:
 1. Daily briefing.
 2. Job site assessment.
 3. Job briefing.
-4. Post-job briefing.  
+4. Post-job briefing.
 
 ## List of projects
 
-|  Project  |  Description  | Last activity |
-|------------------|---------------|-------------|
-{% for project in projects|sort(reverse=false,attribute='project_name') %}
-|  [{{project['project_name']}}]({{project['homepage']}}) | {% if project['description'] != 'None'  %} {{project['description']}} {% else %} N/A {% endif %} | {{project['last_commit']|truncate(10,end='')}}
+| Project                                                | Description                                                                                      | Last activity            |
+| ------------------------------------------------------ | ------------------------------------------------------------------------------------------------ | ------------------------ | --------------------- |
+| {% for project in projects                             | sort(reverse=false,attribute='project_name') %}                                                  |
+| [{{project['project_name']}}]({{project['homepage']}}) | {% if project['description'] != 'None'  %} {{project['description']}} {% else %} N/A {% endif %} | {{project['last_commit'] | truncate(10,end='')}} |
+
 {% endfor %}

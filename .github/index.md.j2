@@ -14,13 +14,12 @@ In this demonstration, we will deploy a L3VPN circuit across an MPLS backbone us
 
 ### Table of Contents
 
-| Link                                                                                  | Description                                                       |
-| ------------------------------------------------------------------------------------- | ----------------------------------------------------------------- |
-| [Automation](https://cdot65.github.io/juniper-mpls-l3vpn-demo/#automation)            | Overview on scripts, tools, and workflows.                        |
-| [Network](https://cdot65.github.io/juniper-mpls-l3vpn-demo/#network)                  | Design of the network, protocols used, IP address scheme.         |
-| [Provisioning](https://cdot65.github.io/juniper-mpls-l3vpn-demo/#provisioning)        | Using PyEZ to template and push configurations.                   |
-| [Validating](https://cdot65.github.io/juniper-mpls-l3vpn-demo/#validating)            | Running JSNAPy tests to validate the network's operational state. |
-| [Other Python Projects](https://cdot65.github.io/juniper-mpls-l3vpn-demo/#validating) | List of similar Python projects.                                  |
+| Link                                                                           | Description                                                       |
+| ------------------------------------------------------------------------------ | ----------------------------------------------------------------- |
+| [Automation](https://cdot65.github.io/juniper-mpls-l3vpn-demo/#automation)     | Overview on scripts, tools, and workflows.                        |
+| [Network](https://cdot65.github.io/juniper-mpls-l3vpn-demo/#network)           | Design of the network, protocols used, IP address scheme.         |
+| [Provisioning](https://cdot65.github.io/juniper-mpls-l3vpn-demo/#provisioning) | Using PyEZ to template and push configurations.                   |
+| [Validating](https://cdot65.github.io/juniper-mpls-l3vpn-demo/#validating)     | Running JSNAPy tests to validate the network's operational state. |
 
 ---
 
@@ -52,14 +51,14 @@ files/python
 
 #### Python Scripts
 
-You likely don't need me to explain that the files that end with `.py` are the various Python scripts. A quick glimpse into the four provided.
+You likely don't need me to explain that the files that end with `.py` are the various Python scripts. Here is a quick glimpse into the four provided.
 
-| Command       | Action                                              |
-| ------------- | --------------------------------------------------- |
-| `generate.py` | Build the configurations locally with Jinaj2.       |
-| `configure`   | Build and push our configurations with PyEZ.        |
-| `download`    | Download our configurations with PyEZ.              |
-| `rollback`    | Rollback to our bootstrap configurations with PyEZ. |
+| Command        | Action                                              |
+| -------------- | --------------------------------------------------- |
+| `generate.py`  | Build the configurations locally with Jinaj2.       |
+| `configure.py` | Build and push our configurations with PyEZ.        |
+| `download.py`  | Download our configurations with PyEZ.              |
+| `rollback.py`  | Rollback to our bootstrap configurations with PyEZ. |
 
 #### Inventory file
 
@@ -165,12 +164,3 @@ There are four elements of job briefings:
 2. Job site assessment.
 3. Job briefing.
 4. Post-job briefing.
-
-## List of projects
-
-| Project                                                | Description                                                                                      | Last activity            |
-| ------------------------------------------------------ | ------------------------------------------------------------------------------------------------ | ------------------------ | --------------------- |
-| {% for project in projects                             | sort(reverse=false,attribute='project_name') %}                                                  |
-| [{{project['project_name']}}]({{project['homepage']}}) | {% if project['description'] != 'None'  %} {{project['description']}} {% else %} N/A {% endif %} | {{project['last_commit'] | truncate(10,end='')}} |
-
-{% endfor %}

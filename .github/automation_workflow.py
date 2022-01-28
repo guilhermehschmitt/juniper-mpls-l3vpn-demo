@@ -34,7 +34,7 @@ JSON_FIELDS = {
     "topics": "topics",
 }
 TEMPLATE_MARKDOWN = "page.md.j2"
-OUTPUT_FILE = "../docs/automation_workflow.md"
+OUTPUT_FILE = "../files/docs/automation_workflow.md"
 PAGE_TITLE = "Automation Overview"
 ORGANISATION_NAME = "cdot65"
 ORGANISATION_URL = "https://github.com/" + ORGANISATION_NAME

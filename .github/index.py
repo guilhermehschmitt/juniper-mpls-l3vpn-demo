@@ -34,7 +34,7 @@ JSON_FIELDS = {
     "topics": "topics",
 }
 TEMPLATE_MARKDOWN = "index.md.j2"
-OUTPUT_FILE = "../docs/index.md"
+OUTPUT_FILE = "../files/docs/index.md"
 PAGE_TITLE = "Juniper MPLS L3VPN Demo"
 ORGANISATION_NAME = "cdot65"
 ORGANISATION_URL = "https://github.com/" + ORGANISATION_NAME

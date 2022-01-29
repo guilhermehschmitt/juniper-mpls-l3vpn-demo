@@ -2,7 +2,31 @@
 site_name: "juniper-mpls-l3vpn-demo"
 site_author: "cdot65"
 site_description: "Deploy a L3VPN circuit over an MPLS backbone with Juniper vMX routers"
-docs_dir: "files/docs/"
+docs_dir: "site/content"
+site_dir: "docs"
+repo_name: "juniper-mpls-l3vpn-demo"
+repo_url: "https://github.com/cdot65/juniper-mpls-l3vpn-demo"
+copyright: "Copyright &copy; 2022 cdot65"
+extra_css:
+  - "stylesheets/extra.css"
+
+nav:
+  - Homepage: "index.md"
+  - Automation:
+      - generate.py: "docs/generate.py.md"
+      - configure.py: "docs/configure.py.md"
+      - download.py: "docs/download.py.md"
+      - rollback.py: "docs/rollback.py.md"
+      - Templates: "docs/templates.py.md"
+  - Network:
+      - IP Addressing: "docs/ip-addressing.md"
+      - MPLS: "docs/ip-addressing.md"
+      - Routing: "docs/ip-addressing.md"
+  - Provisioning:
+      - Workflow: "docs/provisioning.md"
+  - Validating:
+      - Workflow: "docs/validating.md"
+
 theme:
   name: "material"
   custom_dir: "site/overrides"
@@ -16,28 +40,8 @@ theme:
   features:
     - "tabs"
     - "instant"
-extra_css:
-  - "stylesheets/extra.css"
-copyright: "Copyright &copy; 2022 cdot65"
-repo_name: "juniper-mpls-l3vpn-demo"
-repo_url: "https://github.com/cdot65/juniper-mpls-l3vpn-demo"
+
 use_directory_urls: true
-nav:
-  - Homepage: "index.md"
-  - Automation:
-      - generate.py: "generate.py.md"
-      - configure.py: "configure.py.md"
-      - download.py: "download.py.md"
-      - rollback.py: "rollback.py.md"
-      - Templates: "templates.py.md"
-  - Network:
-      - IP Addressing: "ip-addressing.md"
-      - MPLS: "ip-addressing.md"
-      - Routing: "ip-addressing.md"
-  - Provisioning:
-      - Workflow: "provisioning.md"
-  - Validating:
-      - Workflow: "validating.md"
 
 markdown_extensions:
   - "admonition"

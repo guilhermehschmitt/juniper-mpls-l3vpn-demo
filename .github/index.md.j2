@@ -136,13 +136,86 @@ When talking about our network design, I will be referencing the following Junip
 
 ### IP Addressing
 
-### JCL
+I take a pragmatic approach to building an IP address schema.
+
+Each router will be given an ID of 11-17, and its loopback/router-id will be built upon it within the prefix of `192.168.255.{x}/32`, where `{x}` represents the local device's ID.
+
+Additionally, P2P connections will follow a pattern of `10.{x}.{y}.{x}/24`, where `{x}` represents the local device's ID and `{y}` represents the ID of the remote router.
+
+> **Example: Router1**
+
+```yaml
+loopback0 = "192.168.255.11"
+router id = "192.168.255.11"
+p2p to router2 = "10.11.12.11/24"
+p2p to router3 = "10.11.13.11/24"
+p2p to router5 = "10.11.15.11/24"
+```
 
 ### MPLS
 
+The MPLS-aware routers are tagged with the green label of "MPLS" in the vLabs topology. We will be using LDP for signaling labels, which will limit the features we can perform within the network while conversely making it easier to provision.
+
+To build an MPLS neighborship with LDP between two router interfaces, you will see in the configurations that a few parameters need to be setup:
+
+**enable the family of MPLS on the interface configuration**
+
+```
+set interfaces ge-0/0/1.0 family mpls
+```
+
+**list the interface under the protocols/mpls configuration**
+
+```
+set protocols mpls interface ge-0/0/1.0
+set protocols ldp interface ge-0/0/1.0
+```
+
+Each router participating within the MPLS L3VPN circuit will build their route-distinguisher off a similar pattern to our loopbacks, `192.168.255.{x}:100`, where `{x}` represents the router's ID
+
 ### Routing
 
-This work practice is intended to help crew members understand each element of a job briefing, including how they must contribute and participate. This work practice does not describe crew supervisor, Employee in Charge (EIC), or designated crew member (DCM) responsibilities.
+To best emulate a small ISP, I have opted to use OSPF between the MPLS routers, with external BGP peering with both customer connections.
+
+**OSPF PE1**
+
+```
+protocols {
+    ospf {
+        area 0.0.0.0 {
+            interface ge-0/0/2.0 {
+                interface-type p2p;
+            }
+            interface ge-0/0/3.0 {
+                interface-type p2p;
+            }
+            interface lo0.0 {
+                passive;
+            }
+        }
+    }
+}
+```
+
+As iBGP is needed to signal PE routers to share L3VPN routes, we will of course be using it for that usecase in our topology.
+
+**L3VPN PE1 to PE4**
+
+```
+protocols {
+    bgp {
+        group MPLS {
+            type internal;
+            local-address 192.168.255.11;
+            family inet-vpn {
+                unicast;
+            }
+            peer-as 300;
+            neighbor 192.168.255.16;
+        }
+    }
+}
+```
 
 ---
 

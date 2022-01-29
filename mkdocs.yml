@@ -1,10 +1,9 @@
----
-site_name: "juniper-mpls-l3vpn-demo"
-site_description: "Deploy a L3VPN circuit over an MPLS backbone with Juniper vMX routers"
-site_url: "https://aws.github.io/copilot-cli/"
-site_author: "cdot65"
-repo_name: "juniper-mpls-l3vpn-demo"
+site_name: "Juniper MPLS L3VPN Demo"
+site_description: "Build and deploy a full MPLS network on vMX routers."
+site_url: "https://cdot65.github.io/juniper-mpls-l3vpn-demo/"
+repo_name: "cdot65/juniper-mpls-l3vpn-demo"
 repo_url: "https://github.com/cdot65/juniper-mpls-l3vpn-demo"
+edit_uri: "edit/mainline/site/content"
 copyright: "Copyright &copy; 2022 cdot65"
 docs_dir: "site/content"
 site_dir: "docs"
@@ -17,23 +16,25 @@ extra:
       lang: "en"
 
 nav:
-  - Homepage: "index.en.md"
+  - Home: "index.md"
   - Documentation:
-      - Overview: "docs/overview.en.md"
+      - Overview: "docs/overview.md"
+      - Lab Environment:
+          - Juniper vLabs: "docs/lab-environment/juniper-vlabs.md"
+          - Local: "docs/lab-environment/local.md"
       - Automation:
-          - generate.py: "docs/generate.py.md"
-          - configure.py: "docs/configure.py.md"
-          - download.py: "docs/download.py.md"
-          - rollback.py: "docs/rollback.py.md"
-          - Templates: "docs/templates.py.md"
+          - Overview: "docs/automation/overview.md"
+          - Scripts:
+              - configure: "docs/automation/configure.md"
+              - generate: "docs/automation/generate.md"
+              - rollback: "docs/automation/rollback.md"
+          - Tools: "docs/automation/tools.md"
       - Network:
-          - IP Addressing: "docs/ip-addressing.md"
-          - MPLS: "docs/ip-addressing.md"
-          - Routing: "docs/ip-addressing.md"
-      - Provisioning:
-          - Workflow: "docs/provisioning.md"
-      - Validating:
-          - Workflow: "docs/validating.md"
+          - Overview: "docs/network/overview.md"
+          - IP Schema: "docs/network/ip.md"
+          - MPLS: "docs/network/mpls.md"
+          - Routing: "docs/network/routing.md"
+      - Validation: "docs/validate.md"
 
 theme:
   name: "material"
@@ -43,7 +44,7 @@ theme:
   font: false
   icon:
     logo: "octicons/terminal-16"
-  favicon: "files/images/cli.png"
+  favicon: "assets/images/cli.png"
   language: "en"
   features:
     - "tabs"
@@ -54,8 +55,18 @@ markdown_extensions:
   - "pymdownx.details"
   - "pymdownx.superfences"
   - "pymdownx.tabbed"
+  - pymdownx.emoji:
+      emoji_index: "!!python/name:materialx.emoji.twemoji"
+      emoji_generator: "!!python/name:materialx.emoji.to_svg"
+      options:
+        custom_icons:
+          - "site/overrides/.icons"
 
 plugins:
   - "search"
+  - redirects:
+      redirect_maps:
+        "docs/juniper-vlabs.md": "docs/lab-environment/juniper-vlabs.md"
+        "docs/locally.md": "docs/lab-environment/local.md"
   - macros:
       include_dir: "site/content/docs/include"

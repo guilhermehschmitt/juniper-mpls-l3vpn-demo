@@ -5,17 +5,19 @@ site_description: "Deploy a L3VPN circuit over an MPLS backbone with Juniper vMX
 docs_dir: "files/docs/"
 theme:
   name: "material"
+  custom_dir: "site/overrides"
+  palette:
+    primary: "white"
+  font: false
+  icon:
+    logo: "octicons/terminal-16"
+  favicon: "assets/images/cli.png"
+  language: "en"
   features:
+    - "tabs"
     - "instant"
-  highlightjs: true
-  hljs_style: "obsidian"
-  hljs_languages:
-    - "yaml"
-    - "javascript"
-    - "python"
-    - "shell"
 extra_css:
-  - "stylesheets/cdot65.css"
+  - "stylesheets/extra.css"
 copyright: "Copyright &copy; 2022 cdot65"
 repo_name: "juniper-mpls-l3vpn-demo"
 repo_url: "https://github.com/cdot65/juniper-mpls-l3vpn-demo"
@@ -38,29 +40,22 @@ nav:
       - Workflow: "validating.md"
 
 markdown_extensions:
-  - "smarty"
-  - "pymdownx.arithmatex"
-  - pymdownx.betterem:
-      smart_enable: "all"
-  - "pymdownx.caret"
-  - "pymdownx.critic"
-  - "pymdownx.details"
-  - pymdownx.highlight:
-      anchor_linenums: false
-  - "pymdownx.inlinehilite"
-  - "pymdownx.magiclink"
-  - "pymdownx.mark"
-  - "pymdownx.smartsymbols"
-  - "pymdownx.snippets"
-  - "pymdownx.superfences"
-  - pymdownx.tasklist:
-      custom_checkbox: true
-  - "pymdownx.tilde"
-  - "fontawesome_markdown"
   - "admonition"
-  - codehilite:
-      guess_lang: true
-  - toc:
-      separator: "-"
-      permalink: "#"
-      baselevel: 1
+  - "pymdownx.details"
+  - "pymdownx.superfences"
+  - "pymdownx.tabbed"
+  - pymdownx.emoji:
+      emoji_index: "!!python/name:materialx.emoji.twemoji"
+      emoji_generator: "!!python/name:materialx.emoji.to_svg"
+      options:
+        custom_icons:
+          - "site/overrides/.icons"
+
+plugins:
+  - "search"
+  - i18n:
+      default_language: "en"
+      languages:
+        en: "english"
+        ja: "japanese"
+      material_alternate: false

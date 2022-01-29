@@ -1,64 +1,61 @@
 ---
 site_name: "juniper-mpls-l3vpn-demo"
-site_author: "cdot65"
 site_description: "Deploy a L3VPN circuit over an MPLS backbone with Juniper vMX routers"
-docs_dir: "files/docs/"
-theme:
-  name: "material"
-  features:
-    - "instant"
-  highlightjs: true
-  hljs_style: "obsidian"
-  hljs_languages:
-    - "yaml"
-    - "javascript"
-    - "python"
-    - "shell"
-extra_css:
-  - "stylesheets/cdot65.css"
-copyright: "Copyright &copy; 2022 cdot65"
+site_url: "https://aws.github.io/copilot-cli/"
+site_author: "cdot65"
 repo_name: "juniper-mpls-l3vpn-demo"
 repo_url: "https://github.com/cdot65/juniper-mpls-l3vpn-demo"
-use_directory_urls: true
+copyright: "Copyright &copy; 2022 cdot65"
+docs_dir: "site/content"
+site_dir: "docs"
+extra_css:
+  - "stylesheets/extra.css"
+extra:
+  alternate:
+    - name: "English"
+      link: "./en/"
+      lang: "en"
+
 nav:
-  - Homepage: "index.md"
-  - Automation:
-      - Overview: "automation_overview.md"
-      - Workflow: "automation_workflow.md"
-  - Network Topology:
-      - Overview: "network_overview.md"
-      - Workflow: "network_workflow.md"
-  - Provisioning with PyEZ:
-      - Overview: "pyez_overview.md"
-      - Workflow: "pyez_workflow.md"
-  - Validating with JSNAPy:
-      - Overview: "jsnapy_overview.md"
-      - Workflow: "jsnapy_workflow.md"
+  - Homepage: "index.en.md"
+  - Documentation:
+      - Overview: "docs/overview.en.md"
+      - Automation:
+          - generate.py: "docs/generate.py.md"
+          - configure.py: "docs/configure.py.md"
+          - download.py: "docs/download.py.md"
+          - rollback.py: "docs/rollback.py.md"
+          - Templates: "docs/templates.py.md"
+      - Network:
+          - IP Addressing: "docs/ip-addressing.md"
+          - MPLS: "docs/ip-addressing.md"
+          - Routing: "docs/ip-addressing.md"
+      - Provisioning:
+          - Workflow: "docs/provisioning.md"
+      - Validating:
+          - Workflow: "docs/validating.md"
+
+theme:
+  name: "material"
+  custom_dir: "site/overrides"
+  palette:
+    primary: "white"
+  font: false
+  icon:
+    logo: "octicons/terminal-16"
+  favicon: "files/images/cli.png"
+  language: "en"
+  features:
+    - "tabs"
+    - "instant"
 
 markdown_extensions:
-  - "smarty"
-  - "pymdownx.arithmatex"
-  - pymdownx.betterem:
-      smart_enable: "all"
-  - "pymdownx.caret"
-  - "pymdownx.critic"
-  - "pymdownx.details"
-  - pymdownx.highlight:
-      anchor_linenums: true
-  - "pymdownx.inlinehilite"
-  - "pymdownx.magiclink"
-  - "pymdownx.mark"
-  - "pymdownx.smartsymbols"
-  - "pymdownx.snippets"
-  - "pymdownx.superfences"
-  - pymdownx.tasklist:
-      custom_checkbox: true
-  - "pymdownx.tilde"
-  - "fontawesome_markdown"
   - "admonition"
-  - codehilite:
-      guess_lang: true
-  - toc:
-      separator: "-"
-      permalink: "#"
-      baselevel: 1
+  - "pymdownx.details"
+  - "pymdownx.superfences"
+  - "pymdownx.tabbed"
+
+plugins:
+  - "search"
+  - macros:
+      include_dir: "site/content/docs/include"

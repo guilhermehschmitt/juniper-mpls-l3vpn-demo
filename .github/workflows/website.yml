@@ -1,34 +1,23 @@
 ---
-name: "Mkdocs"
+name: "Publish docs via GitHub Pages"
 on:
-  schedule:
-    - cron: "0 0 * * *"
-  # each push
   push:
-    branches: ["main", "dev"]
-  # pull_request:
-  #   branches: ["main"]
+    branches:
+      - "main"
+      - "dev"
+  # Allow the workflow to be triggered also manually.
+  workflow_dispatch:
 
 jobs:
-  mkdocs:
-    name: "Build mkdocs"
+  build:
+    name: "Deploy docs"
     runs-on: "ubuntu-latest"
     steps:
-      - uses: "actions/checkout@v2"
+      - name: "Checkout main"
+        uses: "actions/checkout@v2"
 
-      - name: "Setup Python 3 on runner"
-        uses: "actions/setup-python@v2"
-        with:
-          python-version: "3.8"
-
-      - name: "Build mkdocs content to site folder"
-        run: |
-          pip install -r .github/requirements.txt
-          python .github/index.py
-          mkdocs build -f mkdocs.yml
-
-      - name: "Deploy last version to gh-pages"
-        uses: "peaceiris/actions-gh-pages@v3"
-        with:
-          github_token: "${{ secrets.GITHUB_TOKEN }}"
-          publish_dir: "./site"
+      - name: "Deploy docs"
+        uses: "mhausenblas/mkdocs-deploy-gh-pages@d576def3fd14c49606b31d3e749862f879560b37"
+        env:
+          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+          REQUIREMENTS: ".github/requirements.txt"

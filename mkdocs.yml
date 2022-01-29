@@ -11,7 +11,7 @@ theme:
   font: false
   icon:
     logo: "octicons/terminal-16"
-  favicon: "assets/images/cli.png"
+  favicon: "files/images/cli.png"
   language: "en"
   features:
     - "tabs"

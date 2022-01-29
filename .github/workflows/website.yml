@@ -18,6 +18,4 @@ jobs:
         uses: "mhausenblas/mkdocs-deploy-gh-pages@d576def3fd14c49606b31d3e749862f879560b37"
         env:
           GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
-          CONFIG_FILE: "mkdocs.yml"
-          EXTRA_PACKAGES: "build-base"
           REQUIREMENTS: ".github/requirements.txt"

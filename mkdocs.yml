@@ -11,7 +11,7 @@ extra_css:
   - "stylesheets/extra.css"
 
 nav:
-  - Homepage: "index.md"
+  - Homepage: "index.en.md"
   - Automation:
       - generate.py: "docs/generate.py.md"
       - configure.py: "docs/configure.py.md"

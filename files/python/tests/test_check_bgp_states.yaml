@@ -1,0 +1,14 @@
+---
+tests_include:
+  - "bgp_neighbor"
+
+bgp_neighbor:
+  - command: "show route"
+  # - ignore-null: True
+  - iterate:
+      xpath: "//route-table[table-name='bgp.l3vpn.0']"
+      id: "./table-name"
+      tests:
+        - not-equal: "active-route-count, 0"
+          info: "Validate active routes are found within the bgp.l3vpn.0 table"
+          err: "Route table {{post['table-name']}} has zero active routes"

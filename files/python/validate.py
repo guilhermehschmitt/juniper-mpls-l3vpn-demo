@@ -1,11 +1,14 @@
 """validate.py: use JSNAPy to validate the L3VPN circuit."""
-from pprint import pprint
+
+import os
 
 from jnpr.jsnapy import SnapAdmin
 
+PWD = os.path.dirname(os.path.realpath(__file__))
+
 JSNAPY = SnapAdmin()
 
-CONFIG = """
+CONFIG = f"""
 hosts:
   - device: 100.123.1.4
     username : automation
@@ -14,27 +17,10 @@ hosts:
     username : automation
     passwd: juniper123
 tests:
-  - test_check_bgp_states.yaml
+  - {PWD}/tests/test_l3vpn_routes.yaml
 """
 
 
-def main():
-    """Primary function to take and validate our snapcheck."""
-    snapcheck = JSNAPY.snapcheck(CONFIG, "bgp_test")
-
-    for val in snapcheck:
-        print("Tested on", val.device)
-        print("Final result: ", val.result)
-        print("Total passed: ", val.no_passed)
-        print("Total failed:", val.no_failed)
-        pprint(dict(val.test_details))
-
-
 if __name__ == "__main__":
-    """Main script execution.
-
-    We will first load our inventory.yaml file into a new Python object `devices`
-    Our main function will run next, which will take care of the templating
-    and pushing of our configurations to the remote devices.
-    """
-    main()
+    """Perform our JSNAPy tests."""
+    JSNAPY.snapcheck(CONFIG, "test_l3vpn_routes")

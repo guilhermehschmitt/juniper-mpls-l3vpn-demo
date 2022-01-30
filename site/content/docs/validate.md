@@ -2,13 +2,9 @@
 
 ### 📝 Overview
 
-Our primary goal today is to use PyEZ to provision eight Juniper vMX routers into various elements of an MPLS network.
+Our goal here is to use JSNAPy to validate the route table information within our provisioned fabric.
 
-While PyEZ has the capability of pushing individual lines, or groups of lines, of configurations to a device, here we will be building and pushing an entire configuration.
-
-We will also be following the guiding principles of [Infrastructure-as-Code]("https://en.wikipedia.org/wiki/Infrastructure_as_code"), where we will store our the elements of our configuration as YAML, to be ran through a Jinja2 template to output our configurations.
-
-### 🐍 Python scripts, Jinja2 templates, and variable files
+### 🐍 Script and test file
 
 All of our project's scripts, variables, and template files are stored within the [files/python](https://github.com/cdot65/juniper-mpls-l3vpn-demo/tree/main/files/python) directory.
 
@@ -16,6 +12,7 @@ All of our project's scripts, variables, and template files are stored within th
 files/python
 ├── configurations/
 ├── templates/
+├── tests/
 ├── vars/
 ├── configure.py
 ├── download.py

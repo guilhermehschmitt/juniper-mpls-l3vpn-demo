@@ -16,6 +16,7 @@ All of our project's scripts, variables, and template files are stored within th
 files/python
 ├── configurations/
 ├── templates/
+├── tests/
 ├── vars/
 ├── configure.py
 ├── download.py

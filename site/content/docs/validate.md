@@ -21,7 +21,8 @@ files/python
 ├── download.py
 ├── generate.py
 ├── inventory.yaml
-└── rollback.py
+├── rollback.py
+└── validate.py
 ```
 
 #### Python Scripts

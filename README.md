@@ -18,15 +18,15 @@ We are leveraging Juniper vLabs to deploy the virtualized lab, but we have also 
 
 _high-level design_
 
-![topology](./files/images/topology-100.jpg)
+![topology](./site/content/assets/images/topology-100.jpg)
 
 _Juniper vLabs_
 
-![topology](./files/images/vlabs.png)
+![topology](./site/content/assets/images/vlabs.png)
 
 _EVE-NG_
 
-![topology](./files/images/eve-ng.png)
+![topology](./site/content/assets/images/eve-ng.png)
 
 ## Learning more
 

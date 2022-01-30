@@ -18,7 +18,7 @@ We are leveraging Juniper vLabs to deploy the virtualized lab, but we have also 
 
 _high-level design_
 
-![topology](./site/content/assets/images/topology-100.jpg)
+![topology](./site/content/assets/images/topology.svg)
 
 _Juniper vLabs_
 
@@ -30,17 +30,17 @@ _EVE-NG_
 
 ## Learning more
 
-Want to learn more about what's happening? Check out our documentation [https://cdot65.github.io/juniper-mpls-l3vpn-demo/](https://cdot65.github.io/juniper-mpls-l3vpn-demo/) for a getting started guide, learning about Copilot concepts, and a breakdown of our commands.
+Want to learn more about what's happening? Check out our documentation [https://cdot65.github.io/juniper-mpls-l3vpn-demo/](https://cdot65.github.io/juniper-mpls-l3vpn-demo/) for a getting started guide, learning about concepts, and a breakdown of our code.
 
 ## Feedback
 
-Have any feedback at all? 🙏 Drop us an [issue](https://cdot65.github.io/juniper-mpls-l3vpn-demo/) or join us on [gitter](https://cdot65.github.io/juniper-mpls-l3vpn-demo/).
+Have any feedback at all? 🙏 Drop us an [issue](https://github.com/cdot65/juniper-mpls-l3vpn-demo/issues).
 
 We're happy to hear feedback or answer questions, so reach out, anytime!
 
 ## Security disclosures
 
-If you think you’ve found a potential security issue, please do not post it in the Issues. Instead, please follow the instructions [here](https://cdot65.github.io/juniper-mpls-l3vpn-demo/) or email AWS security directly at [https://cdot65.github.io/juniper-mpls-l3vpn-demo/](https://cdot65.github.io/juniper-mpls-l3vpn-demo/).
+If you think you’ve found a potential security issue, please do not post it in the Issues. Instead, please follow the instructions [here](https://cdot65.github.io/juniper-mpls-l3vpn-demo/).
 
 ## License
 

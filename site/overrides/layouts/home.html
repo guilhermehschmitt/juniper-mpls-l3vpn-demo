@@ -347,13 +347,14 @@
   <div class="md-grid md-typeset">
     <div class="md-main__inner">
       <div>
-        <h1>Your toolkit for containerized applications on AWS</h1>
+        <h1>Automate a MPLS network with Python</h1>
         <p>
-          AWS Copilot is an open source command line interface that makes it
-          easy for developers to <span class="em">build</span>,
-          <span class="em">release</span>, and
-          <span class="em">operate</span> production ready containerized
-          applications on AWS App Runner, Amazon ECS, and AWS Fargate.
+          Leverage Juniper's PyEZ to build, push, and validate an
+          <span class="em">MPLS</span> network using
+          <a href="https://en.wikipedia.org/wiki/Infrastructure_as_code"
+            >Infrastructure-As-Code</a
+          >
+          principles
         </p>
         <a
           href="docs/overview/"
@@ -385,8 +386,8 @@
 <div class="md-container">
   <div class="tx-hero__image">
     <img
-      src="{{config.site_url}}assets/images/screen.png"
-      alt=""
+      src="{{config.site_url}}assets/images/topology.svg"
+      alt="topology"
       draggable="false"
     />
   </div>
@@ -398,33 +399,28 @@
     <div class="section">
       <div class="component-wrapper">
         <div class="first-column">
-          <h3>Get started with architectures</h3>
+          <h3>Get started with automation</h3>
           <p>
-            Run a <span class="em">single command</span> to quickly get started
-            with a containerized application using best practices on AWS from a
-            Dockerfile.
+            Run a <span class="em">single command</span> to quickly build and
+            deploy full device configurations for Juniper vMX routers.
           </p>
           <p>
-            Instead of modeling individual resources, Copilot provides common
-            cloud architectures:
-            <a href="docs/concepts/services/#request-driven-web-service"
-              >Request-Driven Web Service</a
-            >,
-            <a href="docs/concepts/services/#load-balanced-web-service"
-              >Load Balanced Web Service</a
-            >,
-            <a href="docs/concepts/services/#backend-service">Backend Service</a
-            >,
-            <a href="docs/concepts/services/#worker-service">Worker Service</a>,
-            <a href="docs/concepts/jobs/">Scheduled Job</a>. The necessary
-            infrastructure is generated from the chosen pattern. Focus your time
-            on writing business logic instead of connecting AWS resources.
+            Automation within this repository can be executed in two different
+            ways: within a
+            <a
+              href="https://medium.com/fintechexplained/running-python-in-docker-container-58cda726d574"
+              >Docker container</a
+            >
+            or within a
+            <a href="https://python-poetry.org/docs/basic-usage/"
+              >Python virtual environment</a
+            >. The choice is yours as to which makes the most logical path.
           </p>
         </div>
         <div class="second-column">
           <div class="image-wrapper">
             <img
-              src="{{config.site_url}}assets/images/copilot-init.png"
+              src="{{config.site_url}}assets/images/invoke_configure.png"
               alt=""
               draggable="false"
             />
@@ -432,11 +428,11 @@
         </div>
       </div>
       <div class="component-wrapper" style="display: block">
-        <h4>Explore features</h4>
+        <h4>Explore code</h4>
 
         <!-- Arch as code -->
         <div class="responsive-grid">
-          <a class="card-wrapper" href="docs/manifest/overview">
+          <a class="card-wrapper" href="docs/automation/configure/">
             <div class="card">
               <div class="logo">
                 <span class="twemoji">
@@ -444,130 +440,45 @@
                 </span>
               </div>
               <div class="card-content">
-                <h5>Manifests</h5>
-                <p>Describe your services with architecture-as-code.</p>
+                <h5>configure.py</h5>
+                <p>
+                  Use Juniper's PyEZ to template and push a full configuration
+                  to each of your network devices.
+                </p>
               </div>
             </div>
           </a>
 
           <!-- Networking -->
-          <a class="card-wrapper" href="docs/developing/service-discovery">
+          <a class="card-wrapper" href="docs/automation/generate/">
             <div class="card">
               <div class="logo">
                 <span class="twemoji">
-                  {% include ".icons/fontawesome/solid/network-wired.svg" %}
+                  {% include ".icons/octicons/file-code-24.svg" %}
                 </span>
               </div>
               <div class="card-content">
-                <h5>Networking</h5>
+                <h5>generate.py</h5>
                 <p>
-                  Service discovery is setup by default for your services to
-                  connect to each other.
+                  Use Jinja2 to template local copies of our configurations.
                 </p>
               </div>
             </div>
           </a>
 
           <!-- Customize -->
-          <a
-            class="card-wrapper"
-            href="docs/developing/additional-aws-resources/"
-          >
+          <a class="card-wrapper" href="docs/automation/tools/">
             <div class="card">
               <div class="logo">
                 <span class="twemoji">
-                  {% include ".icons/fontawesome/solid/puzzle-piece.svg" %}
+                  {% include ".icons/octicons/file-code-24.svg" %}
                 </span>
               </div>
               <div class="card-content">
-                <h5>Grow with Addons</h5>
+                <h5>Tools</h5>
                 <p>
-                  Integrate your services with databases or any other AWS
-                  resources.
-                </p>
-              </div>
-            </div>
-          </a>
-        </div>
-      </div>
-    </div>
-
-    <!-- Continuous delivery -->
-    <div class="section follow">
-      <div class="component-wrapper">
-        <div class="first-column">
-          <h3>Continuous delivery</h3>
-          <p>
-            No need to worry about gluing Copilot commands in a script to create
-            an automated release process. Copilot provides commands to create
-            multiple deployment
-            <a href="docs/concepts/environments/">environments</a> in separate
-            AWS accounts and regions, as well as creating an AWS CodePipeline
-            <a href="docs/concepts/pipelines/">pipeline</a> to build your
-            container images, deploy your services, and run automated tests.
-          </p>
-        </div>
-        <div class="second-column">
-          <div class="image-wrapper">
-            <img
-              src="{{config.site_url}}assets/images/copilot-env-init.png"
-              alt=""
-              draggable="false"
-            />
-          </div>
-        </div>
-      </div>
-      <div class="component-wrapper" style="display: block">
-        <h4>Explore features</h4>
-
-        <!-- Environments -->
-        <div class="responsive-grid">
-          <a class="card-wrapper" href="docs/commands/env-init/">
-            <div class="card">
-              <div class="logo">
-                <span class="twemoji">
-                  {% include ".icons/octicons/copy-24.svg" %}
-                </span>
-              </div>
-              <div class="card-content">
-                <h5>Environments</h5>
-                <p>Deploy to multiple AWS accounts and regions.</p>
-              </div>
-            </div>
-          </a>
-
-          <!-- Override -->
-          <a
-            class="card-wrapper"
-            href="docs/manifest/lb-web-service/#environments"
-          >
-            <div class="card">
-              <div class="logo">
-                <span class="twemoji">
-                  {% include ".icons/octicons/pencil-24.svg" %}
-                </span>
-              </div>
-              <div class="card-content">
-                <h5>Override per environment</h5>
-                <p>
-                  Adjust your service settings per environments in the manifest.
-                </p>
-              </div>
-            </div>
-          </a>
-
-          <!-- Customize -->
-          <a class="card-wrapper" href="docs/commands/pipeline-init/">
-            <div class="card">
-              <div class="logo">
-                <span class="twemoji">
-                  {% include ".icons/aws/codepipeline-32.svg" %}
-                </span>
-              </div>
-              <div class="card-content">
-                <h5>Automated releases</h5>
-                <p>
-                  Create a continuous delivery pipeline with built-in commands.
+                  We have provided many tools to help get started with
+                  automation, get a full breakdown of how they work here.
                 </p>
               </div>
             </div>
@@ -580,22 +491,17 @@
     <div class="section follow">
       <div class="component-wrapper">
         <div class="first-column">
-          <h3>Operations is part of the workflow</h3>
+          <h3>Get started with MPLS</h3>
           <p>
-            Modeling, provisioning, and deploying services are only part of the
-            application lifecycle for the developer. Copilot also supports
-            workflows around troubleshooting and debugging to help when things
-            go wrong. <a href="docs/commands/svc-logs/">Tail your logs</a>,
-            <a href="docs/commands/svc-exec">get a shell</a> to a running
-            container,
-            <a href="docs/commands/svc-status/">view the health</a> of your
-            services from the comfort of your terminal.
+            BGP, MPLS, and routing instances are only part of the deployment of
+            a successful MPLS network. We have provided additional technical
+            details regarding the design of what is generated by our automation.
           </p>
         </div>
         <div class="second-column">
           <div class="image-wrapper">
             <img
-              src="{{config.site_url}}assets/images/copilot-svc-status.png"
+              src="{{config.site_url}}assets/images/vlabs.png"
               alt=""
               draggable="false"
             />
@@ -603,25 +509,11 @@
         </div>
       </div>
       <div class="component-wrapper" style="display: block">
-        <h4>Explore features</h4>
+        <h4>Explore components</h4>
 
         <!-- Tasks -->
         <div class="responsive-grid">
-          <a class="card-wrapper" href="docs/commands/task-run/">
-            <div class="card">
-              <div class="logo">
-                <span class="twemoji">
-                  {% include ".icons/aws/fargate-32.svg" %}
-                </span>
-              </div>
-              <div class="card-content">
-                <h5>Run tasks</h5>
-                <p>Run one-off tasks for operational workloads.</p>
-              </div>
-            </div>
-          </a>
-
-          <a class="card-wrapper" href="docs/commands/svc-exec/">
+          <a class="card-wrapper" href="docs/network/ip/">
             <div class="card">
               <div class="logo">
                 <span class="twemoji">
@@ -629,25 +521,46 @@
                 </span>
               </div>
               <div class="card-content">
-                <h5>Exec</h5>
+                <h5>IP Schema</h5>
                 <p>
-                  Run commands in or get a shell to a container running on AWS
-                  Fargate.
+                  Understand how the IPv4 address schema for this lab is
+                  derived.
                 </p>
               </div>
             </div>
           </a>
 
-          <a class="card-wrapper" href="docs/commands/svc-status/">
+          <a class="card-wrapper" href="docs/network/mpls/">
             <div class="card">
               <div class="logo">
                 <span class="twemoji">
-                  {% include ".icons/aws/cloudwatch-32.svg" %}
+                  {% include ".icons/octicons/terminal-24.svg" %}
                 </span>
               </div>
               <div class="card-content">
-                <h5>Monitoring</h5>
-                <p>View logs or alarms from your services or tasks.</p>
+                <h5>MPLS</h5>
+                <p>
+                  Information pertaining to route distinguishers, labeling
+                  protocols, routing-instances, and any other component of an
+                  MPLS network.
+                </p>
+              </div>
+            </div>
+          </a>
+
+          <a class="card-wrapper" href="docs/network/routing/">
+            <div class="card">
+              <div class="logo">
+                <span class="twemoji">
+                  {% include ".icons/octicons/terminal-24.svg" %}
+                </span>
+              </div>
+              <div class="card-content">
+                <h5>Routing</h5>
+                <p>
+                  View routing protocols leveraged to deliver a Layer 3 VPN
+                  circuit across our MPLS backbone.
+                </p>
               </div>
             </div>
           </a>

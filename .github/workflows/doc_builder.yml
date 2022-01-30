@@ -13,11 +13,10 @@ jobs:
     name: "Deploy docs"
     runs-on: "ubuntu-latest"
     steps:
-      - name: "Checkout main"
+      - name: "Checkout mainline"
         uses: "actions/checkout@v2"
 
       - name: "Deploy docs"
         uses: "mhausenblas/mkdocs-deploy-gh-pages@d576def3fd14c49606b31d3e749862f879560b37"
         env:
           GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
-          REQUIREMENTS: ".github/requirements.txt"

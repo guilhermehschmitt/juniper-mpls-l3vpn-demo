@@ -89,10 +89,12 @@ This will execute JSNAPy with the parameters we have passed within our test file
 With our attention now on the JSNAPy test file, we will see that we are actually performing two seperate tests on both routers.
 
 ```yaml
+{% raw %}
 ---
 tests_include:
   - "route_table_bgp.l3vpn.0"
   - "route_table_Customer1.inet.0"
+{% endraw %}
 ```
 
 The `tests_include` statement allows us an easy way to bundle multiple tests within the same file. Make sure the name of the tests here match an actual test below.
@@ -102,6 +104,7 @@ The `tests_include` statement allows us an easy way to bundle multiple tests wit
 Our first test will grab the XML output of the command `show route table bgp.l3vpn.0`, which is the L3VPN route table of a PE router.
 
 ```yaml
+{% raw %}
 route_table_bgp.l3vpn.0:
   - command: "show route table bgp.l3vpn.0"
   # - ignore-null: True
@@ -112,6 +115,7 @@ route_table_bgp.l3vpn.0:
         - not-equal: "active-route-count, 0"
           info: "Validate active routes are found within the bgp.l3vpn.0 table"
           err: "Route table {{post['table-name']}} has zero active routes"
+{% endraw %}
 ```
 
 With the output captured, we iterate over all of the resulting routing tables (should be just 1), and test to see if the value of `active-route-count` is not equal to the number zero.
@@ -125,6 +129,7 @@ An informational message and error is provided if this route table exists and is
 We perform a similar test with similar logic against the `Customer1.inet.0` routing table, which will make sure we have routes within the customer's VRF.
 
 ```yaml
+{% raw %}
 route_table_Customer1.inet.0:
   - command: "show route table Customer1.inet.0"
   # - ignore-null: True
@@ -135,4 +140,5 @@ route_table_Customer1.inet.0:
         - not-equal: "active-route-count, 0"
           info: "Validate active routes are found within the Customer1.inet.0 table"
           err: "Route table {{post['table-name']}} has zero active routes"
+{% endraw %}
 ```

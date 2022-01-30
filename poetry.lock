@@ -261,7 +261,7 @@ gitdb = ">=4.0.1,<5"
 
 [[package]]
 name = "icdiff"
-version = "2.0.4"
+version = "1.9.1"
 description = "improved colored diff"
 category = "main"
 optional = false
@@ -728,7 +728,7 @@ pyyaml = "*"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "f279b60f4bbec036fc3481ab38cfe60b0d79baa193324fcc1c3644268fd40899"
+content-hash = "ad996a267f0c95563e93a97e124b90a23ac8147cbad3e2977bde8b58bdb1e93e"
 
 [metadata.files]
 attrs = [
@@ -884,7 +884,7 @@ gitpython = [
     {file = "GitPython-3.1.26.tar.gz", hash = "sha256:fc8868f63a2e6d268fb25f481995ba185a85a66fcad126f039323ff6635669ee"},
 ]
 icdiff = [
-    {file = "icdiff-2.0.4.tar.gz", hash = "sha256:c72572e5ce087bc7a7748af2664764d4a805897caeefb665bdc12677fefb2212"},
+    {file = "icdiff-1.9.1.tar.gz", hash = "sha256:66972dd03318da55280991db375d3ef6b66d948c67af96c1ebdb21587e86655e"},
 ]
 identify = [
     {file = "identify-2.4.5-py2.py3-none-any.whl", hash = "sha256:d27d10099844741c277b45d809bd452db0d70a9b41ea3cd93799ebbbcc6dcb29"},

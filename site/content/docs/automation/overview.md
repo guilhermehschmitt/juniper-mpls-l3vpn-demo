@@ -16,12 +16,14 @@ All of our project's scripts, variables, and template files are stored within th
 files/python
 ├── configurations/
 ├── templates/
+├── tests/
 ├── vars/
 ├── configure.py
 ├── download.py
 ├── generate.py
 ├── inventory.yaml
-└── rollback.py
+├── rollback.py
+└── validate.py
 ```
 
 #### Python Scripts
@@ -34,6 +36,7 @@ You likely don't need me to explain that the files that end with `.py` are the v
 | `configure.py` | Build and push our configurations with PyEZ.        |
 | `download.py`  | Download our configurations with PyEZ.              |
 | `rollback.py`  | Rollback to our bootstrap configurations with PyEZ. |
+| `validate.py`  | Validate our MPLS L3VPN circuit with JSNAPy.        |
 
 #### Inventory file
 
@@ -71,6 +74,7 @@ You will find a packaged called [Invoke](http://www.pyinvoke.org/) installed wit
 | `invoke configure` | Build and push our configurations with PyEZ.        |
 | `invoke download`  | Download our configurations with PyEZ.              |
 | `invoke rollback`  | Rollback to our bootstrap configurations with PyEZ. |
+| `invoke validate`  | Validate our MPLS L3VPN circuit with JSNAPy.        |
 
 #### Dockerfile
 

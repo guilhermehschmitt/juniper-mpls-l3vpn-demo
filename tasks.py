@@ -203,3 +203,16 @@ def rollback(context):
             {DOCKER_IMG}:{DOCKER_TAG} python rollback.py",
         pty=True,
     )
+
+
+@task
+def validate(context):
+    """Validate our MPLS L3VPN circuit with JSNAPy."""
+    console_msg("Validate our MPLS L3VPN circuit with JSNAPy")
+    context.run(
+        f"docker run -it --rm \
+            -v {PWD}/files/:/home/files \
+            -w /home/files/python/ \
+            {DOCKER_IMG}:{DOCKER_TAG} python validate.py",
+        pty=True,
+    )

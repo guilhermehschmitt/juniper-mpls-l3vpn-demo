@@ -1,89 +1,193 @@
-## Automation
+## Code Deep Dive
 
-### 📝 Overview
+### 🐍 Script
 
-Our primary goal today is to use PyEZ to provision eight Juniper vMX routers into various elements of an MPLS network.
+```python
+"""rollback.py: perform a 'rollback 1' operation on our network devices."""
+import yaml  # type: ignore
+from jnpr.junos import Device  # type: ignore
+from jnpr.junos.exception import CommitError  # type: ignore
+from jnpr.junos.exception import ConnectError  # type: ignore
+from jnpr.junos.exception import LockError  # type: ignore
+from jnpr.junos.exception import RpcError  # type: ignore
+from jnpr.junos.exception import UnlockError  # type: ignore
+from jnpr.junos.utils.config import Config  # type: ignore
 
-While PyEZ has the capability of pushing individual lines, or groups of lines, of configurations to a device, here we will be building and pushing an entire configuration.
 
-We will also be following the guiding principles of [Infrastructure-as-Code]("https://en.wikipedia.org/wiki/Infrastructure_as_code"), where we will store our the elements of our configuration as YAML, to be ran through a Jinja2 template to output our configurations.
+def inventory():
+    """Load our inventory.yaml into a python object called routers."""
+    devices = yaml.safe_load(open("inventory.yaml"))
+    return devices
 
-### 🐍 Python scripts, Jinja2 templates, and variable files
 
-All of our project's scripts, variables, and template files are stored within the [files/python](https://github.com/cdot65/juniper-mpls-l3vpn-demo/tree/main/files/python) directory.
+def main(devices):
+    """Rollback the configuration to the previous state.
 
-```bash
-files/python
-├── configurations/
-├── templates/
-├── tests/
-├── vars/
-├── configure.py
-├── download.py
-├── generate.py
-├── inventory.yaml
-├── rollback.py
-└── validate.py
+    Loop over our list of routers that we imported from inventory.py
+    Utilize the ID as the last octet within the IP address of the router
+    Once the connection is open, perform the following steps
+
+    1. Print a message to the console
+    2. Perform a "lock" on the configuration
+    3. Rollback to the previous state
+    4. Commit the configuration
+    5. Perform an "unlock" on the configuration
+    6. Gracefully exit the NETCONF session
+
+    Various error handling mechanisms have been included to ensure that
+    the operator safely exits the script when a known failure occurs.
+    """
+    for each in devices["routers"]:
+        dev = Device(
+            host=f"{each['ip']}",
+            user="jcluser",
+            password="Juniper!1",
+            gather_facts=False,
+        )
+        try:
+            dev.open()
+            print(f"connected to {each['name']}")  # noqa T001
+        except ConnectError as err:
+            print(f"Cannot connect to {each['name']}: {err}")  # noqa T001
+            return
+
+        configuration = Config(dev)
+
+        # Lock the configuration
+        print("Locking the configuration")  # noqa T001
+        try:
+            configuration.lock()
+        except LockError as err:
+            print(f"Unable to lock configuration: {err}")
+            dev.close()
+            return
+        try:
+            print("Rolling back the configuration")  # noqa T001
+            configuration.rollback(rb_id=1)
+            print("Committing the configuration")  # noqa T001
+            configuration.commit()
+        except CommitError as err:
+            print(f"Error: Unable to commit configuration: {err}")  # noqa T001
+        except RpcError as err:
+            print(f"Unable to roll back configuration changes: {err}")  # noqa T001
+
+        print("Unlocking the configuration")  # noqa T001
+        try:
+            configuration.unlock()
+        except UnlockError as err:
+            print(f"Unable to unlock configuration: {err}")  # noqa T001
+        dev.close()
+
+
+if __name__ == "__main__":
+    """Main script execution.
+
+    We will first load our inventory.yaml file into a new Python object `devices`
+    Our main function will run next, which will take care of the rolling back the
+    configurations on the remote devices.
+    """
+    devices = inventory()
+    main(devices)
+
 ```
-
-#### Python Scripts
-
-You likely don't need me to explain that the files that end with `.py` are the various Python scripts. Here is a quick glimpse into the four provided.
-
-| Script         | Action                                              |
-| -------------- | --------------------------------------------------- |
-| `generate.py`  | Build the configurations locally with Jinaj2.       |
-| `configure.py` | Build and push our configurations with PyEZ.        |
-| `download.py`  | Download our configurations with PyEZ.              |
-| `rollback.py`  | Rollback to our bootstrap configurations with PyEZ. |
-| `validate.py`  | Validate our MPLS L3VPN circuit with JSNAPy.        |
-
-#### Inventory file
-
-The `inventory.yaml` file stores information about our devices, basic information like hostname and IP address.
-
-#### `configurations/` directory
-
-If you choose to generate the configurations locally but _not_ push them to the devices, then you will find the generated configurations within the `configurations` directory. I had also included the working final configurations in this directory if you just want to see the resulting configurations.
-
-#### `templates/` directory
-
-Since we are storing our configuration as code, we will need some kind of templating engine to run our variables through to produce the configurations. For this we have Jinja2 to handle the templating, and its template files are stored in the `templates` directory.
-
-#### `vars/` directory
-
-Finally, the device's configuration will be stored as YAML files found within the `vars/` directory. Each device will have its own file to represent its configuration. We will run these files through the Jinaj2 templates to produce our configurations.
 
 ---
 
-### 🛠️ Tools
+### 📝 Deep Dive
 
-In hopes to making this project as easy as possible to execute, I have provided many tools to help with execution of the tasks within this project.
+#### Imports
 
-#### Poetry
+asdf
 
-A [Poetry](https://python-poetry.org/docs/) lock file to help you create a Python environment that mirrors my own. As long as you [have Poetry installed on your machine](https://python-poetry.org/docs/), to you can simply type `poetry install` to create the virtual environment, followed by `poetry shell` to activate it.
+```python
+import yaml  # type: ignore
+from jnpr.junos import Device  # type: ignore
+from jnpr.junos.utils.config import Config  # type: ignore
+```
 
-#### Invoke
+asdf
 
-You will find a packaged called [Invoke](http://www.pyinvoke.org/) installed within the virtual environment. Invoke is an elegant way to create CLI shortcuts for commands that are long to type out. Here is a short list of some of the Invoke operations created in the `tasks.py` file.
+#### Inventory
 
-| Command            | Action                                              |
-| ------------------ | --------------------------------------------------- |
-| `invoke generate`  | Build the configurations locally with Jinaj2.       |
-| `invoke configure` | Build and push our configurations with PyEZ.        |
-| `invoke download`  | Download our configurations with PyEZ.              |
-| `invoke rollback`  | Rollback to our bootstrap configurations with PyEZ. |
-| `invoke validate`  | Validate our MPLS L3VPN circuit with JSNAPy.        |
+asdf
 
-#### Dockerfile
+```python
+def inventory():
+    """Load our inventory.yaml into a python object called routers."""
+    devices = yaml.safe_load(open("inventory.yaml"))
+    return devices
+```
 
-A Dockerfile has also been provided for those that would like to execute this within an isolated container instead of a virtual environment. A couple of additional Invoke tasks are listed below to help with building and accessing the Docker container environment.
+asdf
 
-| Command        | Action                                                   |
-| -------------- | -------------------------------------------------------- |
-| `invoke build` | Build an instance of the Docker container image locally. |
-| `invoke shell` | Get access to the BASH shell within our container.       |
+#### Main
+
+asdf
+
+```python
+def main(devices):
+    """Build connection, template config, and push to device.
+
+    Loop over our list of routers that we imported from inventory.py
+    Utilize the ID as the last octet within the IP address of the router
+    Once the connection is open, print a message to the console
+    Ingest the configuration variables stored in our device's' YAML file
+    """
+    for each in devices["routers"]:
+        dev = Device(
+            host=f"{each['ip']}",
+            user="jcluser",
+            password="Juniper!1",
+            gather_facts=False,
+        )
+        dev.open()
+
+        print(f"connected to {each['name']}")  # noqa T001
+
+        """
+        creating an empty dictionary called `data`
+        then stuffing our YAML vars into it as 'configuration'
+        this is to help handle PyEZ loading YAML vars differently than Jinja2
+        """
+        data = dict()
+        data["configuration"] = yaml.safe_load(open(f"vars/{each['name']}.yaml"))
+
+        configuration = Config(dev)
+
+        configuration.load(
+            template_path="templates/junos.j2", template_vars=data, format="set"
+        )
+        configuration.pdiff()
+        if configuration.commit_check():
+            configuration.commit()
+        else:
+            configuration.rollback()
+
+        dev.close()
+```
+
+asdf
+
+---
+
+#### Initialize script
+
+asdf
+
+```python
+if __name__ == "__main__":
+    """Main script execution.
+
+    We will first load our inventory.yaml file into a new Python object `devices`
+    Our main function will run next, which will take care of the templating
+    and pushing of our configurations to the remote devices.
+    """
+    devices = inventory()
+    main(devices)
+
+```
+
+asdf
 
 ---
 

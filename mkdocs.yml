@@ -19,22 +19,28 @@ nav:
   - Home: "index.md"
   - Documentation:
       - Overview: "docs/overview.md"
-      - Lab Environment:
-          - Juniper vLabs: "docs/lab-environment/juniper-vlabs.md"
-          - Local: "docs/lab-environment/local.md"
       - Automation:
           - Overview: "docs/automation/overview.md"
           - Scripts:
+              - configure.py: "docs/automation/configure.py.md"
+              - generate.py: "docs/automation/generate.py.md"
+              - rollback.py: "docs/automation/rollback.py.md"
+              - validate.py: "docs/automation/validate.py.md"
+          - Tools:
+              - Dockerfile: "docs/automation/dockerfile.md"
+              - Invoke: "docs/automation/invoke.md"
+              - Poetry: "docs/automation/poetry.md"
+          - Workflow:
               - configure: "docs/automation/configure.md"
-              - generate: "docs/automation/generate.md"
-              - rollback: "docs/automation/rollback.md"
-          - Tools: "docs/automation/tools.md"
+              - validate: "docs/automation/validate.md"
       - Network:
           - Overview: "docs/network/overview.md"
           - IP Schema: "docs/network/ip.md"
           - MPLS: "docs/network/mpls.md"
           - Routing: "docs/network/routing.md"
-      - Validation: "docs/validate.md"
+      - Lab Environment:
+          - Juniper vLabs: "docs/lab-environment/juniper-vlabs.md"
+          - Local: "docs/lab-environment/local.md"
 
 theme:
   name: "material"

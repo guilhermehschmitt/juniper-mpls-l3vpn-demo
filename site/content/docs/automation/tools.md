@@ -34,19 +34,3 @@ A Dockerfile has also been provided for those that would like to execute this wi
 | `invoke shell` | Get access to the BASH shell within our container.       |
 
 ---
-
-### 🚀 Workflow
-
-The workflow will look like this:
-
-1. Have Poetry install your Python packages in a virtual environment (one-time operation)
-2. Activate your new virtual environment with Poetry
-3. Build Docker container image (one-time operation)
-4. Run locally or within a container using the Invoke package
-
-```bash
-poetry install
-poetry shell
-invoke build
-invoke configure
-```

@@ -21,15 +21,19 @@ The workflow will look like this:
 1. Have Poetry install your Python packages in a virtual environment (one-time operation)
 2. Activate your new virtual environment with Poetry
 3. Build Docker container image (one-time operation)
-4. Run locally or within a container using the Invoke package
+4. Access the container's bash shell for running scripts without Invoke
+5. Configure your MPLS network
 
 ```bash
 poetry install
 poetry shell
 invoke build
+invoke shell
 invoke configure
 ```
 
-![poetry install](./site/content/assets/images/poetry_install.png)
+![invoke build](../../assets/images/invoke_build.png)
 
-![poetry shell](./site/content/assets/images/poetry_shell.png)
+![invoke shell](../../assets/images/invoke_shell.png)
+
+![invoke configure](../../assets/images/invoke_configure.png)

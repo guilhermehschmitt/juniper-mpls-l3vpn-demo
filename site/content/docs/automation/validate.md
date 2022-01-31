@@ -84,7 +84,7 @@ We execute our JSNAPy task by calling our object called `JSNAPY`, asking it for 
 
 This will execute JSNAPy with the parameters we have passed within our test file. With such a great segway in place...
 
-### 📝 test_l3vpn_routes.yaml
+### ✅ test_l3vpn_routes.yaml
 
 With our attention now on the JSNAPy test file, we will see that we are actually performing two seperate tests on both routers.
 

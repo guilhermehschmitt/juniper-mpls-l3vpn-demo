@@ -1,38 +1,5 @@
 ## Code Deep Dive
 
-### 🐍 Script
-
-```python
-"""validate.py: use JSNAPy to validate the L3VPN circuit."""
-
-import os
-
-from jnpr.jsnapy import SnapAdmin
-
-PWD = os.path.dirname(os.path.realpath(__file__))
-
-JSNAPY = SnapAdmin()
-
-CONFIG = f"""
-hosts:
-  - device: 100.123.1.4
-    username : automation
-    passwd: juniper123
-  - device: 100.123.1.7
-    username : automation
-    passwd: juniper123
-tests:
-  - {PWD}/tests/test_l3vpn_routes.yaml
-"""
-
-
-if __name__ == "__main__":
-    """Perform our JSNAPy tests."""
-    JSNAPY.snapcheck(CONFIG, "test_l3vpn_routes")
-```
-
----
-
 ### 📝 Overview
 
 Our goal here is to use JSNAPy to validate the route table information within our provisioned fabric.
@@ -198,4 +165,37 @@ poetry install
 poetry shell
 cd files/python
 python validate.py
+```
+
+---
+
+### 🐍 Script
+
+```python
+"""validate.py: use JSNAPy to validate the L3VPN circuit."""
+
+import os
+
+from jnpr.jsnapy import SnapAdmin
+
+PWD = os.path.dirname(os.path.realpath(__file__))
+
+JSNAPY = SnapAdmin()
+
+CONFIG = f"""
+hosts:
+  - device: 100.123.1.4
+    username : automation
+    passwd: juniper123
+  - device: 100.123.1.7
+    username : automation
+    passwd: juniper123
+tests:
+  - {PWD}/tests/test_l3vpn_routes.yaml
+"""
+
+
+if __name__ == "__main__":
+    """Perform our JSNAPy tests."""
+    JSNAPY.snapcheck(CONFIG, "test_l3vpn_routes")
 ```

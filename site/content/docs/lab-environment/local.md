@@ -1,8 +1,10 @@
-## Running this project locally
+## 📌 Overview
 
 To get off the ground running with a local copy of this projects, start with making sure that you have the proper tools instead head of time.
 
-### Local Requirements
+---
+
+## Local Requirements
 
 | Technology | Install Guide                                  |
 | ---------- | ---------------------------------------------- |
@@ -11,7 +13,9 @@ To get off the ground running with a local copy of this projects, start with mak
 
 Please make sure you have correct permissions to execute
 
-### Setting up the enviornment
+---
+
+## Setting up the enviornment
 
 Once you're ready for flight, start by [cloning](https://rogerdudler.github.io/git-guide/) this repository to your workstation.
 

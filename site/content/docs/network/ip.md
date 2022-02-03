@@ -1,4 +1,8 @@
+## 📌 Overview
+
 This section explains our default IPv4 address schema
+
+---
 
 ## IP Addressing
 
@@ -6,7 +10,13 @@ Each router will be given an ID of 11-17, and its loopback/router-id will be bui
 
 Additionally, P2P connections will follow a pattern of `10.{x}.{y}.{x}/24`, where `{x}` represents the local device's ID and `{y}` represents the ID of the remote router.
 
-### Example: Router1
+---
+
+## Examples
+
+Example files have been included to help explain
+
+### Router1
 
 ```yaml
 loopback0 = "192.168.255.11"
@@ -16,7 +26,7 @@ p2p to router3 = "10.11.13.11/24"
 p2p to router5 = "10.11.15.11/24"
 ```
 
-### Example: Router2
+### Router2
 
 ```yaml
 loopback0 = "192.168.255.12"

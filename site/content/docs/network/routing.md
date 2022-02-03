@@ -1,6 +1,6 @@
-This section explains our generated MPLS configurations.
+## 📌 Overview
 
-## Routing
+This page explains elements of our generated routing configurations.
 
 To best emulate a small ISP, I have opted to use OSPF between the MPLS routers, with external BGP peering with both customer connections.
 
@@ -8,7 +8,9 @@ PE routers do the heavy lifting in an MPLS environment, P routers are unaware of
 
 We will reference the router PE1 for the examples below.
 
-### OSPF
+---
+
+## OSPF
 
 Our L3VPN circuit will be signaled with BGP, but we'll have to learn our BGP neighbor's loopback before we can form a BGP session with it. For this task we will use OSPF to share the loopbacks between our MPLS backbone.
 
@@ -20,7 +22,9 @@ set protocols ospf area 0.0.0.0 interface ge-0/0/3.0 interface-type p2p
 set protocols ospf area 0.0.0.0 interface lo0.0 passive
 ```
 
-### eBGP to Customer1
+---
+
+## eBGP to Customer1
 
 We will form a external BGP session to our customer to exchange routing information with. Customer1's router `ce1` will not be MPLS aware, and will look extremely simple.
 
@@ -33,7 +37,9 @@ set routing-instances Customer1 protocols bgp group Customer1 peer-as 65000
 set routing-instances Customer1 protocols bgp group Customer1 neighbor 74.51.192.1
 ```
 
-### iBGP to PE4
+---
+
+## iBGP to PE4
 
 Every circuit needs to have a beginning and and end. From the perspective of `pe1`, it is the beginning and `pe4` will be the end of our L3 VPN circuit.
 

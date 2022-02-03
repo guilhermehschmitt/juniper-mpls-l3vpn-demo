@@ -1,4 +1,4 @@
-## Welcome to the Juniper PyEZ L3VPN MPLS demo 🎉
+## 🎉 Welcome
 
 This project is for network developers looking to build, deploy, and validate an MPLS network on Juniper vMX routers.
 
@@ -6,11 +6,11 @@ For those looking to get started with either network automation or MPLS L3VPN ci
 
 ---
 
-### How to use this guide
+## ❓ How to use this guide
 
 The navigation menu on the left hand of this site will be the best method of navigating between the documents.
 
-#### Automation
+### Automation
 
 This is the meat and potatoes of our documentation, even for those just looking for an MPLS example.
 
@@ -18,15 +18,10 @@ We will cover how configurations are built, where they are stored, and how do th
 
 The all-important code deep dive will be taking place here, and we will discuss the various tools that are provided in the project files to make our lives easier.
 
-#### Network
+### Network
 
 This can be considered optional if you're only here for the Python, but it's really cool too. We will cover topics like IP addressing, MPLS configurations, and control-plane details.
 
-#### Lab Environment
+### Lab Environment
 
-Thsi section can be considered optional, only to be referenced if you're planning to execute this project firsthand.
-
----
-
-> **Note**
-> Juniper vLabs will be used as our reference topology throughout the documentation, but we have also included an EVE-NG topology for those interested in running this project locally.
+This section can be considered optional, only to be referenced if you're planning to execute this project firsthand.

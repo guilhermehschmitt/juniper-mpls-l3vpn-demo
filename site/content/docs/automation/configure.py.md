@@ -142,7 +142,7 @@ python configure.py
 
 ---
 
-### 🐍 Script
+## 🐍 Script
 
 ```python
 """Generate production configurations and push to our network devices."""
@@ -209,3 +209,9 @@ if __name__ == "__main__":
     main(devices)
 
 ```
+
+---
+
+## Example output
+
+![python validate.py](https://raw.githubusercontent.com/cdot65/juniper-mpls-l3vpn-demo/dev/site/content/assets/images/generate.png)

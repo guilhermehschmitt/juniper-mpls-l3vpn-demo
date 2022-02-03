@@ -1,6 +1,6 @@
 ## 📌 Overview
 
-This script will be ran when you'd like to generate and push a device's configuration using PyEZ.
+This script will be ran when you'd like to use PyEZ to roll a device's configuration back to the previous step.
 
 ---
 

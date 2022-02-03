@@ -22,7 +22,7 @@ files/python
 └── validate.py
 ```
 
-Our attention in this section will be upon the `configure.py` script.
+Our attention in this section will be upon the `rollback.py` script.
 
 ---
 
@@ -33,14 +33,21 @@ Our attention in this section will be upon the `configure.py` script.
 We will be importing inventory data into our script from a local file named `inventory.yaml`, so we need to `import yaml` to handle this functionality.
 
 ```python
-import yaml
-from jnpr.junos import Device
-from jnpr.junos.utils.config import Config
+import yaml  # type: ignore
+from jnpr.junos import Device  # type: ignore
+from jnpr.junos.exception import CommitError  # type: ignore
+from jnpr.junos.exception import ConnectError  # type: ignore
+from jnpr.junos.exception import LockError  # type: ignore
+from jnpr.junos.exception import RpcError  # type: ignore
+from jnpr.junos.exception import UnlockError  # type: ignore
+from jnpr.junos.utils.config import Config  # type: ignore
 ```
 
 Two primary functions of PyEZ will be imported, the first of which is the `Device` object. `Device` will allow us to model our device's parameters, things like IP address, username, and the sort. But `Device` will also enable us to build and maintain a NETCONF session to our remote device, so this object Class really does most of the heavy lifting here.
 
 From the utilities module, we will be importing the `Config` class, which will (obviously) handle the configuration aspects of our script.
+
+Several problems could arise within this request, so we import PyEZ's error types to help us validate that everything either worked or failed safely.
 
 ---
 
@@ -73,62 +80,49 @@ def main(devices):
             password="Juniper!1",
             gather_facts=False,
         )
-        dev.open()
-
+        try:
+            dev.open()
+            print(f"connected to {each['name']}")  # noqa T001
+        except ConnectError as err:
+            print(f"Cannot connect to {each['name']}: {err}")  # noqa T001
+            return
 ```
 
-After printing a status message to the console, we will be creating an empty dictionary called `data` and then stuffing our YAML vars into it as `data['configuration']`.
+Create an object based on the `Config` object type, passing it our connection to the device.
 
-The only reason this is here is to help handle the fact that PyEZ and Jinja2 library load YAML vars differently than each other.
+Perform a lock on the configuration database, perform the rollback, and commit.
 
 ```python
-print(f"connected to {each['name']}")  # noqa T001
 
-data = dict()
-data["configuration"] = yaml.safe_load(open(f"vars/{each['name']}.yaml"))
+        configuration = Config(dev)
+
+        # Lock the configuration
+        print("Locking the configuration")  # noqa T001
+        try:
+            configuration.lock()
+        except LockError as err:
+            print(f"Unable to lock configuration: {err}")
+            dev.close()
+            return
+        try:
+            print("Rolling back the configuration")  # noqa T001
+            configuration.rollback(rb_id=1)
+            print("Committing the configuration")  # noqa T001
+            configuration.commit()
+        except CommitError as err:
+            print(f"Error: Unable to commit configuration: {err}")  # noqa T001
+        except RpcError as err:
+            print(f"Unable to roll back configuration changes: {err}")  # noqa T001
+
+        print("Unlocking the configuration")  # noqa T001
+        try:
+            configuration.unlock()
+        except UnlockError as err:
+            print(f"Unable to unlock configuration: {err}")  # noqa T001
+        dev.close()
 ```
 
----
-
-We pass on the object that represents our device into the `Config` class, which will create a new object called `configuration` to represent our device's configuration.
-
-```python
-configuration = Config(dev)
-
-configuration.load(
-    template_path="templates/junos.j2", template_vars=data, format="set"
-)
-```
-
-Next we see that we run the `load` method of our recently created `configuration` object, and we pass it three options:
-
-1. Point to our Jinja2 template file at `templates/junos.j2`
-2. Point to our device's variables (the `data` object created above)
-3. Declare that our configuration is in the `set`format, alternatives would be `text`, `xml`, or `json`
-
-This will push the device's configuration to the candidate config database, but will not commit it just yet.
-
----
-
-We perform three functions upon the candidate configuration database:
-
-1. Report any configuration diff to the console.
-2. Perform a configuration check to make sure our generated configuration is valid.
-3. Commit the configuration.
-
-```python
-configuration.pdiff()
-if configuration.commit_check():
-    configuration.commit()
-else:
-    configuration.rollback()
-
-dev.close()
-```
-
-Should the configuration fail the configuration check, roll back to the previous state.
-
-Close our NETCONF session.
+Unlock the configuration database and close our NETCONF session.
 
 ---
 
@@ -145,7 +139,7 @@ if __name__ == "__main__":
 
 We will first load our inventory.yaml file into a new Python object `devices`.
 
-Our main function will run next, which will take care of the templating and pushing of our configurations to the remote devices.
+Our main function will run next, which will take care of the logging into and performing a rollback upon the remote devices.
 
 ---
 
@@ -159,7 +153,7 @@ The workflow will look like this:
 
 ```bash
 cd files/python
-python configure.py
+python rollback.py
 ```
 
 ---
@@ -167,9 +161,14 @@ python configure.py
 ## 🐍 Script
 
 ```python
-"""Generate production configurations and push to our network devices."""
+"""rollback.py: perform a 'rollback 1' operation on our network devices."""
 import yaml  # type: ignore
 from jnpr.junos import Device  # type: ignore
+from jnpr.junos.exception import CommitError  # type: ignore
+from jnpr.junos.exception import ConnectError  # type: ignore
+from jnpr.junos.exception import LockError  # type: ignore
+from jnpr.junos.exception import RpcError  # type: ignore
+from jnpr.junos.exception import UnlockError  # type: ignore
 from jnpr.junos.utils.config import Config  # type: ignore
 
 
@@ -180,12 +179,21 @@ def inventory():
 
 
 def main(devices):
-    """Build connection, template config, and push to device.
+    """Rollback the configuration to the previous state.
 
     Loop over our list of routers that we imported from inventory.py
     Utilize the ID as the last octet within the IP address of the router
-    Once the connection is open, print a message to the console
-    Ingest the configuration variables stored in our device's' YAML file
+    Once the connection is open, perform the following steps
+
+    1. Print a message to the console
+    2. Perform a "lock" on the configuration
+    3. Rollback to the previous state
+    4. Commit the configuration
+    5. Perform an "unlock" on the configuration
+    6. Gracefully exit the NETCONF session
+
+    Various error handling mechanisms have been included to ensure that
+    the operator safely exits the script when a known failure occurs.
     """
     for each in devices["routers"]:
         dev = Device(
@@ -194,29 +202,38 @@ def main(devices):
             password="Juniper!1",
             gather_facts=False,
         )
-        dev.open()
-
-        print(f"connected to {each['name']}")  # noqa T001
-
-        """
-        creating an empty dictionary called `data`
-        then stuffing our YAML vars into it as 'configuration'
-        this is to help handle PyEZ loading YAML vars differently than Jinja2
-        """
-        data = dict()
-        data["configuration"] = yaml.safe_load(open(f"vars/{each['name']}.yaml"))
+        try:
+            dev.open()
+            print(f"connected to {each['name']}")  # noqa T001
+        except ConnectError as err:
+            print(f"Cannot connect to {each['name']}: {err}")  # noqa T001
+            return
 
         configuration = Config(dev)
 
-        configuration.load(
-            template_path="templates/junos.j2", template_vars=data, format="set"
-        )
-        configuration.pdiff()
-        if configuration.commit_check():
+        # Lock the configuration
+        print("Locking the configuration")  # noqa T001
+        try:
+            configuration.lock()
+        except LockError as err:
+            print(f"Unable to lock configuration: {err}")
+            dev.close()
+            return
+        try:
+            print("Rolling back the configuration")  # noqa T001
+            configuration.rollback(rb_id=1)
+            print("Committing the configuration")  # noqa T001
             configuration.commit()
-        else:
-            configuration.rollback()
+        except CommitError as err:
+            print(f"Error: Unable to commit configuration: {err}")  # noqa T001
+        except RpcError as err:
+            print(f"Unable to roll back configuration changes: {err}")  # noqa T001
 
+        print("Unlocking the configuration")  # noqa T001
+        try:
+            configuration.unlock()
+        except UnlockError as err:
+            print(f"Unable to unlock configuration: {err}")  # noqa T001
         dev.close()
 
 
@@ -224,12 +241,11 @@ if __name__ == "__main__":
     """Main script execution.
 
     We will first load our inventory.yaml file into a new Python object `devices`
-    Our main function will run next, which will take care of the templating
-    and pushing of our configurations to the remote devices.
+    Our main function will run next, which will take care of the rolling back the
+    configurations on the remote devices.
     """
     devices = inventory()
     main(devices)
-
 ```
 
 ---

@@ -33,14 +33,14 @@ Our attention in this section will be upon the `rollback.py` script.
 We will be importing inventory data into our script from a local file named `inventory.yaml`, so we need to `import yaml` to handle this functionality.
 
 ```python
-import yaml  # type: ignore
-from jnpr.junos import Device  # type: ignore
-from jnpr.junos.exception import CommitError  # type: ignore
-from jnpr.junos.exception import ConnectError  # type: ignore
-from jnpr.junos.exception import LockError  # type: ignore
-from jnpr.junos.exception import RpcError  # type: ignore
-from jnpr.junos.exception import UnlockError  # type: ignore
-from jnpr.junos.utils.config import Config  # type: ignore
+import yaml
+from jnpr.junos import Device
+from jnpr.junos.exception import CommitError
+from jnpr.junos.exception import ConnectError
+from jnpr.junos.exception import LockError
+from jnpr.junos.exception import RpcError
+from jnpr.junos.exception import UnlockError
+from jnpr.junos.utils.config import Config
 ```
 
 Two primary functions of PyEZ will be imported, the first of which is the `Device` object. `Device` will allow us to model our device's parameters, things like IP address, username, and the sort. But `Device` will also enable us to build and maintain a NETCONF session to our remote device, so this object Class really does most of the heavy lifting here.
@@ -82,9 +82,9 @@ def main(devices):
         )
         try:
             dev.open()
-            print(f"connected to {each['name']}")  # noqa T001
+            print(f"connected to {each['name']}")
         except ConnectError as err:
-            print(f"Cannot connect to {each['name']}: {err}")  # noqa T001
+            print(f"Cannot connect to {each['name']}: {err}")
             return
 ```
 
@@ -96,8 +96,7 @@ Perform a lock on the configuration database, perform the rollback, and commit.
 
         configuration = Config(dev)
 
-        # Lock the configuration
-        print("Locking the configuration")  # noqa T001
+        print("Locking the configuration")
         try:
             configuration.lock()
         except LockError as err:
@@ -105,20 +104,20 @@ Perform a lock on the configuration database, perform the rollback, and commit.
             dev.close()
             return
         try:
-            print("Rolling back the configuration")  # noqa T001
+            print("Rolling back the configuration")
             configuration.rollback(rb_id=1)
-            print("Committing the configuration")  # noqa T001
+            print("Committing the configuration")
             configuration.commit()
         except CommitError as err:
-            print(f"Error: Unable to commit configuration: {err}")  # noqa T001
+            print(f"Error: Unable to commit configuration: {err}")
         except RpcError as err:
-            print(f"Unable to roll back configuration changes: {err}")  # noqa T001
+            print(f"Unable to roll back configuration changes: {err}")
 
-        print("Unlocking the configuration")  # noqa T001
+        print("Unlocking the configuration")
         try:
             configuration.unlock()
         except UnlockError as err:
-            print(f"Unable to unlock configuration: {err}")  # noqa T001
+            print(f"Unable to unlock configuration: {err}")
         dev.close()
 ```
 

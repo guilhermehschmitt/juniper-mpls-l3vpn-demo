@@ -214,4 +214,4 @@ if __name__ == "__main__":
 
 ## Example output
 
-![python validate.py](https://raw.githubusercontent.com/cdot65/juniper-mpls-l3vpn-demo/dev/site/content/assets/images/generate.png)
+![python validate.py](https://raw.githubusercontent.com/cdot65/juniper-mpls-l3vpn-demo/dev/site/content/assets/images/configure.png)

@@ -33,4 +33,4 @@ poetry shell
 
 ![poetry shell](https://raw.githubusercontent.com/cdot65/juniper-mpls-l3vpn-demo/dev/site/content/assets/images/poetry_shell.png)
 
-> **Note: If you have EVE-NG running within your home, we have provided a [sample topology](https://raw.githubusercontent.com/cdot65/juniper-mpls-l3vpn-demo/dev/site/content/assets/images/eve-ng.png).**
+> **Note: If you have EVE-NG running within your home, we have provided a [sample EVE-NG lab file](https://github.com/cdot65/juniper-mpls-l3vpn-demo/tree/main/files/eve-ng).**

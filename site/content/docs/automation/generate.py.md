@@ -6,6 +6,8 @@ Instead we will be using the same Jinja2 templating engine, just outside of PyEZ
 
 Configurations will be stored in a local directory, as declared within our script below.
 
+---
+
 ## Code Deep Dive
 
 ### Imports
@@ -46,11 +48,9 @@ The function returns our list of devices as an object called `devices`.
 
 ---
 
-### Main
+### `main()`
 
 This is the primary function of our script. Here will find us setting up our Jinja2 environment and running our device's variable file through the configuration template.
-
-#### `main()`
 
 When the `main` function is called in our `if __name__ == "__main__":` below, it will be passed the output of our `inventory` function described above. We will use this list of devices to loop over when generating our configurations.
 

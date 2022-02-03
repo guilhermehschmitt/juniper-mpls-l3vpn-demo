@@ -1,22 +1,28 @@
+## Overview
+
+This script will be ran when you'd like to generate and push a device's configuration using PyEZ.
+
+---
+
 ## Code Deep Dive
 
-### 📝 Deep Dive
-
-#### Imports
+### Imports
 
 We will be importing inventory data into our script from a local file named `inventory.yaml`, so we need to `import yaml` to handle this functionality.
 
 ```python
-import yaml  # type: ignore
-from jnpr.junos import Device  # type: ignore
-from jnpr.junos.utils.config import Config  # type: ignore
+import yaml
+from jnpr.junos import Device
+from jnpr.junos.utils.config import Config
 ```
 
 Two primary functions of PyEZ will be imported, the first of which is the `Device` object. `Device` will allow us to model our device's parameters, things like IP address, username, and the sort. But `Device` will also enable us to build and maintain a NETCONF session to our remote device, so this object Class really does most of the heavy lifting here.
 
 From the utilities module, we will be importing the `Config` class, which will (obviously) handle the configuration aspects of our script.
 
-#### Inventory
+---
+
+### Inventory
 
 We are declaring our device inventory in a YAML markdown, since YAML is easy for humans and powerful for machines.
 
@@ -30,7 +36,9 @@ Here we are taking advantage of the `yaml` library we imported and calling the `
 
 The function returns our list of devices as an object called `devices`.
 
-#### Main
+---
+
+### `main()`
 
 For our script's main function, we will loop over our list of routers that we imported from `inventory.yaml` to open a NETCONF session.
 
@@ -47,17 +55,15 @@ def main(devices):
 
 ```
 
----
-
 After printing a status message to the console, we will be creating an empty dictionary called `data` and then stuffing our YAML vars into it as `data['configuration']`.
 
 The only reason this is here is to help handle the fact that PyEZ and Jinja2 library load YAML vars differently than each other.
 
 ```python
-        print(f"connected to {each['name']}")  # noqa T001
+print(f"connected to {each['name']}")  # noqa T001
 
-        data = dict()
-        data["configuration"] = yaml.safe_load(open(f"vars/{each['name']}.yaml"))
+data = dict()
+data["configuration"] = yaml.safe_load(open(f"vars/{each['name']}.yaml"))
 ```
 
 ---
@@ -65,11 +71,11 @@ The only reason this is here is to help handle the fact that PyEZ and Jinja2 lib
 We pass on the object that represents our device into the `Config` class, which will create a new object called `configuration` to represent our device's configuration.
 
 ```python
-        configuration = Config(dev)
+configuration = Config(dev)
 
-        configuration.load(
-            template_path="templates/junos.j2", template_vars=data, format="set"
-        )
+configuration.load(
+    template_path="templates/junos.j2", template_vars=data, format="set"
+)
 ```
 
 Next we see that we run the `load` method of our recently created `configuration` object, and we pass it three options:
@@ -89,13 +95,13 @@ We perform three functions upon the candidate configuration database:
 3. Commit the configuration.
 
 ```python
-        configuration.pdiff()
-        if configuration.commit_check():
-            configuration.commit()
-        else:
-            configuration.rollback()
+configuration.pdiff()
+if configuration.commit_check():
+    configuration.commit()
+else:
+    configuration.rollback()
 
-        dev.close()
+dev.close()
 ```
 
 Should the configuration fail the configuration check, roll back to the previous state.
@@ -104,7 +110,7 @@ Close our NETCONF session.
 
 ---
 
-#### Initialize script
+### Initialize script
 
 There are thousands of explanations on `if __name__ == "__main__":` within Python, I will rely on your Google skills to find you the one that makes the most sense. In short, we need this so leave it alone.
 
@@ -121,18 +127,17 @@ Our main function will run next, which will take care of the templating and push
 
 ---
 
-### 🚀 Workflow
+## 🚀 Workflow
 
 The workflow will look like this:
 
 1. Have Poetry install your Python packages in a virtual environment (one-time operation)
 2. Activate your new virtual environment with Poetry
-3. Run locally or within a container using the Invoke package
+3. Run locally
 
 ```bash
-poetry install
-poetry shell
-invoke configure
+cd files/python
+python configure.py
 ```
 
 ---

@@ -1,12 +1,10 @@
-## Overview
+## 📌 Overview
 
 ---
 
-## Code Deep Dive
+## 📝 Code Deep Dive
 
-### 📝 Deep Dive
-
-#### Imports
+### Imports
 
 asdf
 
@@ -18,7 +16,7 @@ from jnpr.junos.utils.config import Config  # type: ignore
 
 asdf
 
-#### Inventory
+### Inventory
 
 asdf
 
@@ -31,7 +29,7 @@ def inventory():
 
 asdf
 
-#### Main
+### Main
 
 asdf
 
@@ -81,7 +79,7 @@ asdf
 
 ---
 
-#### Initialize script
+### Initialize script
 
 asdf
 
@@ -102,7 +100,7 @@ asdf
 
 ---
 
-### 🚀 Workflow
+## 🚀 Workflow
 
 The workflow will look like this:
 
@@ -118,7 +116,7 @@ invoke configure
 
 ---
 
-### 🐍 Script
+## 🐍 Script
 
 ```python
 """rollback.py: perform a 'rollback 1' operation on our network devices."""

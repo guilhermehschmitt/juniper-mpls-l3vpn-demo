@@ -1,4 +1,4 @@
-## 📝 Overview
+## 📌 Overview
 
 This script is used when your goal is to just generate the configurations locally. PyEZ would not be the best candidate in this setup, as it's ability to generate template configurations is based upon a connection to a device.
 
@@ -8,7 +8,7 @@ Configurations will be stored in a local directory, as declared within our scrip
 
 ---
 
-## Code Deep Dive
+## 📝 Code Deep Dive
 
 ### Imports
 
@@ -226,6 +226,6 @@ if __name__ == "__main__":
 
 ```
 
-## Example output
+## 📸 Screenshots
 
 ![python validate.py](https://raw.githubusercontent.com/cdot65/juniper-mpls-l3vpn-demo/dev/site/content/assets/images/generate.png)

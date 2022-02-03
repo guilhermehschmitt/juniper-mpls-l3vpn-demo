@@ -1,10 +1,10 @@
-## Overview
+## 📌 Overview
 
 This script will be ran when you'd like to generate and push a device's configuration using PyEZ.
 
 ---
 
-## Code Deep Dive
+## 📝 Code Deep Dive
 
 ### Imports
 
@@ -212,6 +212,6 @@ if __name__ == "__main__":
 
 ---
 
-## Example output
+## 📸Screenshots
 
 ![python validate.py](https://raw.githubusercontent.com/cdot65/juniper-mpls-l3vpn-demo/dev/site/content/assets/images/configure.png)

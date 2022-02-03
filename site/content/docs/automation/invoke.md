@@ -1,4 +1,4 @@
-## Invoke
+## 📌 Overview
 
 You will find a packaged called [Invoke](http://www.pyinvoke.org/) installed within your poetry's virtual environment.
 
@@ -14,7 +14,7 @@ Invoke is an elegant way to create CLI shortcuts for commands that are long to t
 
 ---
 
-### 🚀 Workflow
+## 🚀 Workflow
 
 The workflow will look like this:
 
@@ -31,6 +31,8 @@ invoke build
 invoke shell
 invoke configure
 ```
+
+## 📸 Screenshots
 
 ![invoke build](../../assets/images/invoke_build.png)
 

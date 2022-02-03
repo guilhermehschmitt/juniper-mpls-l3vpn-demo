@@ -1,8 +1,10 @@
-## Validate
-
-### Overview
+## 📌 Overview
 
 Our goal here is to use JSNAPy to validate the route table information within our provisioned fabric.
+
+---
+
+## 🐍 Files
 
 Recall that all of our project's automation files are stored within the [files/python](https://github.com/cdot65/juniper-mpls-l3vpn-demo/tree/main/files/python) directory.
 
@@ -22,7 +24,7 @@ files/python
 
 Our attention in this section will be upon the `validate.py` script and its associated JSNAPy test file `tests/test_l3vpn_routes.yaml`.
 
-### 🐍 validate.py
+### `validate.py`
 
 Starting off with our imports, let's explain what we're bringing into this script and why.
 
@@ -84,7 +86,7 @@ We execute our JSNAPy task by calling our object called `JSNAPY`, asking it for 
 
 This will execute JSNAPy with the parameters we have passed within our test file. With such a great segway in place...
 
-### ✅ test_l3vpn_routes.yaml
+### `test_l3vpn_routes.yaml`
 
 With our attention now on the JSNAPy test file, we will see that we are actually performing two seperate tests on both routers.
 
@@ -143,6 +145,6 @@ route_table_Customer1.inet.0:
 {% endraw %}
 ```
 
-### Example output
+## 📸 Screenshots
 
 ![python validate.py](https://raw.githubusercontent.com/cdot65/juniper-mpls-l3vpn-demo/dev/site/content/assets/images/jsnapy_validate.png)

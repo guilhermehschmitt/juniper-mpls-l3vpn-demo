@@ -8,6 +8,28 @@ Configurations will be stored in a local directory, as declared within our scrip
 
 ---
 
+## 🐍 Files
+
+Recall that all of our project's automation files are stored within the [files/python](https://github.com/cdot65/juniper-mpls-l3vpn-demo/tree/main/files/python) directory.
+
+```bash
+files/python
+├── configurations/
+├── templates/
+├── tests/
+├── vars/
+├── configure.py
+├── download.py
+├── generate.py
+├── inventory.yaml
+├── rollback.py
+└── validate.py
+```
+
+Our attention in this section will be upon the `generate.py` script.
+
+---
+
 ## 📝 Code Deep Dive
 
 ### Imports

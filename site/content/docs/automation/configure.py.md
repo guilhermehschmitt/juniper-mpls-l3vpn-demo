@@ -4,6 +4,28 @@ This script will be ran when you'd like to generate and push a device's configur
 
 ---
 
+## 🐍 Files
+
+Recall that all of our project's automation files are stored within the [files/python](https://github.com/cdot65/juniper-mpls-l3vpn-demo/tree/main/files/python) directory.
+
+```bash
+files/python
+├── configurations/
+├── templates/
+├── tests/
+├── vars/
+├── configure.py
+├── download.py
+├── generate.py
+├── inventory.yaml
+├── rollback.py
+└── validate.py
+```
+
+Our attention in this section will be upon the `configure.py` script.
+
+---
+
 ## 📝 Code Deep Dive
 
 ### Imports
@@ -212,6 +234,6 @@ if __name__ == "__main__":
 
 ---
 
-## 📸Screenshots
+## 📸 Screenshots
 
 ![python validate.py](https://raw.githubusercontent.com/cdot65/juniper-mpls-l3vpn-demo/dev/site/content/assets/images/configure.png)

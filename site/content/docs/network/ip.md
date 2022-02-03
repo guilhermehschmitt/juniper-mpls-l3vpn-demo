@@ -15,3 +15,13 @@ p2p to router2 = "10.11.12.11/24"
 p2p to router3 = "10.11.13.11/24"
 p2p to router5 = "10.11.15.11/24"
 ```
+
+### Example: Router2
+
+```yaml
+loopback0 = "192.168.255.12"
+router id = "192.168.255.12"
+p2p to router2 = "10.11.12.12/24"
+p2p to router3 = "10.12.13.12/24"
+p2p to router5 = "10.12.15.12/24"
+```

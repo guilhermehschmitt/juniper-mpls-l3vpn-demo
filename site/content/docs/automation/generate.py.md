@@ -1,85 +1,154 @@
+## 📝 Overview
+
+This script is used when your goal is to just generate the configurations locally. PyEZ would not be the best candidate in this setup, as it's ability to generate template configurations is based upon a connection to a device.
+
+Instead we will be using the same Jinja2 templating engine, just outside of PyEZ.
+
+Configurations will be stored in a local directory, as declared within our script below.
+
 ## Code Deep Dive
 
-### 📝 Deep Dive
+### Imports
 
-#### Imports
-
-asdf
+We will be using the same `inventory.yaml` file used in our PyEZ configuration task, so we will need to import the ability to read YAML here.
 
 ```python
 import yaml  # type: ignore
-from jnpr.junos import Device  # type: ignore
-from jnpr.junos.utils.config import Config  # type: ignore
+from jinja2 import Environment, FileSystemLoader
 ```
 
-asdf
+Jinja2 has a couple components that we'll use here,
 
-#### Inventory
+- `Environment`: configuration options and template functionality
+- `FileSystemLoader`: allows us to declare the path of our working directory
 
-asdf
+### Setting our configuration output directory
+
+We will want to tell Jinja2 where we expect it to output the templated configurations. Setting it up here as a constant is simply out of convenience.
+
+```python
+CONFIG_PATH = "./configurations/generated"
+```
+
+### Inventory
+
+We are declaring our device inventory in a YAML markdown, since YAML is easy for humans and powerful for machines.
 
 ```python
 def inventory():
-    """Load our inventory.yaml into a python object called routers."""
     devices = yaml.safe_load(open("inventory.yaml"))
     return devices
 ```
 
-asdf
+Here we are taking advantage of the `yaml` library we imported and calling the `safe_load` method to load in the data from our `inventory.yaml` file.
 
-#### Main
+The function returns our list of devices as an object called `devices`.
 
-asdf
+---
+
+### Main
+
+This is the primary function of our script. Here will find us setting up our Jinja2 environment and running our device's variable file through the configuration template.
+
+---
+
+#### `main()`
+
+When the `main` function is called in our `if __name__ == "__main__":` below, it will be passed the output of our `inventory` function described above. We will use this list of devices to loop over when generating our configurations.
 
 ```python
 def main(devices):
-    """Build connection, template config, and push to device.
-
-    Loop over our list of routers that we imported from inventory.py
-    Utilize the ID as the last octet within the IP address of the router
-    Once the connection is open, print a message to the console
-    Ingest the configuration variables stored in our device's' YAML file
-    """
-    for each in devices["routers"]:
-        dev = Device(
-            host=f"{each['ip']}",
-            user="jcluser",
-            password="Juniper!1",
-            gather_facts=False,
-        )
-        dev.open()
-
-        print(f"connected to {each['name']}")  # noqa T001
-
-        """
-        creating an empty dictionary called `data`
-        then stuffing our YAML vars into it as 'configuration'
-        this is to help handle PyEZ loading YAML vars differently than Jinja2
-        """
-        data = dict()
-        data["configuration"] = yaml.safe_load(open(f"vars/{each['name']}.yaml"))
-
-        configuration = Config(dev)
-
-        configuration.load(
-            template_path="templates/junos.j2", template_vars=data, format="set"
-        )
-        configuration.pdiff()
-        if configuration.commit_check():
-            configuration.commit()
-        else:
-            configuration.rollback()
-
-        dev.close()
 ```
 
-asdf
+---
+
+### Defining Jinja2 parameters
+
+Jinja2 has many options, here we will just focus on some of the more common ones.
+
+The `FileSystemLoader` was imported at the top of our script from Jinja2, and it will help us when writting to the local system. Its sole parameter passed references the path that Jinja2 should reference.
+
+We create a new object called `env` and set it equal to an instance of the `Environment` class we imported from Jinja2, and passing it our recently-created `file_loader` object.
+
+When autoescaping is enabled, Jinja2 will filter input strings to escape any HTML content submitted via template variables. Without escaping HTML input the application becomes vulnerable to Cross Site Scripting (XSS) attacks.
+
+```python
+    file_loader = FileSystemLoader("./")
+    env = Environment(loader=file_loader, autoescape=True)
+    env.trim_blocks = True
+    env.lstrip_blocks = True
+```
+
+`trim_blocks`: If this is set to True the first newline after a block is removed.
+
+`lstrip_blocks`: If this is set to True leading spaces and tabs are stripped from the start of a line to a block.
+
+---
+
+### Loading device variables
+
+Jinja requires two things to complete its work: a template file and variables to run through it.
+
+Here we will loop over the devices that are found within the `routers` group of our `inventory.yaml` file.
+
+For each entry in our list, we will look for a variable file in the `vars/` directory. The name of the file will be based upon our device's hostname, which again was sourced from our `devices` object.
+
+```python
+    # begin loop over devices
+    for each in devices["routers"]:
+        # create a template based on variables stored in file
+        with open(f"vars/{each['name']}.yaml", "r") as stream:
+```
+
+The contents of our device's variables will be referenced as `stream` in the next steps below.
+
+### Build configurations
+
+With our device's configuration variables loaded into an object called `stream`, we will safely load the YAML file's contents into a python dictionary called `variables`.
+
+Creating a new object called `template` and setting it equal an instance of Jinja2's `get_template()` method, and making sure to tell it where to find our template file.
+
+Finally, we build our configuration by running our `variables` object through the `render` method, and storing the output as `output`.
+
+```python
+            try:
+                # set up  our environment and render configuration
+                variables = yaml.safe_load(stream)
+                template = env.get_template("templates/junos.j2")
+                output = template.render(configuration=variables)
+```
+
+---
+
+### Writing to a local file
+
+At this point, our generated configuration lives within Python as an object, this step will find us writing this to a local file.
+
+We open a file for our device's configuration based upon its name, but we need to perform a little cleanup before we write anything.
+
+A Jinja2 generated configuration will have a lot of blank lines for various reasons, we want to get rid of these blank lines to make it easier to read our configurations. So we loop over each line within our object and perform a `strip()` operation upon it.
+
+Only lines with text within them will then be written to our file, with a `\n` to create a new line break after each line.
+
+```python
+# write our rendered configuration to a local file
+with open(f"{CONFIG_PATH}/{each['name']}.conf", "w") as f:
+    for line in output.splitlines():
+        cleanedLine = line.strip()
+        if cleanedLine:
+            f.write(cleanedLine + str("\n"))
+print(f"config built: {CONFIG_PATH}/{each['name']}.conf")
+```
+
+Finally we see a print statement on the console, informing us of our success and where to find the configurations.
 
 ---
 
 #### Initialize script
 
-asdf
+We will first load our inventory.yaml file into a new Python object `devices`.
+
+Our main function will run next, which will take care of the templating a local copy of our configurations.
 
 ```python
 if __name__ == "__main__":
@@ -94,27 +163,17 @@ if __name__ == "__main__":
 
 ```
 
-asdf
-
 ---
 
-### 🚀 Workflow
-
-The workflow will look like this:
-
-1. Have Poetry install your Python packages in a virtual environment (one-time operation)
-2. Activate your new virtual environment with Poetry
-3. Run locally or within a container using the Invoke package
+## 🚀 Workflow
 
 ```bash
-poetry install
-poetry shell
-invoke configure
+python generate.py
 ```
 
 ---
 
-### 🐍 Script
+## 🐍 Script
 
 ```python
 """Generate bootstrap configurations for our network devices."""
@@ -171,3 +230,7 @@ if __name__ == "__main__":
     main(devices)
 
 ```
+
+## Example output
+
+![python validate.py](https://raw.githubusercontent.com/cdot65/juniper-mpls-l3vpn-demo/dev/site/content/assets/images/jsnapy_validate.png)

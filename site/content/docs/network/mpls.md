@@ -6,20 +6,26 @@ The MPLS-aware routers are tagged with the green label of "MPLS" in the vLabs to
 
 To build an MPLS neighborship with LDP between two router interfaces, you will see in the configurations that a few parameters need to be setup:
 
-> **enable the family of MPLS on the interface configuration**
+### Enable MPLS on interface
+
+We'll start by enabling the family of MPLS on the interface configuration
 
 ```
 set interfaces ge-0/0/1.0 family mpls
 ```
 
-> **list the interface under the protocols/mpls configuration**
+### Configure MPLS and LDP
+
+Adding our interface to the MPLS and LDP protocols will be the end of our MPLS configuration
 
 ```
 set protocols mpls interface ge-0/0/1.0
 set protocols ldp interface ge-0/0/1.0
 ```
 
-#### L3VPN
+## L3VPN
+
+### Route Distinguisher
 
 Each router participating within the MPLS L3VPN circuit will build their route-distinguisher off a similar pattern to our loopbacks, `192.168.255.{x}:100`, where `{x}` represents the router's ID
 
@@ -27,6 +33,8 @@ Each router participating within the MPLS L3VPN circuit will build their route-d
 set routing-instances Customer1 instance-type vrf
 set routing-instances Customer1 route-distinguisher 192.168.255.11:100
 ```
+
+### Route Target
 
 The routes that we import and export will be managed by the `target:{a}:{b}` structure, where `{a}` represents the BGP ASN and `{b}` respresents the customer's ID
 

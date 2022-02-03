@@ -142,3 +142,7 @@ route_table_Customer1.inet.0:
           err: "Route table {{post['table-name']}} has zero active routes"
 {% endraw %}
 ```
+
+### Example output
+
+![python validate.py](https://raw.githubusercontent.com/cdot65/juniper-mpls-l3vpn-demo/dev/site/content/assets/images/jsnapy_validate.png)

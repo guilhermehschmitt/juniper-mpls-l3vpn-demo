@@ -199,3 +199,7 @@ if __name__ == "__main__":
     """Perform our JSNAPy tests."""
     JSNAPY.snapcheck(CONFIG, "test_l3vpn_routes")
 ```
+
+### Example output
+
+![python validate.py](https://raw.githubusercontent.com/cdot65/juniper-mpls-l3vpn-demo/dev/site/content/assets/images/jsnapy_validate.png)

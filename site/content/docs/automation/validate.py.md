@@ -1,6 +1,4 @@
-## Code Deep Dive
-
-### 📝 Overview
+## 📝 Overview
 
 Our goal here is to use JSNAPy to validate the route table information within our provisioned fabric.
 
@@ -24,9 +22,9 @@ Our attention in this section will be upon the `validate.py` script and its asso
 
 ---
 
-### Deep Dive
+## Deep Dive
 
-#### Imports
+### Imports
 
 Starting off with our imports, let's explain what we're bringing into this script and why.
 
@@ -43,7 +41,9 @@ We see that we are bringing in the core python library `os`, this will be used v
 
 Our additional import is pulling in `SnapAdmin` from the `jnpr.jsnapy` library. This will give us a JSNAPy object that will give us the necessary mechanisms to perform snapshots of our production network.
 
-#### Defining our objects
+---
+
+### Defining our objects
 
 Moving on to our configuration elements, let's briefly discuss what these objects do and why we've included them.
 
@@ -71,7 +71,9 @@ We create an instance of the `SnapAdmin` object class we imported from JSNAPy, a
 
 Finally, our configuration file. This is a simple way of passing a YAML file into JSNAPy without needing an extra YAML file. We instead create a multi-line string in a new object called `CONFIG`, and within this string we have a YAML file contents. Since JSNAPy is expecting a configuration to be passed as a YAML file, this is a clever way of getting away with not needing another file.
 
-#### Main
+---
+
+### Main
 
 And to put the cherry on top, our mechanism of executing the Python script.
 
@@ -90,7 +92,7 @@ This will execute JSNAPy with the parameters we have passed within our test file
 
 ---
 
-### 📝 test_l3vpn_routes.yaml
+### 📝 `test_l3vpn_routes.yaml`
 
 With our attention now on the JSNAPy test file, we will see that we are actually performing two seperate tests on both routers.
 
@@ -151,25 +153,18 @@ route_table_Customer1.inet.0:
 
 ---
 
-### 🚀 Workflow
+## 🚀 Workflow
 
-The workflow will look like this:
-
-1. Have Poetry install your Python packages in a virtual environment (one-time operation)
-2. Activate your new virtual environment with Poetry
-3. Change into the directory containing our python files
-4. Execute the validation script
+Execute the validation script with Python
 
 ```bash
-poetry install
-poetry shell
 cd files/python
 python validate.py
 ```
 
 ---
 
-### 🐍 Script
+## 🐍 Script
 
 ```python
 """validate.py: use JSNAPy to validate the L3VPN circuit."""
@@ -200,6 +195,6 @@ if __name__ == "__main__":
     JSNAPY.snapcheck(CONFIG, "test_l3vpn_routes")
 ```
 
-### Example output
+## Example output
 
 ![python validate.py](https://raw.githubusercontent.com/cdot65/juniper-mpls-l3vpn-demo/dev/site/content/assets/images/jsnapy_validate.png)

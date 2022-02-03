@@ -50,8 +50,6 @@ The function returns our list of devices as an object called `devices`.
 
 This is the primary function of our script. Here will find us setting up our Jinja2 environment and running our device's variable file through the configuration template.
 
----
-
 #### `main()`
 
 When the `main` function is called in our `if __name__ == "__main__":` below, it will be passed the output of our `inventory` function described above. We will use this list of devices to loop over when generating our configurations.
@@ -73,10 +71,10 @@ We create a new object called `env` and set it equal to an instance of the `Envi
 When autoescaping is enabled, Jinja2 will filter input strings to escape any HTML content submitted via template variables. Without escaping HTML input the application becomes vulnerable to Cross Site Scripting (XSS) attacks.
 
 ```python
-    file_loader = FileSystemLoader("./")
-    env = Environment(loader=file_loader, autoescape=True)
-    env.trim_blocks = True
-    env.lstrip_blocks = True
+file_loader = FileSystemLoader("./")
+env = Environment(loader=file_loader, autoescape=True)
+env.trim_blocks = True
+env.lstrip_blocks = True
 ```
 
 `trim_blocks`: If this is set to True the first newline after a block is removed.
@@ -94,10 +92,8 @@ Here we will loop over the devices that are found within the `routers` group of 
 For each entry in our list, we will look for a variable file in the `vars/` directory. The name of the file will be based upon our device's hostname, which again was sourced from our `devices` object.
 
 ```python
-    # begin loop over devices
-    for each in devices["routers"]:
-        # create a template based on variables stored in file
-        with open(f"vars/{each['name']}.yaml", "r") as stream:
+for each in devices["routers"]:
+    with open(f"vars/{each['name']}.yaml", "r") as stream:
 ```
 
 The contents of our device's variables will be referenced as `stream` in the next steps below.
@@ -111,12 +107,18 @@ Creating a new object called `template` and setting it equal an instance of Jinj
 Finally, we build our configuration by running our `variables` object through the `render` method, and storing the output as `output`.
 
 ```python
-            try:
-                # set up  our environment and render configuration
-                variables = yaml.safe_load(stream)
-                template = env.get_template("templates/junos.j2")
-                output = template.render(configuration=variables)
+try:
+    variables = yaml.safe_load(stream)
+    template = env.get_template("templates/junos.j2")
+    output = template.render(configuration=variables)
+
+    # execution goes here.
+
+except yaml.YAMLError as exc:
+    print(exc)
 ```
+
+We wrap this all up within a Try/Except clause, enabling us to halt execution and print a message when there's an error with our YAML
 
 ---
 
@@ -131,7 +133,6 @@ A Jinja2 generated configuration will have a lot of blank lines for various reas
 Only lines with text within them will then be written to our file, with a `\n` to create a new line break after each line.
 
 ```python
-# write our rendered configuration to a local file
 with open(f"{CONFIG_PATH}/{each['name']}.conf", "w") as f:
     for line in output.splitlines():
         cleanedLine = line.strip()
@@ -152,12 +153,6 @@ Our main function will run next, which will take care of the templating a local 
 
 ```python
 if __name__ == "__main__":
-    """Main script execution.
-
-    We will first load our inventory.yaml file into a new Python object `devices`
-    Our main function will run next, which will take care of the templating
-    and pushing of our configurations to the remote devices.
-    """
     devices = inventory()
     main(devices)
 

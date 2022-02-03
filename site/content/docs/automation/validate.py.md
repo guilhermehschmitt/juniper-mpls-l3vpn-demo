@@ -1,8 +1,10 @@
-## Validate
-
-### Overview
+## 📌 Overview
 
 Our goal here is to use JSNAPy to validate the route table information within our provisioned fabric.
+
+---
+
+## 🐍 Files
 
 Recall that all of our project's automation files are stored within the [files/python](https://github.com/cdot65/juniper-mpls-l3vpn-demo/tree/main/files/python) directory.
 
@@ -22,7 +24,11 @@ files/python
 
 Our attention in this section will be upon the `validate.py` script and its associated JSNAPy test file `tests/test_l3vpn_routes.yaml`.
 
-### 🐍 validate.py
+---
+
+## 📝 Code Deep Dive
+
+### Imports
 
 Starting off with our imports, let's explain what we're bringing into this script and why.
 
@@ -40,6 +46,8 @@ We see that we are bringing in the core python library `os`, this will be used v
 Our additional import is pulling in `SnapAdmin` from the `jnpr.jsnapy` library. This will give us a JSNAPy object that will give us the necessary mechanisms to perform snapshots of our production network.
 
 ---
+
+### Defining our objects
 
 Moving on to our configuration elements, let's briefly discuss what these objects do and why we've included them.
 
@@ -69,6 +77,8 @@ Finally, our configuration file. This is a simple way of passing a YAML file int
 
 ---
 
+### Main
+
 And to put the cherry on top, our mechanism of executing the Python script.
 
 ```python
@@ -84,7 +94,9 @@ We execute our JSNAPy task by calling our object called `JSNAPY`, asking it for 
 
 This will execute JSNAPy with the parameters we have passed within our test file. With such a great segway in place...
 
-### 📝 test_l3vpn_routes.yaml
+---
+
+### `test_l3vpn_routes.yaml`
 
 With our attention now on the JSNAPy test file, we will see that we are actually performing two seperate tests on both routers.
 
@@ -142,3 +154,51 @@ route_table_Customer1.inet.0:
           err: "Route table {{post['table-name']}} has zero active routes"
 {% endraw %}
 ```
+
+---
+
+## 🚀 Workflow
+
+Execute the validation script with Python
+
+```bash
+cd files/python
+python validate.py
+```
+
+---
+
+## 🐍 Script
+
+```python
+"""validate.py: use JSNAPy to validate the L3VPN circuit."""
+
+import os
+
+from jnpr.jsnapy import SnapAdmin
+
+PWD = os.path.dirname(os.path.realpath(__file__))
+
+JSNAPY = SnapAdmin()
+
+CONFIG = f"""
+hosts:
+  - device: 100.123.1.4
+    username : automation
+    passwd: juniper123
+  - device: 100.123.1.7
+    username : automation
+    passwd: juniper123
+tests:
+  - {PWD}/tests/test_l3vpn_routes.yaml
+"""
+
+
+if __name__ == "__main__":
+    """Perform our JSNAPy tests."""
+    JSNAPY.snapcheck(CONFIG, "test_l3vpn_routes")
+```
+
+## 📸 Screenshots
+
+![python validate.py](https://raw.githubusercontent.com/cdot65/juniper-mpls-l3vpn-demo/dev/site/content/assets/images/jsnapy_validate.png)

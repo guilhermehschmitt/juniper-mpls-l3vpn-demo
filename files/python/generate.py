@@ -1,4 +1,4 @@
-"""Generate bootstrap configurations for our network devices."""
+"""Generate local configurations for our network devices."""
 import yaml  # type: ignore
 from jinja2 import Environment, FileSystemLoader
 

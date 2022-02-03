@@ -107,3 +107,5 @@ __pycache__
 
 example_certs/
 files/eve-ng/bootstrap
+bgp.py
+ospf.py

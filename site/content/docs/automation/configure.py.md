@@ -2,6 +2,10 @@
 
 This script will be ran when you'd like to generate and push a device's configuration using PyEZ.
 
+### Video
+
+<iframe width="720" height="405" src="https://www.youtube.com/embed/k7TvcTbikqA" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
 ---
 
 ## 🐍 Files
@@ -44,7 +48,13 @@ From the utilities module, we will be importing the `Config` class, which will (
 
 ---
 
-### Inventory
+### Configurations
+
+We will find a need to make adjustments to some of the default behavior of packages, and in some cases create an object to define some parameter.
+
+---
+
+#### Inventory
 
 We are declaring our device inventory in a YAML markdown, since YAML is easy for humans and powerful for machines.
 
@@ -82,7 +92,7 @@ After printing a status message to the console, we will be creating an empty dic
 The only reason this is here is to help handle the fact that PyEZ and Jinja2 library load YAML vars differently than each other.
 
 ```python
-print(f"connected to {each['name']}")  # noqa T001
+print(f"connected to {each['name']}")
 
 data = dict()
 data["configuration"] = yaml.safe_load(open(f"vars/{each['name']}.yaml"))
@@ -132,7 +142,7 @@ Close our NETCONF session.
 
 ---
 
-### Initialize script
+### Initialize
 
 There are thousands of explanations on `if __name__ == "__main__":` within Python, I will rely on your Google skills to find you the one that makes the most sense. In short, we need this so leave it alone.
 
@@ -151,15 +161,21 @@ Our main function will run next, which will take care of the templating and push
 
 ## 🚀 Workflow
 
-The workflow will look like this:
+Make sure your Python Virtual Environment has the necessary packages installed.
 
-1. Have Poetry install your Python packages in a virtual environment (one-time operation)
-2. Activate your new virtual environment with Poetry
-3. Run locally
+> **Reminder**: a [Poetry lock file has been provided](https://cdot65.github.io/juniper-mpls-l3vpn-demo/docs/automation/poetry/) to help create your virtual environment to reflect ours. You will need to have [Poetry installed](https://python-poetry.org/).
+
+Change into the `files/python` directory and execute the script
 
 ```bash
 cd files/python
 python configure.py
+```
+
+An alternative method of executing the script would be to leverage the Docker container provided with this project.
+
+```bash
+invoke configure
 ```
 
 ---

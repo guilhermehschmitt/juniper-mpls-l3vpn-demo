@@ -8,13 +8,15 @@ It is my hope that this repository helps those looking to understand more about 
 
 ## Documentation Site
 
-For all information about this project, please reference the [documentation page](https://cdot65.github.io/juniper-mpls-l3vpn-demo/).
+For all information about this project, please reference the [documentation site](https://cdot65.github.io/juniper-mpls-l3vpn-demo/).
 
 ---
 
 ## Virtualization
 
-We are leveraging Juniper vLabs to deploy the virtualized lab, but we have also included an EVE-NG topology to import if you do not have access to vLabs.
+I am leveraging Juniper vLabs to deploy the virtualized lab, but have also included an EVE-NG topology to import if you do not have access to vLabs.
+
+[vLabs Blueprint](https://portal.cloudlabs.juniper.net/RM/Diagram/Index/74601771-360a-4d01-80c9-c1f41f5d2438?diagramType=Topology)
 
 _high-level design_
 
@@ -34,13 +36,7 @@ Want to learn more about what's happening? Check out our documentation [https://
 
 ## Feedback
 
-Have any feedback at all? 🙏 Drop us an [issue](https://github.com/cdot65/juniper-mpls-l3vpn-demo/issues).
-
-We're happy to hear feedback or answer questions, so reach out, anytime!
-
-## Security disclosures
-
-If you think you’ve found a potential security issue, please do not post it in the Issues. Instead, please follow the instructions [here](https://cdot65.github.io/juniper-mpls-l3vpn-demo/).
+Have any feedback at all? 🙏 Drop me an [issue](https://github.com/cdot65/juniper-mpls-l3vpn-demo/issues).
 
 ## License
 

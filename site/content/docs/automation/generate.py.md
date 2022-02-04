@@ -6,6 +6,10 @@ Instead we will be using the same Jinja2 templating engine, just outside of PyEZ
 
 Configurations will be stored in a local directory, as declared within our script below.
 
+### Video
+
+<iframe width="720" height="405" src="https://www.youtube.com/embed/k7TvcTbikqA" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
 ---
 
 ## 🐍 Files
@@ -46,15 +50,13 @@ Jinja2 has a couple components that we'll use here,
 - `Environment`: configuration options and template functionality
 - `FileSystemLoader`: allows us to declare the path of our working directory
 
-### Setting our configuration output directory
+### Configurations
 
-We will want to tell Jinja2 where we expect it to output the templated configurations. Setting it up here as a constant is simply out of convenience.
+We will find a need to make adjustments to some of the default behavior of packages, and in some cases create an object to define some parameter.
 
-```python
-CONFIG_PATH = "./configurations/generated"
-```
+---
 
-### Inventory
+#### Inventory
 
 We are declaring our device inventory in a YAML markdown, since YAML is easy for humans and powerful for machines.
 
@@ -70,19 +72,17 @@ The function returns our list of devices as an object called `devices`.
 
 ---
 
-### `main()`
+#### Output Directory
 
-This is the primary function of our script. Here will find us setting up our Jinja2 environment and running our device's variable file through the configuration template.
-
-When the `main` function is called in our `if __name__ == "__main__":` below, it will be passed the output of our `inventory` function described above. We will use this list of devices to loop over when generating our configurations.
+We will want to tell Jinja2 where we expect it to output the templated configurations. Setting it up here as a constant is simply out of convenience.
 
 ```python
-def main(devices):
+CONFIG_PATH = "./configurations/generated"
 ```
 
 ---
 
-### Defining Jinja2 parameters
+#### Jinja2 Options
 
 Jinja2 has many options, here we will just focus on some of the more common ones.
 
@@ -105,7 +105,7 @@ env.lstrip_blocks = True
 
 ---
 
-### Loading device variables
+#### Device Variables
 
 Jinja requires two things to complete its work: a template file and variables to run through it.
 
@@ -120,7 +120,19 @@ for each in devices["routers"]:
 
 The contents of our device's variables will be referenced as `stream` in the next steps below.
 
-### Build configurations
+### `main()`
+
+This is the primary function of our script. Here will find us setting up our Jinja2 environment and running our device's variable file through the configuration template.
+
+When the `main` function is called in our `if __name__ == "__main__":` below, it will be passed the output of our `inventory` function described above. We will use this list of devices to loop over when generating our configurations.
+
+```python
+def main(devices):
+```
+
+---
+
+#### Build configurations
 
 With our device's configuration variables loaded into an object called `stream`, we will safely load the YAML file's contents into a python dictionary called `variables`.
 
@@ -144,7 +156,7 @@ We wrap this all up within a Try/Except clause, enabling us to halt execution an
 
 ---
 
-### Writing to a local file
+#### Writing to a local file
 
 At this point, our generated configuration lives within Python as an object, this step will find us writing this to a local file.
 
@@ -167,7 +179,7 @@ Finally we see a print statement on the console, informing us of our success and
 
 ---
 
-#### Initialize script
+### Initialize script
 
 We will first load our inventory.yaml file into a new Python object `devices`.
 
@@ -184,9 +196,28 @@ if __name__ == "__main__":
 
 ## 🚀 Workflow
 
+Make sure your Python Virtual Environment has the necessary packages installed.
+
+> **Reminder**: a [Poetry lock file has been provided](https://cdot65.github.io/juniper-mpls-l3vpn-demo/docs/automation/poetry/) to help create your virtual environment to reflect ours. You will need to have [Poetry installed](https://python-poetry.org/).
+
+Change into the `files/python` directory and execute the script
+
 ```bash
+cd files/python
 python generate.py
 ```
+
+An alternative method of executing the script would be to leverage the Docker container provided with this project.
+
+```bash
+invoke generate
+```
+
+---
+
+## 📸 Screenshots
+
+![python generate.py](https://raw.githubusercontent.com/cdot65/juniper-mpls-l3vpn-demo/dev/site/content/assets/images/generate.png)
 
 ---
 
@@ -248,6 +279,4 @@ if __name__ == "__main__":
 
 ```
 
-## 📸 Screenshots
-
-![python validate.py](https://raw.githubusercontent.com/cdot65/juniper-mpls-l3vpn-demo/dev/site/content/assets/images/generate.png)
+---

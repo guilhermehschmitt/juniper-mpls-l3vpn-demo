@@ -16,6 +16,8 @@ For all information about this project, please reference the [documentation site
 
 I am leveraging Juniper vLabs to deploy the virtualized lab, but have also included an EVE-NG topology to import if you do not have access to vLabs.
 
+[vLabs Blueprint](https://portal.cloudlabs.juniper.net/RM/Diagram/Index/74601771-360a-4d01-80c9-c1f41f5d2438?diagramType=Topology)
+
 _high-level design_
 
 ![topology](./site/content/assets/images/topology.svg)

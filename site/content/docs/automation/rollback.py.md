@@ -156,7 +156,7 @@ Our main function will run next, which will take care of the logging into and pe
 
 Make sure your Python Virtual Environment has the necessary packages installed.
 
-> **Reminder**: a [https://cdot65.github.io/juniper-mpls-l3vpn-demo/docs/automation/poetry/](Poetry lock file has been provided) to help create your virtual environment to reflect ours. You will need to have Poetry [https://python-poetry.org/](installed).
+> **Reminder**: a [Poetry lock file has been provided](https://cdot65.github.io/juniper-mpls-l3vpn-demo/docs/automation/poetry/) to help create your virtual environment to reflect ours. You will need to have [Poetry installed](https://python-poetry.org/).
 
 Change into the `files/python` directory and execute the script
 

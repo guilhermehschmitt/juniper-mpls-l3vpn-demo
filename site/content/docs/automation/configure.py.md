@@ -161,15 +161,21 @@ Our main function will run next, which will take care of the templating and push
 
 ## 🚀 Workflow
 
-The workflow will look like this:
+Make sure your Python Virtual Environment has the necessary packages installed.
 
-1. Have Poetry install your Python packages in a virtual environment (one-time operation)
-2. Activate your new virtual environment with Poetry
-3. Run locally
+> **Reminder**: a [Poetry lock file has been provided](https://cdot65.github.io/juniper-mpls-l3vpn-demo/docs/automation/poetry/) to help create your virtual environment to reflect ours. You will need to have [Poetry installed](https://python-poetry.org/).
+
+Change into the `files/python` directory and execute the script
 
 ```bash
 cd files/python
 python configure.py
+```
+
+An alternative method of executing the script would be to leverage the Docker container provided with this project.
+
+```bash
+invoke configure
 ```
 
 ---

@@ -51,7 +51,13 @@ Several problems could arise within this request, so we import PyEZ's error type
 
 ---
 
-### Inventory
+### Configurations
+
+We will find a need to make adjustments to some of the default behavior of packages, and in some cases create an object to define some parameter.
+
+---
+
+#### Inventory
 
 We are declaring our device inventory in a YAML markdown, since YAML is easy for humans and powerful for machines.
 
@@ -144,16 +150,28 @@ Our main function will run next, which will take care of the logging into and pe
 
 ## 🚀 Workflow
 
-The workflow will look like this:
+Make sure your Python Virtual Environment has the necessary packages installed.
 
-1. Have Poetry install your Python packages in a virtual environment (one-time operation)
-2. Activate your new virtual environment with Poetry
-3. Run locally
+> **Reminder**: a [https://cdot65.github.io/juniper-mpls-l3vpn-demo/docs/automation/poetry/](Poetry lock file has been provided) to help create your virtual environment to reflect ours. You will need to have Poetry [https://python-poetry.org/](installed).
+
+Change into the `files/python` directory and execute the script
 
 ```bash
 cd files/python
 python rollback.py
 ```
+
+An alternative method of executing the script would be to leverage the Docker container provided with this project.
+
+```bash
+invoke rollback
+```
+
+---
+
+## 📸 Screenshots
+
+![python rollback.py](https://raw.githubusercontent.com/cdot65/juniper-mpls-l3vpn-demo/dev/site/content/assets/images/rollback.png)
 
 ---
 
@@ -248,7 +266,3 @@ if __name__ == "__main__":
 ```
 
 ---
-
-## 📸 Screenshots
-
-![python validate.py](https://raw.githubusercontent.com/cdot65/juniper-mpls-l3vpn-demo/dev/site/content/assets/images/rollback.png)

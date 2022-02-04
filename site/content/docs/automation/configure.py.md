@@ -132,7 +132,7 @@ Close our NETCONF session.
 
 ---
 
-### Initialize script
+### Initialize
 
 There are thousands of explanations on `if __name__ == "__main__":` within Python, I will rely on your Google skills to find you the one that makes the most sense. In short, we need this so leave it alone.
 

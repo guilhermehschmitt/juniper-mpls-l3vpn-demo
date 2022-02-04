@@ -47,7 +47,13 @@ Our additional import is pulling in `SnapAdmin` from the `jnpr.jsnapy` library. 
 
 ---
 
-### Defining our objects
+### Configurations
+
+We will find a need to make adjustments to some of the default behavior of packages, and in some cases create an object to define some parameter.
+
+---
+
+#### JSNAPy parameters
 
 Moving on to our configuration elements, let's briefly discuss what these objects do and why we've included them.
 
@@ -77,28 +83,9 @@ Finally, our configuration file. This is a simple way of passing a YAML file int
 
 ---
 
-### Main
+#### JSNAPy Test File
 
-And to put the cherry on top, our mechanism of executing the Python script.
-
-```python
-if __name__ == "__main__":
-    """Perform our JSNAPy tests."""
-    JSNAPY.snapcheck(CONFIG, "test_l3vpn_routes")
-
-```
-
-There are thousands of explanations on `if __name__ == "__main__":` within Python, I will rely on your Google skills to find you the one that makes the most sense. In short, we need this so leave it alone.
-
-We execute our JSNAPy task by calling our object called `JSNAPY`, asking it for the `snapcheck` method, and passing in our `CONFIG` object (really a multi-line YAML string), and a name for our tests.
-
-This will execute JSNAPy with the parameters we have passed within our test file. With such a great segway in place...
-
----
-
-### `test_l3vpn_routes.yaml`
-
-With our attention now on the JSNAPy test file, we will see that we are actually performing two seperate tests on both routers.
+With our attention now on the JSNAPy test file [https://github.com/cdot65/juniper-mpls-l3vpn-demo/blob/main/files/python/tests/test_l3vpn_routes.yaml](`test_l3vpn_routes.yaml`), we will see that we are actually performing two seperate tests on both routers.
 
 ```yaml
 {% raw %}
@@ -157,14 +144,49 @@ route_table_Customer1.inet.0:
 
 ---
 
+### `main()`
+
+This is the primary function of our script. Here will find us setting up our snapcheck to execute against our test file.
+
+```python
+if __name__ == "__main__":
+    """Perform our JSNAPy tests."""
+    JSNAPY.snapcheck(CONFIG, "test_l3vpn_routes")
+
+```
+
+There are thousands of explanations on `if __name__ == "__main__":` within Python, I will rely on your Google skills to find you the one that makes the most sense. In short, we need this so leave it alone.
+
+We execute our JSNAPy task by calling our object called `JSNAPY`, asking it for the `snapcheck` method, and passing in our `CONFIG` object (really a multi-line YAML string), and a name for our tests.
+
+This will execute JSNAPy with the parameters we have passed within our test file.
+
+---
+
 ## 🚀 Workflow
 
-Execute the validation script with Python
+Make sure your Python Virtual Environment has the necessary packages installed.
+
+> **Reminder**: a [https://cdot65.github.io/juniper-mpls-l3vpn-demo/docs/automation/poetry/](Poetry lock file has been provided) to help create your virtual environment to reflect ours. You will need to have Poetry [https://python-poetry.org/](installed).
+
+Change into the `files/python` directory and execute the script
 
 ```bash
 cd files/python
 python validate.py
 ```
+
+An alternative method of executing the script would be to leverage the Docker container provided with this project.
+
+```bash
+invoke validate
+```
+
+---
+
+## 📸 Screenshots
+
+![python validate.py](https://raw.githubusercontent.com/cdot65/juniper-mpls-l3vpn-demo/dev/site/content/assets/images/jsnapy_validate.png)
 
 ---
 
@@ -198,7 +220,3 @@ if __name__ == "__main__":
     """Perform our JSNAPy tests."""
     JSNAPY.snapcheck(CONFIG, "test_l3vpn_routes")
 ```
-
-## 📸 Screenshots
-
-![python validate.py](https://raw.githubusercontent.com/cdot65/juniper-mpls-l3vpn-demo/dev/site/content/assets/images/jsnapy_validate.png)

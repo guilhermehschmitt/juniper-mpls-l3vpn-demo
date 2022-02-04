@@ -48,7 +48,13 @@ From the utilities module, we will be importing the `Config` class, which will (
 
 ---
 
-### Inventory
+### Configurations
+
+We will find a need to make adjustments to some of the default behavior of packages, and in some cases create an object to define some parameter.
+
+---
+
+#### Inventory
 
 We are declaring our device inventory in a YAML markdown, since YAML is easy for humans and powerful for machines.
 
@@ -86,7 +92,7 @@ After printing a status message to the console, we will be creating an empty dic
 The only reason this is here is to help handle the fact that PyEZ and Jinja2 library load YAML vars differently than each other.
 
 ```python
-print(f"connected to {each['name']}")  # noqa T001
+print(f"connected to {each['name']}")
 
 data = dict()
 data["configuration"] = yaml.safe_load(open(f"vars/{each['name']}.yaml"))

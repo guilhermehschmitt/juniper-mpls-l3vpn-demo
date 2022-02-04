@@ -6,6 +6,10 @@ Instead we will be using the same Jinja2 templating engine, just outside of PyEZ
 
 Configurations will be stored in a local directory, as declared within our script below.
 
+### Video
+
+<iframe width="720" height="405" src="https://www.youtube.com/embed/k7TvcTbikqA" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
 ---
 
 ## 🐍 Files

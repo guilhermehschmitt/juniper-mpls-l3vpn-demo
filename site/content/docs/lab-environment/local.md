@@ -2,6 +2,8 @@
 
 To get off the ground running with a local copy of this projects, start with making sure that you have the proper tools instead head of time.
 
+> **Note: If you have EVE-NG running within your home, we have provided a [sample EVE-NG lab file](https://github.com/cdot65/juniper-mpls-l3vpn-demo/tree/main/files/eve-ng).**
+
 ---
 
 ## Local Requirements
@@ -36,5 +38,3 @@ poetry shell
 ![poetry install](https://raw.githubusercontent.com/cdot65/juniper-mpls-l3vpn-demo/dev/site/content/assets/images/poetry_install.png)
 
 ![poetry shell](https://raw.githubusercontent.com/cdot65/juniper-mpls-l3vpn-demo/dev/site/content/assets/images/poetry_shell.png)
-
-> **Note: If you have EVE-NG running within your home, we have provided a [sample EVE-NG lab file](https://github.com/cdot65/juniper-mpls-l3vpn-demo/tree/main/files/eve-ng).**

@@ -2,10 +2,6 @@
 
 Our goal here is to use JSNAPy to validate the route table information within our provisioned fabric.
 
-### Video
-
-<iframe width="720" height="405" src="https://www.youtube.com/embed/k7TvcTbikqA" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-
 ---
 
 ## 🐍 Files

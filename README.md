@@ -12,6 +12,12 @@ For all information about this project, please reference the [documentation site
 
 ---
 
+## Video Companion
+
+[![YouTube](https://img.youtube.com/vi/nOKj8fnviRk/0.jpg)](https://www.youtube.com/watch?v=nOKj8fnviRk)
+
+---
+
 ## Virtualization
 
 I am leveraging Juniper vLabs to deploy the virtualized lab, but have also included an EVE-NG topology to import if you do not have access to vLabs.
